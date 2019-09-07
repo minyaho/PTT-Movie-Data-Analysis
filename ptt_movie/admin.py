@@ -6,7 +6,8 @@ from .models import Article,Keyword_Yahoo,Keyword_Like,Keyword
 #Article
 class Article_Admin(admin.ModelAdmin):
 	list_display = ('title','author','time','push_message_all','push_message_good','push_message_bad')
-
+	search_fields = ('title','author',)
+	
 admin.site.register(Article, Article_Admin)
 
 #Keyword_Yahoo
