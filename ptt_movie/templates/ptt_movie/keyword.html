@@ -1,0 +1,281 @@
+<!-- index.html-->
+{% extends 'ptt_movie/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Ptt電影溫度計 {% endblock %}
+{% block headmessage %}
+	<h4 style="font-family: 微軟正黑體">電影 - {{key}}</h4>
+{% endblock %}
+{% block content %}
+				<div style="font-family: 微軟正黑體" class="col-10 ml-3">
+				
+					<h4 class="mt-1">總數據</h4>
+					<hr class="mt-0 mb-3">
+					<div class="ml-4">
+						<p class="my-1">文章數: {{ data.b_article }}</p>
+						<p class="my-1">討論數: {{ data.c_discussion }}</p>
+						<p class="my-1">好評數: {{ data.d_good }}</p>
+						<p class="my-1">負評數: {{ data.e_bad }}</p>
+						<p class="my-1">評比分: {{ data.f_score }}</p>
+						<p class="my-1">評比: {{ data.g_comment }}</p>
+						<p class="my-1">JSON: {{ data }}</p>
+					</div>
+					
+					<h4 class="mt-5">近7天數據</h4>
+					<hr class="mt-0 mb-2">
+					<ul class="">
+						<li class="mt-4">文章數
+							<canvas id="Article_Chart_of_7_Days" width="200" height="100"></canvas>
+							<script>
+								var ctx = document.getElementById("Article_Chart_of_7_Days");
+								var myChart = new Chart(ctx, {
+									type: 'line',
+									data: {
+										labels: {{ label_of_7_days|safe }}, // 換成自己的labels
+										datasets: [{
+											label: '{{ movie_name }}', 
+											data: {{ article_of_7_days|safe }}, // 換成自己的data
+											backgroundColor: [
+
+												'rgba(255, 159, 64, 0.2)'
+											],
+											borderColor: [
+
+												'rgba(255, 159, 64, 1)'
+											],
+											borderWidth: 1
+										}]
+									},
+									options: {
+										scales: {
+											yAxes: [{
+												ticks: {
+													beginAtZero:true
+												}
+											}]
+										}
+									}
+								});
+							</script>
+						</li>
+						<li class="mt-4">討論數
+							<canvas id="Discussion_Chart_of_7_Days" width="200" height="100"></canvas>
+							<script>
+								var ctx = document.getElementById("Discussion_Chart_of_7_Days");
+								var myChart = new Chart(ctx, {
+									type: 'line',
+									data: {
+										labels: {{ label_of_7_days|safe }}, // 換成自己的labels
+										datasets: [{
+											label: '{{ movie_name }}', 
+											data: {{ discussion_of_7_days|safe }}, // 換成自己的data
+											backgroundColor: [
+
+												'rgba(255, 159, 64, 0.2)'
+											],
+											borderColor: [
+
+												'rgba(255, 159, 64, 1)'
+											],
+											borderWidth: 1
+										}]
+									},
+									options: {
+										scales: {
+											yAxes: [{
+												ticks: {
+													beginAtZero:true
+												}
+											}]
+										}
+									}
+								});
+							</script>
+						</li>
+						<li class="mt-4">好壞評數
+							<canvas id="GoodorBad_Chart_of_7_Days" width="200" height="100"></canvas>
+							<script>
+								var ctx = document.getElementById("GoodorBad_Chart_of_7_Days");
+								var myChart = new Chart(ctx, {
+									type: 'line',
+									data: {
+										labels: {{ label_of_7_days|safe }}, // 換成自己的labels
+										datasets: [{
+											label: 'good', 
+											data: {{ good_of_7_days|safe }}, // 換成自己的data
+											backgroundColor: [
+
+												'rgba(149, 199, 243, 0.2)'
+											],
+											borderColor: [
+
+												'rgba(149, 199, 243, 1)'
+											],
+											borderWidth: 1
+										},{
+											label: 'bad', 
+											data: {{ bad_of_7_days|safe }}, // 換成自己的data
+											backgroundColor: [
+
+												'rgba(255, 129, 64, 0.2)'
+											],
+											borderColor: [
+
+												'rgba(255, 109, 64, 1)'
+											],
+											borderWidth: 1
+										}]
+									},
+									options: {
+										scales: {
+											yAxes: [{
+												ticks: {
+													beginAtZero:true
+												}
+											}]
+										}
+									}
+								});
+							</script>
+						</li>
+					</ul>
+
+					<h4 class="mt-5">近5周數據</h4>
+					<hr class="mt-0 mb-2">
+					<ul class="">
+						<li class="mt-4">文章數
+							<canvas id="Article_Chart_of_5_weeks" width="200" height="100"></canvas>
+							<script>
+								var ctx = document.getElementById("Article_Chart_of_5_weeks");
+								var myChart = new Chart(ctx, {
+									type: 'line',
+									data: {
+										labels: {{ label_of_5_weeks|safe }}, // 換成自己的labels
+										datasets: [{
+											label: '{{ movie_name }}', 
+											data: {{ article_of_5_weeks|safe }}, // 換成自己的data
+											backgroundColor: [
+
+												'rgba(255, 159, 64, 0.2)'
+											],
+											borderColor: [
+
+												'rgba(255, 159, 64, 1)'
+											],
+											borderWidth: 1
+										}]
+									},
+									options: {
+										scales: {
+											yAxes: [{
+												ticks: {
+													beginAtZero:true
+												}
+											}]
+										}
+									}
+								});
+							</script>
+						</li>
+						<li class="mt-4">討論數
+							<canvas id="Discussion_Chart_of_5_weeks" width="200" height="100"></canvas>
+							<script>
+								var ctx = document.getElementById("Discussion_Chart_of_5_weeks");
+								var myChart = new Chart(ctx, {
+									type: 'line',
+									data: {
+										labels: {{ label_of_5_weeks|safe }}, // 換成自己的labels
+										datasets: [{
+											label: '{{ movie_name }}', 
+											data: {{ discussion_of_5_weeks|safe }}, // 換成自己的data
+											backgroundColor: [
+
+												'rgba(255, 159, 64, 0.2)'
+											],
+											borderColor: [
+
+												'rgba(255, 159, 64, 1)'
+											],
+											borderWidth: 1
+										}]
+									},
+									options: {
+										scales: {
+											yAxes: [{
+												ticks: {
+													beginAtZero:true
+												}
+											}]
+										}
+									}
+								});
+							</script>
+						</li>
+						<li class="mt-4">好壞評數
+							<canvas id="GoodorBad_Chart_of_5_weeks" width="200" height="100"></canvas>
+							<script>
+								var ctx = document.getElementById("GoodorBad_Chart_of_5_weeks");
+								var myChart = new Chart(ctx, {
+									type: 'line',
+									data: {
+										labels: {{ label_of_5_weeks|safe }}, // 換成自己的labels
+										datasets: [{
+											label: 'good', 
+											data: {{ good_of_5_weeks|safe }}, // 換成自己的data
+											backgroundColor: [
+
+												'rgba(149, 199, 243, 0.2)'
+											],
+											borderColor: [
+
+												'rgba(149, 199, 243, 1)'
+											],
+											borderWidth: 1
+										},{
+											label: 'bad', 
+											data: {{ bad_of_5_weeks|safe }}, // 換成自己的data
+											backgroundColor: [
+
+												'rgba(255, 129, 64, 0.2)'
+											],
+											borderColor: [
+
+												'rgba(255, 109, 64, 1)'
+											],
+											borderWidth: 1
+										}]
+									},
+									options: {
+										scales: {
+											yAxes: [{
+												ticks: {
+													beginAtZero:true
+												}
+											}]
+										}
+									}
+								});
+							</script>
+						</li>
+					</ul>
+					
+					<h4 class="mt-5">其他</h4>
+					<hr class="mt-0 mb-2">
+					<div class="ml-4">
+						<a href='/week/{{key}}'>周份資料表</a>
+						<a href='/month/{{key}}'>月份資料表</a>
+					</div>
+					
+					<h4 class="mt-5">相似關鍵字</h4>
+					<hr class="mt-0 mb-2">
+
+					<h4 class="mt-5">文章</h4>
+					<hr class="mt-0 mb-2">
+					<div class="ml-4">
+						{% for i in article_for_keyword %}
+							<div class="row my-0">
+								<a class='col' href='https://www.ptt.cc/{{ i.3 }}'>{{ i.0 }}</a> <p class='col-4'>{{i.2}}</p>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+{% endblock %}

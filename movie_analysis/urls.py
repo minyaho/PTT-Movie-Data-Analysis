@@ -19,7 +19,10 @@ from ptt_movie import views as movie_analysis_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-	path('a/',movie_analysis_views.index),
+	path('',movie_analysis_views.index),
 	path('b/',movie_analysis_views.analysis),
-	path('type/',movie_analysis_views.analysis_type),
+	path('search/',movie_analysis_views.analysis_type),
+	path('keyword/<str:key>',movie_analysis_views.keyword,name='keyword'),
+	path('month/<str:key>',movie_analysis_views.month,name='keyword'),
+	path('week/<str:key>',movie_analysis_views.week,name='keyword'),
 ]

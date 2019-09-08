@@ -1,0 +1,23 @@
+<!-- index.html-->
+{% extends 'ptt_movie/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Ptt電影溫度計 {% endblock %}
+{% block headmessage %}
+	<h4 style="font-family: 微軟正黑體">首頁</h4>
+{% endblock %}
+{% block content %}
+				<div class="col-10 ml-2">
+					<h3 style="font-family: 微軟正黑體">
+						  歡迎來到電影溫度計
+					</h3>
+					<hr class="mt-0 mb-4">
+					<div class="ml-4">
+						<h5 style="font-family: 微軟正黑體">以下是我們所建立好的電影關鍵字</h5>
+						<p class='mt-0 mb-4'></p>
+						<ul style="font-family: 微軟正黑體" class="">
+						{% for keyword in keywords %}
+							<li><a href='keyword/{{keyword.movie}}'>{{ keyword }}</a></li>
+						{% endfor %}
+					</div>
+				</div>
+{% endblock %}

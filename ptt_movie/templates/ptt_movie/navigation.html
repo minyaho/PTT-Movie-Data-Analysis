@@ -1,0 +1,22 @@
+            <div class="card">
+                <div class="card-header">
+                    <h4>menu</h4>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        <a href="/" class="list-group-item">回到首頁</a>
+                        <a href="/hot/" class="list-group-item">熱門電影</a>
+                        <a href="/rank/" class="list-group-item">電影排行榜</a>
+						<a href="/search/" class="list-group-item">電影搜尋</a>
+                        <a href="/admin/" class="list-group-item">後台</a>
+                    </div>
+                </div>
+				<div class="card-footer text-center">
+					{% if request.user.is_authenticated %}
+						{{ request.user.username }},您好!
+					{% else %}
+						請登入，按我登入
+					{% endif %}
+				</div>
+            </div>
+            <br>

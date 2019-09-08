@@ -1,0 +1,30 @@
+<!--教程列表：
+{% for i in TutorialList %}
+<br>
+{{ i }}
+<br>
+{% endfor %} -->
+
+<!--
+站點: {{ info_dict.site }}
+<br>
+內容: {{ info_dict.content }} -->
+
+<!--
+{% for key,value in info_dict.items %}
+	{{key}} : {{ value }}
+{% endfor %} -->
+
+{% for item in List %}
+	{{ item }}{% if not forloop.last %},{% endif %}
+{% endfor %}
+<br>
+<a href = {% url 'homepage' %}> home </a>
+<br>
+{% if request.user.is_authenticated %}
+	{{ request.user.username }},您好!
+{% else %}
+	請登入，按我登入
+{% endif %}
+<br>
+{{ request.path }}
