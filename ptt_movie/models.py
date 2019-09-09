@@ -37,6 +37,18 @@ class Keyword_Like(models.Model):
 class Keyword(models.Model):
 	movie = models.CharField(max_length = 60)
 	keyword = models.CharField(max_length = 256,null=True)
+	not_keyword = models.CharField(max_length = 256,null=True)
 	
 	def __str__(self):
 		return self.movie
+
+class Keyword_Analysis(models.Model):
+	name = models.CharField(max_length = 60, primary_key=True)
+	article = models.IntegerField()
+	discussion = models.IntegerField()
+	good = models.IntegerField()
+	bad = models.IntegerField()
+	score = models.FloatField()
+	comment = models.CharField(max_length = 10)
+	def __str__(self):
+		return self.name

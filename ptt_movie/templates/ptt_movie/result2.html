@@ -1,8 +1,8 @@
 {% extends 'ptt_movie/base.html' %}
 {% load crispy_forms_tags %}
-{% block title %} Ptt電影溫度計 {% endblock %}
+{% block title %}{{type_name}}查詢 - Ptt電影溫度計 {% endblock %}
 {% block headmessage %}
-	<h4 style="font-family: 微軟正黑體">Search Result - {{ movie_name }}</h4>
+	<h4 style="font-family: 微軟正黑體">{{type_name}}查詢 - {{ movie_name }}</h4>
 {% endblock %}
 {% block content %}
 				<div class='col-10 ml-3'>

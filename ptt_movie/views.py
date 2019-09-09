@@ -29,9 +29,41 @@ def index(request):
 		form = AddForm()
 	return render(request,'ptt_movie/index.html',{'form':form})	
 """
-from ptt_movie.models import Keyword
+from .search_of_article import article_search
+from ptt_movie.models import Keyword_Analysis,Keyword
 def index(request):
+	
+	#今日
+	today = datetime.datetime.today().date()
+	
+	#今日討論電影關鍵字
+	todays_keywords = list()
+	
+	#所有關鍵字
 	keywords = Keyword.objects.all()
+	
+	#今日文章
+	article_today = Article.objects.filter(time__year=today.strftime('%Y'),time__month=today.strftime('%m'),time__day=today.strftime('%d'))
+	
+	"""
+	尋找今日電影關鍵字的快速做法
+	
+	"""
+	article_str = ''
+	
+	for _article_today in article_today:
+		article_str += _article_today.title + ' '
+	article_str = article_str.strip()
+	
+	for _keyword in keywords:
+		
+		if(_keyword.movie in article_str):
+			todays_keywords.append(_keyword.movie)
+			
+		for same_keyword in _keyword.keyword.strip().split(' '):
+			if(same_keyword.strip()!='') and (same_keyword.strip() in article_str):
+				todays_keywords.append(_keyword.movie)
+
 	return render(request,'ptt_movie/index.html', locals())
 	
 
@@ -73,16 +105,24 @@ def keyword(request,key):
 					for article in articles:
 						temp = (article.title,article.author,article.time,article.url,article.push_message_all,article.push_message_good,article.push_message_bad,article.push_message_neutral)
 						article_for_keyword.discard(temp)
+					
 
 					#第二階段搜尋: 比對與電影關鍵字附屬關鍵字吻合的文章
-					if(len(similar_keyword.keyword.strip().split(' '))>0):
+					if(len(similar_keyword.keyword.strip().split(' '))>0) and (similar_keyword.keyword.strip()!=''):
+						#error_ = similar_keyword.keyword.strip().split(' ')
+						#error_len = len(error_)
+						#if(movie_name=='生日'):
+						#	a = 1/0
 						for same_keyword in similar_keyword.keyword.strip().split(' '):
 							#print(same_keyword)
 							articles = Article.objects.filter(title__contains=same_keyword)
 							for article in articles:
 								temp = (article.title,article.author,article.time,article.url,article.push_message_all,article.push_message_good,article.push_message_bad,article.push_message_neutral)
 								article_for_keyword.discard(temp)
-					
+		
+		article_for_keyword = list(article_for_keyword)
+		article_for_keyword.sort(key=lambda k:k[2], reverse=True)
+		
 		#   產生討論數
 		number_of_discussion = 0
 		for article in article_for_keyword:
@@ -100,8 +140,7 @@ def keyword(request,key):
 				#print('Good',item[0])
 				number_of_good += item[5]
 			elif(emotion_score == -1):
-				#print('Bad',item[0])
-				number_of_bad += item[6]
+				number_of_bad += item[5]
 			else:
 				#print('Neutral',item[0])
 				pass
@@ -127,7 +166,7 @@ def keyword(request,key):
 			"c_discussion": number_of_discussion,
 			"d_good": number_of_good,
 			"e_bad": number_of_bad,
-			"f_score": ration_of_score,
+			"f_score": round(ration_of_score,3),
 			"g_comment": comment_good_bad,
 		}
 		
@@ -143,7 +182,7 @@ def keyword(request,key):
 		data_of_7_days = []
 			
 		for day in range(1,8):
-			data_of_7_days.append(article_search(3,movie_name,[int((start_date + relativedelta(days=i)).strftime('%m')),int((start_date + relativedelta(days=day)).strftime('%d'))]))
+			data_of_7_days.append(article_search(3,movie_name,[2019,int((start_date + relativedelta(days=i)).strftime('%m')),int((start_date + relativedelta(days=day)).strftime('%d'))]))
 
 		article_of_7_days = list()
 		for _data in data_of_7_days:
@@ -167,12 +206,12 @@ def keyword(request,key):
 		
 		
 		#近5周
-		end_date = datetime.datetime.today().date()
+		end_date = datetime.datetime.today().date()+ relativedelta(days=1)
 		start_date = end_date - relativedelta(days=7*5)
 		
 		label_of_5_weeks = list()
 		for i in range(1,6):
-			label_of_5_weeks.append(start_date.strftime('%m-%d') + ' ~ ' +(start_date + relativedelta(days=7)).strftime('%m-%d'))
+			label_of_5_weeks.append(start_date.strftime('%m-%d') + ' ~ ' +(start_date + relativedelta(days=6)).strftime('%m-%d'))
 			start_date = start_date + relativedelta(days=7)
 		label_of_5_weeks = json.dumps(label_of_5_weeks)
 		
@@ -213,6 +252,7 @@ def week(request,key):
 	
 	if len(keyword_result) != 0:
 	
+		type_name = '周'
 		movie_name = key
 		data = []
 				
@@ -248,14 +288,14 @@ def week(request,key):
 		return render(request,'ptt_movie/result2.html',locals())
 	else:
 		return HttpResponse(str('電影名稱錯誤'))
-		
-		
+			
 def month(request,key):
 
 	keyword_result = Keyword.objects.filter(movie = key)
 	
 	if len(keyword_result) != 0:
 	
+		type_name = '月'
 		movie_name = key
 		data = []
 				
@@ -291,6 +331,48 @@ def month(request,key):
 		return render(request,'ptt_movie/result2.html',locals())
 	else:
 		return HttpResponse(str('電影名稱錯誤'))
+
+from .search_of_article import article_search
+from ptt_movie.models import Keyword_Analysis
+def rank(request):
+
+	# 極好評 好評 普評 壞評 極壞評
+	# better good ordinary bad worse
+
+	#極好評電影
+	better_keywords = Keyword_Analysis.objects.filter(comment='極好評')
+	better_keywords_datas = list()
+	for better_keyword in better_keywords:
+		better_keywords_datas.append(better_keyword.name)
+		
+	return render(request,'ptt_movie/rank.html',locals())
+
+def hot(request):
+				
+	movie_keywords = Keyword.objects.all()
+		
+	#近7天
+	end_date = datetime.datetime.today().date()
+	start_date = end_date - relativedelta(days=7)
+	
+	label_of_7_days = list()
+	for i in range(1,8):
+		label_of_7_days.append((start_date + relativedelta(days=i)).strftime('%m-%d'))
+	label_of_7_days = json.dumps(label_of_7_days)
+		
+	data_of_7_days = []
+		
+	for movie_keyword in movie_keywords:
+		
+		movie_name = movie_keyword.movie
+		
+		for day in range(1,8):
+			data_of_7_days.append(article_search(3,movie_name,[int((start_date + relativedelta(days=i)).strftime('%m')),int((start_date + relativedelta(days=day)).strftime('%d'))]))
+	
+	data_of_7_days.sort(key=lambda k: k['c_discussion'])
+
+	
+	return render(request,'ptt_movie/hot.html',locals())
 
 def analysis(request):
 	if request.method == 'POST':
@@ -370,6 +452,8 @@ def analysis_type(request):
 				
 			elif (type == 1):
 			
+				type_name = '周'
+				
 				data = []
 				
 				for week in range(1,54):
@@ -408,6 +492,8 @@ def analysis_type(request):
 				return render(request,'ptt_movie/result2.html',locals())	
 				
 			elif (type == 2):
+			
+				type_name = '月'
 			
 				data = []
 				

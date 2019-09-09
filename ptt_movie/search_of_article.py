@@ -57,7 +57,7 @@ def article_search(type,movie_name,arg):
 			number_of_good += item[5]
 		elif(emotion_score == -1):
 			#print('Bad',item[0])
-			number_of_bad += item[6]
+			number_of_bad += item[5]
 		else:
 			#print('Neutral',item[0])
 			pass
@@ -83,7 +83,7 @@ def article_search(type,movie_name,arg):
 		"c_discussion": number_of_discussion,
 		"d_good": number_of_good,
 		"e_bad": number_of_bad,
-		"f_score": ration_of_score,
+		"f_score": round(ration_of_score,3),
 		"g_comment": comment_good_bad,
 	}
 	return temp
@@ -97,6 +97,6 @@ def article_search_type(args):	#[type,movie_name,arg]
 	if(args[0] == 2): #year_month
 		return Article.objects.filter(time__year=2019,time__month=args[2],title__contains=args[1])
 	if(args[0] == 3): #某天
-		return Article.objects.filter(time__year=2019,time__month=args[2][0],time__day=args[2][1],title__contains=args[1]) #2:Start,3:end
+		return Article.objects.filter(time__year=args[2][0],time__month=args[2][1],time__day=args[2][2],title__contains=args[1]) #2:Start,3:end
 	if(args[0] == 4): #時間範圍
 		return Article.objects.filter(time__range=(args[2][0],args[2][1]) ,title__contains=args[1]) #2:Start,3:end

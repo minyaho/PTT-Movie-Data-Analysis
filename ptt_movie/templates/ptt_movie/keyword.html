@@ -1,23 +1,58 @@
 <!-- index.html-->
 {% extends 'ptt_movie/base.html' %}
 {% load crispy_forms_tags %}
-{% block title %} Ptt電影溫度計 {% endblock %}
+{% block title %}{{key}} - Ptt電影溫度計 {% endblock %}
 {% block headmessage %}
-	<h4 style="font-family: 微軟正黑體">電影 - {{key}}</h4>
+	<h4 style="font-family: 微軟正黑體">關鍵字 - {{key}}</h4>
 {% endblock %}
 {% block content %}
 				<div style="font-family: 微軟正黑體" class="col-10 ml-3">
 				
 					<h4 class="mt-1">總數據</h4>
 					<hr class="mt-0 mb-3">
-					<div class="ml-4">
-						<p class="my-1">文章數: {{ data.b_article }}</p>
-						<p class="my-1">討論數: {{ data.c_discussion }}</p>
-						<p class="my-1">好評數: {{ data.d_good }}</p>
-						<p class="my-1">負評數: {{ data.e_bad }}</p>
-						<p class="my-1">評比分: {{ data.f_score }}</p>
-						<p class="my-1">評比: {{ data.g_comment }}</p>
-						<p class="my-1">JSON: {{ data }}</p>
+					<div class='row'>
+						<div class='col mx-auto text-center'>
+								<div class='row my-0'>
+									<p class="col">文章數: </p>
+									<p class="col">{{ data.b_article }}</p>
+								</div>
+								<div class='row my-0'>
+									<p class="col">討論數: </p>
+									<p class="col">{{ data.c_discussion }}</p>
+								</div>
+								<div class='row my-0'>
+									<p class="col">好評數: </p>
+									<p class="col">{{ data.d_good }}</p>
+								</div>
+								<div class='row my-0'>
+									<p class="col">負評數: </p>
+									<p class="col">{{ data.e_bad }}</p>
+								</div>
+								<!--
+								<div class='row my-0'>
+									<p class="col">評比分: </p>
+									<p class="col">{{ data.f_score }}</p>
+								</div>-->
+								<!--
+								<p class="my-1">文章數: {{ data.b_article }}</p>
+								<p class="my-1">討論數: {{ data.c_discussion }}</p>
+								<p class="my-1">好評數: {{ data.d_good }}</p>
+								<p class="my-1">負評數: {{ data.e_bad }}</p>
+								<p class="my-1">評比分: {{ data.f_score }}</p>
+								<p class="my-1">評比: {{ data.g_comment }}</p>
+								<p class="my-1">JSON: {{ data }}</p>
+								-->
+						</div>
+						<div class='col mx-auto'>
+							<div class='row'>
+								<p class="col">評比分: </p>
+								<p class="col">{{ data.f_score }}</p>
+							</div>
+							<div class='row my-0'>
+								<h6 class="col mt-2">評比:</h6>
+								<h3 class="col mt-3">{{ data.g_comment }}</h3>
+							</div>
+						</div>
 					</div>
 					
 					<h4 class="mt-5">近7天數據</h4>
@@ -271,10 +306,21 @@
 					<h4 class="mt-5">文章</h4>
 					<hr class="mt-0 mb-2">
 					<div class="ml-4">
+						<div class="row">
+							<p class='col text-center'>標題</p>
+							<p class='col text-center'>時間</p>
+							<p class='col-1 text-center'>推</p>
+							<p class='col-1 text-center'>噓</p>
+						</div>
+						<hr class='mt-0 mb-3'>
 						{% for i in article_for_keyword %}
-							<div class="row my-0">
-								<a class='col' href='https://www.ptt.cc/{{ i.3 }}'>{{ i.0 }}</a> <p class='col-4'>{{i.2}}</p>
-							</div>
+						<div class="row my-0">
+							<a class='col' href='https://www.ptt.cc/{{ i.3 }}'>{{ i.0 }}</a> 
+							<p class='col text-center'>{{i.2}}</p>
+							<p class='col-1 text-center'>{{i.5}}</p>
+							<p class='col-1 text-center'>{{i.6}}</p>
+						</div>
+						<hr class='mt-1 mb-1'>
 						{% endfor %}
 					</div>
 				</div>

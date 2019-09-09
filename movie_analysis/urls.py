@@ -21,8 +21,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 	path('',movie_analysis_views.index),
 	path('b/',movie_analysis_views.analysis),
-	path('search/',movie_analysis_views.analysis_type),
+	path('search/',movie_analysis_views.analysis_type,name = 'search'),
 	path('keyword/<str:key>',movie_analysis_views.keyword,name='keyword'),
-	path('month/<str:key>',movie_analysis_views.month,name='keyword'),
-	path('week/<str:key>',movie_analysis_views.week,name='keyword'),
+	path('month/<str:key>',movie_analysis_views.month,name='month'),
+	path('week/<str:key>',movie_analysis_views.week,name='week'),
+	path('hot/',movie_analysis_views.hot,name='hot'),
+	path('rank/',movie_analysis_views.rank,name='rnk'),
 ]
