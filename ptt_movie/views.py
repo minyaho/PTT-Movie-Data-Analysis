@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from dateutil.relativedelta import relativedelta
 import json
 
 # Create your views here.
@@ -37,7 +38,7 @@ def index(request):
 	today = datetime.datetime.today().date()
 	
 	#今日討論電影關鍵字
-	todays_keywords = list()
+	todays_keywords = set()
 	
 	#所有關鍵字
 	keywords = Keyword.objects.all()
@@ -58,11 +59,39 @@ def index(request):
 	for _keyword in keywords:
 		
 		if(_keyword.movie in article_str):
-			todays_keywords.append(_keyword.movie)
+			todays_keywords.add(_keyword.movie)
 			
 		for same_keyword in _keyword.keyword.strip().split(' '):
 			if(same_keyword.strip()!='') and (same_keyword.strip() in article_str):
-				todays_keywords.append(_keyword.movie)
+				todays_keywords.add(_keyword.movie)
+	
+	#昨日
+	yesterday = datetime.datetime.today().date() - relativedelta(days=1)
+	
+	#今日討論電影關鍵字
+	yesterday_keywords = set()
+	
+	#今日文章
+	article_yesterday = Article.objects.filter(time__year=yesterday.strftime('%Y'),time__month=yesterday.strftime('%m'),time__day=yesterday.strftime('%d'))
+	
+	"""
+	尋找今日電影關鍵字的快速做法
+	
+	"""
+	article_str = ''
+	
+	for _article_today in article_yesterday:
+		article_str += _article_today.title + ' '
+	article_str = article_str.strip()
+	
+	for _keyword in keywords:
+		
+		if(_keyword.movie in article_str):
+			yesterday_keywords.add(_keyword.movie)
+			
+		for same_keyword in _keyword.keyword.strip().split(' '):
+			if(same_keyword.strip()!='') and (same_keyword.strip() in article_str):
+				yesterday_keywords.add(_keyword.movie)
 
 	return render(request,'ptt_movie/index.html', locals())
 	
@@ -70,7 +99,6 @@ def index(request):
 from .forms import MoiveForm
 from ptt_movie.models import Article,Keyword
 from .tendency import make_tendency_score
-from dateutil.relativedelta import relativedelta
 import datetime,time
 
 def keyword(request,key):
@@ -351,27 +379,193 @@ def hot(request):
 				
 	movie_keywords = Keyword.objects.all()
 		
-	#近7天
-	end_date = datetime.datetime.today().date()
-	start_date = end_date - relativedelta(days=7)
+	#這一周
+	timenow = datetime.datetime.now()		#現在時間
+	this_week = timenow.isocalendar()[1]	#找出目前第幾周
 	
-	label_of_7_days = list()
-	for i in range(1,8):
-		label_of_7_days.append((start_date + relativedelta(days=i)).strftime('%m-%d'))
-	label_of_7_days = json.dumps(label_of_7_days)
-		
-	data_of_7_days = []
-		
-	for movie_keyword in movie_keywords:
-		
-		movie_name = movie_keyword.movie
-		
-		for day in range(1,8):
-			data_of_7_days.append(article_search(3,movie_name,[int((start_date + relativedelta(days=i)).strftime('%m')),int((start_date + relativedelta(days=day)).strftime('%d'))]))
-	
-	data_of_7_days.sort(key=lambda k: k['c_discussion'])
+	this_week_keywords = set()				#這周的電影關鍵字
 
+	article_this_week = Article.objects.filter(time__year=2019,time__week=this_week)	#這周的文章
 	
+	article_str = ''	#從文章標題去找電影關鍵字
+	for _article_this_week in article_this_week:
+		article_str += _article_this_week.title + ' '
+	article_str = article_str.strip()
+
+	for _keyword in movie_keywords:
+		
+		if(_keyword.movie in article_str):
+			this_week_keywords.add(_keyword.movie)
+			
+		for same_keyword in _keyword.keyword.strip().split(' '):
+			if(same_keyword.strip()!='') and (same_keyword.strip() in article_str):
+				this_week_keywords.add(_keyword.movie)
+				
+				
+	data_this_week = []	#裝這周電影關鍵字的資料
+		
+	for _keyword in this_week_keywords:			#抓取這周的電影資料
+		movie_name = _keyword
+		data_this_week.append(article_search(1,movie_name,this_week))
+
+
+	#依照討論度進行逆排序(大->小)，只擷取8筆
+	data_this_week.sort(key=lambda k: k['c_discussion'],reverse=True)
+	data_this_week = data_this_week[:8]
+			
+	#匯出電影名稱
+	discussion_label_this_week = list()
+	for _keyword in data_this_week:
+		discussion_label_this_week.append(_keyword['a_movie'])
+	discussion_label_this_week = json.dumps(discussion_label_this_week)
+	
+	#匯出電影討論度
+	discussiond_data_this_week = list()
+	for _data in data_this_week:
+		discussiond_data_this_week.append(_data['c_discussion'])
+	discussiond_data_this_week = json.dumps(discussiond_data_this_week)
+	
+	
+	#上一周
+	timenow = datetime.datetime.now()		#現在時間
+	last_week = timenow.isocalendar()[1]-1	#找出目前第幾周
+	
+	last_week_keywords = set()				#這周的電影關鍵字
+
+	article_last_week = Article.objects.filter(time__year=2019,time__week=last_week)	#這周的文章
+	
+	article_str = ''	#從文章標題去找電影關鍵字
+	for _article_last_week in article_last_week:
+		article_str += _article_last_week.title + ' '
+	article_str = article_str.strip()
+
+	for _keyword in movie_keywords:
+		
+		if(_keyword.movie in article_str):
+			last_week_keywords.add(_keyword.movie)
+			
+		for same_keyword in _keyword.keyword.strip().split(' '):
+			if(same_keyword.strip()!='') and (same_keyword.strip() in article_str):
+				last_week_keywords.add(_keyword.movie)
+				
+				
+	data_last_week = []	#裝這周電影關鍵字的資料
+		
+	for _keyword in last_week_keywords:			#抓取這周的電影資料
+		movie_name = _keyword
+		data_last_week.append(article_search(1,movie_name,last_week))
+
+
+	#依照討論度進行逆排序(大->小)，只擷取8筆
+	data_last_week.sort(key=lambda k: k['c_discussion'],reverse=True)
+	data_last_week = data_last_week[:8]
+			
+	#匯出電影名稱
+	discussion_label_last_week = list()
+	for _keyword in data_last_week:
+		discussion_label_last_week.append(_keyword['a_movie'])
+	discussion_label_last_week = json.dumps(discussion_label_last_week)
+	
+	#匯出電影討論度
+	discussiond_data_last_week = list()
+	for _data in data_last_week:
+		discussiond_data_last_week.append(_data['c_discussion'])
+	discussiond_data_last_week = json.dumps(discussiond_data_last_week)
+	
+	
+	#這一月
+	timenow = datetime.datetime.now().date()		#現在時間
+	
+	this_month = int(timenow.strftime('%m'))
+	
+	this_month_keywords = set()				#這周的電影關鍵字
+
+	article_this_month =  Article.objects.filter(time__year=timenow.strftime('%Y'),time__month=timenow.strftime('%m'))	#這周的文章
+	
+	article_str = ''	#從文章標題去找電影關鍵字
+	for _article_this_month in article_this_month:
+		article_str += _article_this_month.title + ' '
+	article_str = article_str.strip()
+
+	for _keyword in movie_keywords:
+		
+		if(_keyword.movie in article_str):
+			this_month_keywords.add(_keyword.movie)
+			
+		for same_keyword in _keyword.keyword.strip().split(' '):
+			if(same_keyword.strip()!='') and (same_keyword.strip() in article_str):
+				this_month_keywords.add(_keyword.movie)
+				
+				
+	data_this_month = []	#裝這周電影關鍵字的資料
+		
+	for _keyword in last_week_keywords:			#抓取這周的電影資料
+		movie_name = _keyword
+		data_this_month.append(article_search(2,movie_name,timenow.strftime('%m')))
+
+	#依照討論度進行逆排序(大->小)，只擷取8筆
+	data_this_month.sort(key=lambda k: k['c_discussion'],reverse=True)
+	data_this_month = data_this_month[:8]
+			
+	#匯出電影名稱
+	discussion_label_this_month = list()
+	for _keyword in data_this_month:
+		discussion_label_this_month.append(_keyword['a_movie'])
+	discussion_label_this_month = json.dumps(discussion_label_this_month)
+	
+	#匯出電影討論度
+	discussiond_data_this_month = list()
+	for _data in data_this_month:
+		discussiond_data_this_month.append(_data['c_discussion'])
+	discussiond_data_this_month = json.dumps(discussiond_data_this_month)
+	
+	
+	#上一月
+	timenow = datetime.datetime.now().date() - relativedelta(months=1)		#現在時間
+	
+	last_month = int(timenow.strftime('%m'))
+	
+	last_month_keywords = set()				#這周的電影關鍵字
+
+	article_last_month =  Article.objects.filter(time__year=timenow.strftime('%Y'),time__month=timenow.strftime('%m'))	#這周的文章
+	
+	article_str = ''	#從文章標題去找電影關鍵字
+	for _article_last_month in article_last_month:
+		article_str += _article_last_month.title + ' '
+	article_str = article_str.strip()
+
+	for _keyword in movie_keywords:
+		
+		if(_keyword.movie in article_str):
+			last_month_keywords.add(_keyword.movie)
+			
+		for same_keyword in _keyword.keyword.strip().split(' '):
+			if(same_keyword.strip()!='') and (same_keyword.strip() in article_str):
+				last_month_keywords.add(_keyword.movie)
+				
+				
+	data_last_month = []	#裝這周電影關鍵字的資料
+		
+	for _keyword in last_month_keywords:			#抓取這周的電影資料
+		movie_name = _keyword
+		data_last_month.append(article_search(2,movie_name,timenow.strftime('%m')))
+
+	#依照討論度進行逆排序(大->小)，只擷取8筆
+	data_last_month.sort(key=lambda k: k['c_discussion'],reverse=True)
+	data_last_month = data_last_month[:8]
+			
+	#匯出電影名稱
+	discussion_label_last_month = list()
+	for _keyword in data_last_month:
+		discussion_label_last_month.append(_keyword['a_movie'])
+	discussion_label_last_month = json.dumps(discussion_label_last_month)
+	
+	#匯出電影討論度
+	discussiond_data_last_month = list()
+	for _data in data_last_month:
+		discussiond_data_last_month.append(_data['c_discussion'])
+	discussiond_data_last_month = json.dumps(discussiond_data_last_month)
+
 	return render(request,'ptt_movie/hot.html',locals())
 
 def analysis(request):
@@ -442,13 +636,17 @@ def analysis_type(request):
 		if form.is_valid():
 			type = form.cleaned_data['type']
 			movie_name = form.cleaned_data['movie_name']
-			if(type < 1 ) or (type > 2):
+			if(type < 0 ) or (type > 2):
 				return HttpResponse(str('type error'))
 				
 			result = Article.objects.filter(title__contains=movie_name)
 			
 			if len(Keyword.objects.filter(movie=movie_name)) == 0:
 				return HttpResponse(str('電影名稱錯誤'))
+				
+			elif (type == 0):
+				
+				return keyword(request,movie_name)
 				
 			elif (type == 1):
 			

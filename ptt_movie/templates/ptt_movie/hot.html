@@ -14,13 +14,190 @@
 					
 					<h4 class="mt-3">熱門討論電影<h4>
 					<hr class="mt-0 mb-4">
-					<div class='ml-3'>
+					<div class='ml-0'>
 						<ul>
-							<li>
-								<h5 class="mt-3">近1周<h4>
+							<li class="mt-4"><h5 class="mt-3">這一周<h5>
+								<canvas id="Discussion_Chart_of_this_week" width="200" height="100"></canvas>
+								<script>
+									var ctx = document.getElementById("Discussion_Chart_of_this_week");
+									var myChart = new Chart(ctx, {
+										type: 'horizontalBar',
+										data: {
+											labels: {{ discussion_label_this_week |safe }}, // 換成自己的labels
+											datasets: [{
+												label: 'Discussion (第{{ this_week }}周)', 
+												data: {{ discussiond_data_this_week|safe }}, // 換成自己的data
+												backgroundColor: [
+													'rgba(255,  99, 132, 0.2)',
+													'rgba( 24, 168, 184, 0.2)',
+													'rgba( 64,  24, 184, 0.2)',
+													'rgba( 54, 162, 235, 0.2)',
+													'rgba(255, 206,  86, 0.2)',
+													'rgba( 75, 192, 192, 0.2)',
+													'rgba(153, 102, 255, 0.2)',
+													'rgba(255, 159, 64, 0.2)'
+												],
+												borderColor: [
+													'rgba(255, 99, 132, 1)',
+													'rgba(24, 168, 184, 1)',
+													'rgba(64, 24, 184, 1)',
+													'rgba(54, 162, 235, 1)',
+													'rgba(255, 206, 86, 1)',
+													'rgba(75, 192, 192, 1)',
+													'rgba(153, 102, 255, 1)',
+													'rgba(255, 159, 64, 1)'
+												],
+												borderWidth: 1
+											}]
+										},
+										options: {
+											scales: {
+												yAxes: [{
+													ticks: {
+														beginAtZero:true
+													}
+												}]
+											}
+										}
+									});
+								</script>
 							</li>
-							<li>
-								<h5 class="mt-3">近1月<h4>
+							<li class="mt-4"><h5 class="mt-3">上一周<h5>
+								<canvas id="Discussion_Chart_of_7_Days_Last" width="200" height="100"></canvas>
+								<script>
+									var ctx = document.getElementById("Discussion_Chart_of_7_Days_Last");
+									var myChart = new Chart(ctx, {
+										type: 'horizontalBar',
+										data: {
+											labels: {{ discussion_label_last_week|safe }}, // 換成自己的labels
+											datasets: [{
+												label: 'Discussion (第{{ last_week }}周)', 
+												data: {{ discussiond_data_last_week|safe }}, // 換成自己的data
+												backgroundColor: [
+													'rgba(255, 99, 132, 0.2)',
+													'rgba(24, 168, 184, 0.2)',
+													'rgba(64, 24, 184, 0.2)',
+													'rgba(54, 162, 235, 0.2)',
+													'rgba(255, 206, 86, 0.2)',
+													'rgba(75, 192, 192, 0.2)',
+													'rgba(153, 102, 255, 0.2)',
+													'rgba(255, 159, 64, 0.2)'
+												],
+												borderColor: [
+													'rgba(255, 99, 132, 1)',
+													'rgba(24, 168, 184, 1)',
+													'rgba(64, 24, 184, 1)',
+													'rgba(54, 162, 235, 1)',
+													'rgba(255, 206, 86, 1)',
+													'rgba(75, 192, 192, 1)',
+													'rgba(153, 102, 255, 1)',
+													'rgba(255, 159, 64, 1)'
+												],
+												borderWidth: 1
+											}]
+										},
+										options: {
+											scales: {
+												yAxes: [{
+													ticks: {
+														beginAtZero:true
+													}
+												}]
+											}
+										}
+									});
+								</script>
+							</li>
+							<li class="mt-4"><h5 class="mt-3">這一月<h5>
+								<canvas id="Discussion_Chart_this_month" width="200" height="100"></canvas>
+								<script>
+									var ctx = document.getElementById("Discussion_Chart_this_month");
+									var myChart = new Chart(ctx, {
+										type: 'horizontalBar',
+										data: {
+											labels: {{ discussion_label_this_month|safe }}, // 換成自己的labels
+											datasets: [{
+												label: 'Discussion ({{ this_month }}月)', 
+												data: {{ discussiond_data_this_month|safe }}, // 換成自己的data
+												backgroundColor: [
+													'rgba(255, 99, 132, 0.2)',
+													'rgba(24, 168, 184, 0.2)',
+													'rgba(64, 24, 184, 0.2)',
+													'rgba(54, 162, 235, 0.2)',
+													'rgba(255, 206, 86, 0.2)',
+													'rgba(75, 192, 192, 0.2)',
+													'rgba(153, 102, 255, 0.2)',
+													'rgba(255, 159, 64, 0.2)'
+												],
+												borderColor: [
+													'rgba(255, 99, 132, 1)',
+													'rgba(24, 168, 184, 1)',
+													'rgba(64, 24, 184, 1)',
+													'rgba(54, 162, 235, 1)',
+													'rgba(255, 206, 86, 1)',
+													'rgba(75, 192, 192, 1)',
+													'rgba(153, 102, 255, 1)',
+													'rgba(255, 159, 64, 1)'
+												],
+												borderWidth: 1
+											}]
+										},
+										options: {
+											scales: {
+												yAxes: [{
+													ticks: {
+														beginAtZero:true
+													}
+												}]
+											}
+										}
+									});
+								</script>
+							<li class="mt-4"><h5 class="mt-3">上一月<h5>
+								<canvas id="Discussion_Chart_last_month" width="200" height="100"></canvas>
+								<script>
+									var ctx = document.getElementById("Discussion_Chart_last_month");
+									var myChart = new Chart(ctx, {
+										type: 'horizontalBar',
+										data: {
+											labels: {{ discussion_label_last_month|safe }}, // 換成自己的labels
+											datasets: [{
+												label: 'Discussion ({{ last_month }}月)', 
+												data: {{ discussiond_data_last_month|safe }}, // 換成自己的data
+												backgroundColor: [
+													'rgba(255, 99, 132, 0.2)',
+													'rgba(24, 168, 184, 0.2)',
+													'rgba(64, 24, 184, 0.2)',
+													'rgba(54, 162, 235, 0.2)',
+													'rgba(255, 206, 86, 0.2)',
+													'rgba(75, 192, 192, 0.2)',
+													'rgba(153, 102, 255, 0.2)',
+													'rgba(255, 159, 64, 0.2)'
+												],
+												borderColor: [
+													'rgba(255, 99, 132, 1)',
+													'rgba(24, 168, 184, 1)',
+													'rgba(64, 24, 184, 1)',
+													'rgba(54, 162, 235, 1)',
+													'rgba(255, 206, 86, 1)',
+													'rgba(75, 192, 192, 1)',
+													'rgba(153, 102, 255, 1)',
+													'rgba(255, 159, 64, 1)'
+												],
+												borderWidth: 1
+											}]
+										},
+										options: {
+											scales: {
+												yAxes: [{
+													ticks: {
+														beginAtZero:true
+													}
+												}]
+											}
+										}
+									});
+								</script>
 							</li>
 						</ul>
 					</div>
@@ -30,14 +207,12 @@
 					<div class='ml-3'>
 						<ul>
 							<li>
-								<h5 class="mt-3">近1周<h4>
+								<h5 class="mt-3">近1周<h5>
 							</li>
 							<li>
-								<h5 class="mt-3">近1月<h4>
+								<h5 class="mt-3">近1月<h5>
 							</li>
 						</ul>
 					</div>
-					
-					{{ data_of_7_days }}
 				</div>
 {% endblock %}
