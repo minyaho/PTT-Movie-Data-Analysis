@@ -36,15 +36,64 @@
 						<ul>						
 							<li>
 								<h5 class="mt-0">極好評電影<h5>
-								<div class=''>
-									<ul class=''>
+								<div class='mt-4'>
+									<div class='row ml-4'>
 									{% for better_keywords_data in better_keywords_datas %}
-										<li><a href='/keyword/{{better_keywords_data}}'>{{ better_keywords_data }}</a></li>
+										<p class='col-4'><a href='/keyword/{{better_keywords_data}}'>{{ better_keywords_data }}</a></p>
 									{% endfor %}
-									</ul>
+									</div>
 								</div>
 							</li>
-							<li><h5 class="mt-3">好評電影<h5></li>
+							<li>
+								<h5 class="mt-0">好評電影<h5>
+								<div class='mt-4'>
+									<div class='row ml-4'>
+									{% for good_keywords_data in good_keywords_datas %}
+										<p class='col-4'><a href='/keyword/{{good_keywords_data}}'>{{ good_keywords_data }}</a></p>
+									{% endfor %}
+									</div>
+								</div>
+							</li>
+							<li>
+								<h5 class="mt-0">普評電影<h5>
+								<div class='mt-4'>
+									<div class='row ml-4'>
+									{% for ordinary_keywords_data in ordinary_keywords_datas %}
+										<p class='col-4'><a href='/keyword/{{ordinary_keywords_data}}'>{{ ordinary_keywords_data }}</a></p>
+									{% endfor %}
+									</div>
+								</div>
+							</li>
+							<li>
+								<h5 class="mt-0">壞評電影<h5>
+								<div class='mt-4'>
+									<div class='row ml-4'>
+									{% for bad_keywords_data in bad_keywords_datas %}
+										<p class='col-4'><a href='/keyword/{{bad_keywords_data}}'>{{ bad_keywords_data }}</a></p>
+									{% endfor %}
+									</div>
+								</div>
+							</li>
+							<li>
+								<h5 class="mt-0">極壞評電影<h5>
+								<div class='mt-4'>
+									<div class='row ml-4'>
+									{% for worse_keywords_data in worse_keywords_datas %}
+										<p class='col-4'><a href='/keyword/{{worse_keywords_data}}'>{{ worse_keywords_data }}</a></p>
+									{% endfor %}
+									</div>
+								</div>
+							</li>
+							<li>
+								<h5 class="mt-0">資料量不足的電影<h5>
+								<div class='mt-4'>
+									<div class='row ml-4'>
+									{% for insufficient_keywords_data in insufficient_keywords_datas %}
+										<p class='col-4'><a href='/keyword/{{insufficient_keywords_data}}'>{{ insufficient_keywords_data }}</a></p>
+									{% endfor %}
+									</div>
+								</div>
+							</li>
 						<ul>
 					</div>
 					

@@ -167,27 +167,32 @@ def keyword(request,key):
 			if(emotion_score == 1):
 				#print('Good',item[0])
 				number_of_good += item[5]
+				number_of_bad += item[6]
 			elif(emotion_score == -1):
 				number_of_bad += item[5]
+				number_of_good += item[6]
 			else:
 				#print('Neutral',item[0])
 				pass
 
-		try:
-			ration_of_score = (number_of_good/(number_of_good+number_of_bad))
-			if(ration_of_score<=1) and (ration_of_score>=0.8):
-				comment_good_bad = '極好評'
-			if(ration_of_score<0.8) and (ration_of_score>=0.6):
-				comment_good_bad = '好評'
-			if(ration_of_score<0.6) and (ration_of_score>=0.4):
-				comment_good_bad = '普評'
-			if(ration_of_score<0.4) and (ration_of_score>=0.2):
-				comment_good_bad = '壞評'
-			if(ration_of_score<0.2) and (ration_of_score>=0):
-				comment_good_bad = '極壞評'
-		except:
+		if(number_of_good+number_of_bad) < 10 :
 			comment_good_bad = '資料不足'
-						
+		else:
+			try:
+				ration_of_score = (number_of_good/(number_of_good+number_of_bad))
+				if(ration_of_score<=1) and (ration_of_score>=0.8):
+					comment_good_bad = '極好評'
+				if(ration_of_score<0.8) and (ration_of_score>=0.6):
+					comment_good_bad = '好評'
+				if(ration_of_score<0.6) and (ration_of_score>=0.4):
+					comment_good_bad = '普評'
+				if(ration_of_score<0.4) and (ration_of_score>=0.2):
+					comment_good_bad = '壞評'
+				if(ration_of_score<0.2) and (ration_of_score>=0):
+					comment_good_bad = '極壞評'
+			except:
+				comment_good_bad = '資料不足'
+							
 		data = {
 			"a_movie": movie_name,
 			"b_article": len(article_for_keyword),
@@ -372,12 +377,43 @@ def rank(request):
 	better_keywords_datas = list()
 	for better_keyword in better_keywords:
 		better_keywords_datas.append(better_keyword.name)
+	
+	#好評電影
+	good_keywords = Keyword_Analysis.objects.filter(comment='好評')
+	good_keywords_datas = list()
+	for good_keyword in good_keywords:
+		good_keywords_datas.append(good_keyword.name)
+
+	#普評電影
+	ordinary_keywords = Keyword_Analysis.objects.filter(comment='普評')
+	ordinary_keywords_datas = list()
+	for ordinary_keyword in ordinary_keywords:
+		ordinary_keywords_datas.append(ordinary_keyword.name)
+
+	#壞評電影
+	bad_keywords = Keyword_Analysis.objects.filter(comment='壞評')
+	bad_keywords_datas = list()
+	for bad_keyword in bad_keywords:
+		bad_keywords_datas.append(bad_keyword.name)
+	
+	#極壞評電影
+	worse_keywords = Keyword_Analysis.objects.filter(comment='極壞評')
+	worse_keywords_datas = list()
+	for worse_keyword in worse_keywords:
+		worse_keywords_datas.append(worse_keyword.name)
+		
+	#資料量不足
+	insufficient_keywords = Keyword_Analysis.objects.filter(comment='資料不足')
+	insufficient_keywords_datas = list()
+	for insufficient_keyword in insufficient_keywords:
+		insufficient_keywords_datas.append(insufficient_keyword.name)
 		
 	return render(request,'ptt_movie/rank.html',locals())
 
 def hot(request):
 				
 	movie_keywords = Keyword.objects.all()
+	num_movie_keyword = 8					#輸出電影的數量
 		
 	#這一周
 	timenow = datetime.datetime.now()		#現在時間
@@ -408,20 +444,33 @@ def hot(request):
 		movie_name = _keyword
 		data_this_week.append(article_search(1,movie_name,this_week))
 
-
+	
+	#依照文章數進行逆排序(大->小)，只擷取8筆
+	data_this_week.sort(key=lambda k: k['b_article'],reverse=True)
+	a_data_this_week = data_this_week[:num_movie_keyword]
 	#依照討論度進行逆排序(大->小)，只擷取8筆
 	data_this_week.sort(key=lambda k: k['c_discussion'],reverse=True)
-	data_this_week = data_this_week[:8]
+	d_data_this_week = data_this_week[:num_movie_keyword]
 			
 	#匯出電影名稱
-	discussion_label_this_week = list()
-	for _keyword in data_this_week:
+	article_label_this_week = list()			#文
+	for _keyword in a_data_this_week:
+		article_label_this_week.append(_keyword['a_movie'])
+	article_label_this_week = json.dumps(article_label_this_week)
+	
+	discussion_label_this_week = list()			#討
+	for _keyword in d_data_this_week:
 		discussion_label_this_week.append(_keyword['a_movie'])
 	discussion_label_this_week = json.dumps(discussion_label_this_week)
 	
 	#匯出電影討論度
-	discussiond_data_this_week = list()
-	for _data in data_this_week:
+	article_data_this_week = list()			#文
+	for _data in a_data_this_week:
+		article_data_this_week.append(_data['b_article'])
+	article_data_this_week = json.dumps(article_data_this_week)
+
+	discussiond_data_this_week = list()			#討
+	for _data in d_data_this_week:
 		discussiond_data_this_week.append(_data['c_discussion'])
 	discussiond_data_this_week = json.dumps(discussiond_data_this_week)
 	
@@ -454,21 +503,34 @@ def hot(request):
 	for _keyword in last_week_keywords:			#抓取這周的電影資料
 		movie_name = _keyword
 		data_last_week.append(article_search(1,movie_name,last_week))
-
-
+			
+	#依照文章數進行逆排序(大->小)，只擷取8筆
+	data_last_week.sort(key=lambda k: k['b_article'],reverse=True)
+	a_data_last_week = data_last_week[:num_movie_keyword]
 	#依照討論度進行逆排序(大->小)，只擷取8筆
 	data_last_week.sort(key=lambda k: k['c_discussion'],reverse=True)
-	data_last_week = data_last_week[:8]
-			
+	d_data_last_week = data_last_week[:num_movie_keyword]
+
 	#匯出電影名稱
-	discussion_label_last_week = list()
-	for _keyword in data_last_week:
+	article_label_last_week = list()				#文
+	for _keyword in a_data_last_week:
+		article_label_last_week.append(_keyword['a_movie'])
+	article_label_last_week = json.dumps(article_label_last_week)
+	
+	discussion_label_last_week = list()				#討
+	for _keyword in d_data_last_week:
 		discussion_label_last_week.append(_keyword['a_movie'])
 	discussion_label_last_week = json.dumps(discussion_label_last_week)
 	
+	
 	#匯出電影討論度
-	discussiond_data_last_week = list()
-	for _data in data_last_week:
+	article_data_last_week = list()				#文
+	for _data in a_data_last_week:
+		article_data_last_week.append(_data['b_article'])
+	article_data_last_week = json.dumps(article_data_last_week)
+
+	discussiond_data_last_week = list()				#討
+	for _data in d_data_last_week:
 		discussiond_data_last_week.append(_data['c_discussion'])
 	discussiond_data_last_week = json.dumps(discussiond_data_last_week)
 	
@@ -503,22 +565,34 @@ def hot(request):
 		movie_name = _keyword
 		data_this_month.append(article_search(2,movie_name,timenow.strftime('%m')))
 
+	#依照文章數進行逆排序(大->小)，只擷取8筆
+	data_this_month.sort(key=lambda k: k['b_article'],reverse=True)
+	a_data_this_month = data_this_month[:num_movie_keyword]
 	#依照討論度進行逆排序(大->小)，只擷取8筆
 	data_this_month.sort(key=lambda k: k['c_discussion'],reverse=True)
-	data_this_month = data_this_month[:8]
+	d_data_this_month = data_this_month[:num_movie_keyword]
 			
 	#匯出電影名稱
-	discussion_label_this_month = list()
-	for _keyword in data_this_month:
+	article_label_this_month = list()		#文
+	for _keyword in a_data_this_month:
+		article_label_this_month.append(_keyword['a_movie'])
+	article_label_this_month = json.dumps(article_label_this_month)
+	
+	discussion_label_this_month = list()		#討
+	for _keyword in d_data_this_month:
 		discussion_label_this_month.append(_keyword['a_movie'])
 	discussion_label_this_month = json.dumps(discussion_label_this_month)
 	
 	#匯出電影討論度
-	discussiond_data_this_month = list()
-	for _data in data_this_month:
+	article_data_this_month = list()		#文
+	for _data in a_data_this_month:
+		article_data_this_month.append(_data['b_article'])
+	article_data_this_month = json.dumps(article_data_this_month)
+	
+	discussiond_data_this_month = list()		#討
+	for _data in d_data_this_month:
 		discussiond_data_this_month.append(_data['c_discussion'])
 	discussiond_data_this_month = json.dumps(discussiond_data_this_month)
-	
 	
 	#上一月
 	timenow = datetime.datetime.now().date() - relativedelta(months=1)		#現在時間
@@ -550,19 +624,32 @@ def hot(request):
 		movie_name = _keyword
 		data_last_month.append(article_search(2,movie_name,timenow.strftime('%m')))
 
+	#依照文章數進行逆排序(大->小)，只擷取8筆
+	data_last_month.sort(key=lambda k: k['b_article'],reverse=True)
+	a_data_last_month = data_last_month[:num_movie_keyword]
 	#依照討論度進行逆排序(大->小)，只擷取8筆
 	data_last_month.sort(key=lambda k: k['c_discussion'],reverse=True)
-	data_last_month = data_last_month[:8]
+	d_data_last_month = data_last_month[:num_movie_keyword]
 			
 	#匯出電影名稱
-	discussion_label_last_month = list()
-	for _keyword in data_last_month:
+	article_label_last_month = list()		#文
+	for _keyword in a_data_last_month:
+		article_label_last_month.append(_keyword['a_movie'])
+	article_label_last_month = json.dumps(article_label_last_month)
+
+	discussion_label_last_month = list()	#討
+	for _keyword in d_data_last_month:
 		discussion_label_last_month.append(_keyword['a_movie'])
 	discussion_label_last_month = json.dumps(discussion_label_last_month)
 	
 	#匯出電影討論度
-	discussiond_data_last_month = list()
-	for _data in data_last_month:
+	article_data_last_month = list()		#文
+	for _data in a_data_last_month:
+		article_data_last_month.append(_data['b_article'])
+	article_data_last_month = json.dumps(article_data_last_month)
+	
+	discussiond_data_last_month = list()	#討
+	for _data in d_data_last_month:
 		discussiond_data_last_month.append(_data['c_discussion'])
 	discussiond_data_last_month = json.dumps(discussiond_data_last_month)
 

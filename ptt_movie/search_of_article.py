@@ -38,6 +38,10 @@ def article_search(type,movie_name,arg):
 						for article in articles:
 							temp = (article.title,article.author,article.time,article.url,article.push_message_all,article.push_message_good,article.push_message_bad,article.push_message_neutral)
 							article_for_keyword.discard(temp)
+						if(movie_name=='大叔之愛電影'):
+							print(similar_keyword.keyword.strip().split(' '))
+							print('YES')
+							print(article_for_keyword)
 					
 	#   產生討論數
 	number_of_discussion = 0
@@ -55,27 +59,32 @@ def article_search(type,movie_name,arg):
 		if(emotion_score == 1):
 			#print('Good',item[0])
 			number_of_good += item[5]
+			number_of_bad += item[6]
 		elif(emotion_score == -1):
 			#print('Bad',item[0])
 			number_of_bad += item[5]
+			number_of_good += item[6]
 		else:
 			#print('Neutral',item[0])
 			pass
 
-	try:
-		ration_of_score = (number_of_good/(number_of_good+number_of_bad))
-		if(ration_of_score<=1) and (ration_of_score>=0.8):
-			comment_good_bad = '極好評'
-		if(ration_of_score<0.8) and (ration_of_score>=0.6):
-			comment_good_bad = '好評'
-		if(ration_of_score<0.6) and (ration_of_score>=0.4):
-			comment_good_bad = '普評'
-		if(ration_of_score<0.4) and (ration_of_score>=0.2):
-			comment_good_bad = '壞評'
-		if(ration_of_score<0.2) and (ration_of_score>=0):
-			comment_good_bad = '極壞評'
-	except:
-		comment_good_bad = '資料不足'
+		if(number_of_good+number_of_bad) < 10 :
+			comment_good_bad = '資料不足'
+		else:
+			try:
+				ration_of_score = (number_of_good/(number_of_good+number_of_bad))
+				if(ration_of_score<=1) and (ration_of_score>=0.8):
+					comment_good_bad = '極好評'
+				if(ration_of_score<0.8) and (ration_of_score>=0.6):
+					comment_good_bad = '好評'
+				if(ration_of_score<0.6) and (ration_of_score>=0.4):
+					comment_good_bad = '普評'
+				if(ration_of_score<0.4) and (ration_of_score>=0.2):
+					comment_good_bad = '壞評'
+				if(ration_of_score<0.2) and (ration_of_score>=0):
+					comment_good_bad = '極壞評'
+			except:
+				comment_good_bad = '資料不足'
 					
 	temp = {
 		"a_movie": movie_name,

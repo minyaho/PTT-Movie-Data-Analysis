@@ -34,7 +34,7 @@ admin.site.register(Keyword, Keyword_Admin)
 #Keyword_Analysis
 class Keyword_Analysis_Admin(admin.ModelAdmin):
 	list_display = ('name','article','discussion','good','bad','score','comment')
-	search_fields = ('name',)
+	search_fields = ('name','comment',)
 	
 admin.site.register(Keyword_Analysis, Keyword_Analysis_Admin)
 

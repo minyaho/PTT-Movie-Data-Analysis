@@ -9,21 +9,21 @@
 				<div class="col-10 ml-2">
 					<h5 style="font-family: 微軟正黑體">今日討論的電影關鍵字</h5>
 					<hr class="mt-0 mb-4">
-					<div class="ml-2 mb-4">
-						<p style="font-family: 微軟正黑體" class="">
-							{% for todays_keyword in todays_keywords %}
+					<div class="ml-4 mb-4 row">
+						{% for todays_keyword in todays_keywords %}
+						<p style="font-family: 微軟正黑體" class="col-4">					
 							<a href='keyword/{{todays_keyword}}'>{{ todays_keyword }} </a>
-							{% endfor %}
 						</p>
+						{% endfor %}
 					</div>
 					<h5 style="font-family: 微軟正黑體">昨日討論的電影關鍵字</h5>
 					<hr class="mt-0 mb-4">
-					<div class="ml-2 mb-4">
-						<p style="font-family: 微軟正黑體" class="">
-							{% for yesterday_keyword in yesterday_keywords %}
+					<div class="ml-4 mb-4 row">
+						{% for yesterday_keyword in yesterday_keywords %}
+						<p style="font-family: 微軟正黑體" class="col-4">							
 							<a href='keyword/{{yesterday_keyword}}'>{{ yesterday_keyword }} </a>
-							{% endfor %}
 						</p>
+						{% endfor %}
 					</div>
 					<h5 style="font-family: 微軟正黑體">以下是我們所建立好的電影關鍵字</h5>
 					<hr class="mt-0 mb-4">
