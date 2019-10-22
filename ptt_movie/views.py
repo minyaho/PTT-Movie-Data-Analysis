@@ -410,6 +410,7 @@ def rank(request):
 		
 	return render(request,'ptt_movie/rank.html',locals())
 
+from ptt_movie.models import Keyword_Analysis_This_Month, Keyword_Analysis_Last_Month, Keyword_Analysis_Last_Week, Keyword_Analysis_This_Week
 def hot(request):
 				
 	movie_keywords = Keyword.objects.all()
@@ -419,6 +420,7 @@ def hot(request):
 	timenow = datetime.datetime.now()		#現在時間
 	this_week = timenow.isocalendar()[1]	#找出目前第幾周
 	
+	"""
 	this_week_keywords = set()				#這周的電影關鍵字
 
 	article_this_week = Article.objects.filter(time__year=2019,time__week=this_week)	#這周的文章
@@ -443,7 +445,20 @@ def hot(request):
 	for _keyword in this_week_keywords:			#抓取這周的電影資料
 		movie_name = _keyword
 		data_this_week.append(article_search(1,movie_name,this_week))
-
+	"""
+	
+	data_this_week = []
+	for data in Keyword_Analysis_This_Week.objects.all():
+		temp = {
+			"a_movie": data.name,
+			"b_article": data.article,
+			"c_discussion": data.discussion,
+			"d_good": data.good,
+			"e_bad": data.bad,
+			"f_score": data.score,
+			"g_comment": data.comment,
+		}
+		data_this_week.append(temp)
 	
 	#依照文章數進行逆排序(大->小)，只擷取8筆
 	data_this_week.sort(key=lambda k: k['b_article'],reverse=True)
@@ -476,9 +491,10 @@ def hot(request):
 	
 	
 	#上一周
+	
 	timenow = datetime.datetime.now()		#現在時間
 	last_week = timenow.isocalendar()[1]-1	#找出目前第幾周
-	
+	"""
 	last_week_keywords = set()				#這周的電影關鍵字
 
 	article_last_week = Article.objects.filter(time__year=2019,time__week=last_week)	#這周的文章
@@ -503,6 +519,20 @@ def hot(request):
 	for _keyword in last_week_keywords:			#抓取這周的電影資料
 		movie_name = _keyword
 		data_last_week.append(article_search(1,movie_name,last_week))
+	"""
+
+	data_last_week = []
+	for data in Keyword_Analysis_Last_Week.objects.all():
+		temp = {
+			"a_movie": data.name,
+			"b_article": data.article,
+			"c_discussion": data.discussion,
+			"d_good": data.good,
+			"e_bad": data.bad,
+			"f_score": data.score,
+			"g_comment": data.comment,
+		}
+		data_last_week.append(temp)
 			
 	#依照文章數進行逆排序(大->小)，只擷取8筆
 	data_last_week.sort(key=lambda k: k['b_article'],reverse=True)
@@ -522,7 +552,6 @@ def hot(request):
 		discussion_label_last_week.append(_keyword['a_movie'])
 	discussion_label_last_week = json.dumps(discussion_label_last_week)
 	
-	
 	#匯出電影討論度
 	article_data_last_week = list()				#文
 	for _data in a_data_last_week:
@@ -536,10 +565,11 @@ def hot(request):
 	
 	
 	#這一月
+	
 	timenow = datetime.datetime.now().date()		#現在時間
 	
 	this_month = int(timenow.strftime('%m'))
-	
+	"""
 	this_month_keywords = set()				#這周的電影關鍵字
 
 	article_this_month =  Article.objects.filter(time__year=timenow.strftime('%Y'),time__month=timenow.strftime('%m'))	#這周的文章
@@ -564,6 +594,19 @@ def hot(request):
 	for _keyword in last_week_keywords:			#抓取這周的電影資料
 		movie_name = _keyword
 		data_this_month.append(article_search(2,movie_name,timenow.strftime('%m')))
+	"""
+	data_this_month = []
+	for data in Keyword_Analysis_This_Month.objects.all():
+		temp = {
+			"a_movie": data.name,
+			"b_article": data.article,
+			"c_discussion": data.discussion,
+			"d_good": data.good,
+			"e_bad": data.bad,
+			"f_score": data.score,
+			"g_comment": data.comment,
+		}
+		data_this_month.append(temp)
 
 	#依照文章數進行逆排序(大->小)，只擷取8筆
 	data_this_month.sort(key=lambda k: k['b_article'],reverse=True)
@@ -593,12 +636,13 @@ def hot(request):
 	for _data in d_data_this_month:
 		discussiond_data_this_month.append(_data['c_discussion'])
 	discussiond_data_this_month = json.dumps(discussiond_data_this_month)
-	
+
 	#上一月
+	
 	timenow = datetime.datetime.now().date() - relativedelta(months=1)		#現在時間
 	
 	last_month = int(timenow.strftime('%m'))
-	
+	"""
 	last_month_keywords = set()				#這周的電影關鍵字
 
 	article_last_month =  Article.objects.filter(time__year=timenow.strftime('%Y'),time__month=timenow.strftime('%m'))	#這周的文章
@@ -619,11 +663,24 @@ def hot(request):
 				
 				
 	data_last_month = []	#裝這周電影關鍵字的資料
-		
+	
 	for _keyword in last_month_keywords:			#抓取這周的電影資料
 		movie_name = _keyword
 		data_last_month.append(article_search(2,movie_name,timenow.strftime('%m')))
-
+	"""
+	data_last_month = []
+	for data in Keyword_Analysis_Last_Month.objects.all():
+		temp = {
+			"a_movie": data.name,
+			"b_article": data.article,
+			"c_discussion": data.discussion,
+			"d_good": data.good,
+			"e_bad": data.bad,
+			"f_score": data.score,
+			"g_comment": data.comment,
+		}
+		data_last_month.append(temp)
+	
 	#依照文章數進行逆排序(大->小)，只擷取8筆
 	data_last_month.sort(key=lambda k: k['b_article'],reverse=True)
 	a_data_last_month = data_last_month[:num_movie_keyword]
@@ -652,7 +709,7 @@ def hot(request):
 	for _data in d_data_last_month:
 		discussiond_data_last_month.append(_data['c_discussion'])
 	discussiond_data_last_month = json.dumps(discussiond_data_last_month)
-
+	
 	return render(request,'ptt_movie/hot.html',locals())
 
 def analysis(request):

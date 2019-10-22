@@ -52,3 +52,47 @@ class Keyword_Analysis(models.Model):
 	comment = models.CharField(max_length = 10)
 	def __str__(self):
 		return self.name
+
+class Keyword_Analysis_This_Week(models.Model):
+	name = models.CharField(max_length = 60, primary_key=True)
+	article = models.IntegerField()
+	discussion = models.IntegerField()
+	good = models.IntegerField()
+	bad = models.IntegerField()
+	score = models.FloatField()
+	comment = models.CharField(max_length = 10)
+	def __str__(self):
+		return self.name
+
+class Keyword_Analysis_Last_Week(models.Model):
+	name = models.CharField(max_length = 60, primary_key=True)
+	article = models.IntegerField()
+	discussion = models.IntegerField()
+	good = models.IntegerField()
+	bad = models.IntegerField()
+	score = models.FloatField()
+	comment = models.CharField(max_length = 10)
+	def __str__(self):
+		return self.name
+		
+class Keyword_Analysis_This_Month(models.Model):
+	name = models.CharField(max_length = 60, primary_key=True)
+	article = models.IntegerField()
+	discussion = models.IntegerField()
+	good = models.IntegerField()
+	bad = models.IntegerField()
+	score = models.FloatField()
+	comment = models.CharField(max_length = 10)
+	def __str__(self):
+		return self.name
+
+class Keyword_Analysis_Last_Month(models.Model):
+	name = models.CharField(max_length = 60, primary_key=True)
+	article = models.IntegerField()
+	discussion = models.IntegerField()
+	good = models.IntegerField()
+	bad = models.IntegerField()
+	score = models.FloatField()
+	comment = models.CharField(max_length = 10)
+	def __str__(self):
+		return self.name

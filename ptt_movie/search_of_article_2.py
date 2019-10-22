@@ -10,7 +10,7 @@ def article_search(type,movie_name,arg):
 	for article in articles:
 		temp = (article.title,article.author,article.time,article.url,article.push_message_all,article.push_message_good,article.push_message_bad,article.push_message_neutral)
 		article_for_keyword.add(temp)
-				
+					
 	#第二階段搜尋: 比對與電影關鍵字附屬關鍵字吻合的文章
 	movie_keywords = Keyword.objects.get(movie=movie_name)
 	if(len(movie_keywords.keyword.strip())>0):
@@ -42,7 +42,7 @@ def article_search(type,movie_name,arg):
 							print(similar_keyword.keyword.strip().split(' '))
 							print('YES')
 							print(article_for_keyword)
-			
+					
 	#   產生討論數
 	number_of_discussion = 0
 	for article in article_for_keyword:
