@@ -19,7 +19,7 @@ def article_search(type,movie_name,arg):
 			for article in articles:
 				temp = (article.title,article.author,article.time,article.url,article.push_message_all,article.push_message_good,article.push_message_bad,article.push_message_neutral)
 				article_for_keyword.add(temp)
-					
+
 	#第三階段剃除: 除去內容相似的電影關鍵字資料
 	similar_keywords = Keyword.objects.filter(movie__contains=movie_name)
 	if(len(similar_keywords)!=0):
@@ -28,21 +28,21 @@ def article_search(type,movie_name,arg):
 				articles = article_search_type([type,similar_keyword.movie,arg])
 				for article in articles:
 					temp = (article.title,article.author,article.time,article.url,article.push_message_all,article.push_message_good,article.push_message_bad,article.push_message_neutral)
+					print(temp)
 					article_for_keyword.discard(temp)
+				#print(article_for_keyword)
 
 				#第二階段搜尋: 比對與電影關鍵字附屬關鍵字吻合的文章
 				if(len(similar_keyword.keyword.strip().split(' '))>0):
 					for same_keyword in similar_keyword.keyword.strip().split(' '):
-						#print(same_keyword)
-						articles = article_search_type([type,same_keyword,arg])
-						for article in articles:
-							temp = (article.title,article.author,article.time,article.url,article.push_message_all,article.push_message_good,article.push_message_bad,article.push_message_neutral)
-							article_for_keyword.discard(temp)
-						if(movie_name=='大叔之愛電影'):
-							print(similar_keyword.keyword.strip().split(' '))
-							print('YES')
-							print(article_for_keyword)
-			
+						if(len(same_keyword)>0):
+							#print('@'+same_keyword+'@')
+							articles = article_search_type([type,same_keyword,arg])
+							for article in articles:
+								temp = (article.title,article.author,article.time,article.url,article.push_message_all,article.push_message_good,article.push_message_bad,article.push_message_neutral)
+								article_for_keyword.discard(temp)
+				#print(article_for_keyword)
+
 	#   產生討論數
 	number_of_discussion = 0
 	for article in article_for_keyword:

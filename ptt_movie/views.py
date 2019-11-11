@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from dateutil.relativedelta import relativedelta
+from ptt_movie.models import Keyword_Analysis_This_Month, Keyword_Analysis_Last_Month, Keyword_Analysis_Last_Week, Keyword_Analysis_This_Week
 import json
 
 # Create your views here.
@@ -141,12 +142,13 @@ def keyword(request,key):
 						#error_len = len(error_)
 						#if(movie_name=='生日'):
 						#	a = 1/0
-						for same_keyword in similar_keyword.keyword.strip().split(' '):
-							#print(same_keyword)
-							articles = Article.objects.filter(title__contains=same_keyword)
-							for article in articles:
-								temp = (article.title,article.author,article.time,article.url,article.push_message_all,article.push_message_good,article.push_message_bad,article.push_message_neutral)
-								article_for_keyword.discard(temp)
+						if(len(same_keyword)>0):
+							for same_keyword in similar_keyword.keyword.strip().split(' '):
+								#print(same_keyword)
+								articles = Article.objects.filter(title__contains=same_keyword)
+								for article in articles:
+									temp = (article.title,article.author,article.time,article.url,article.push_message_all,article.push_message_good,article.push_message_bad,article.push_message_neutral)
+									article_for_keyword.discard(temp)
 		
 		article_for_keyword = list(article_for_keyword)
 		article_for_keyword.sort(key=lambda k:k[2], reverse=True)
@@ -372,45 +374,157 @@ def rank(request):
 	# 極好評 好評 普評 壞評 極壞評
 	# better good ordinary bad worse
 
+	#---這一周---------------------------------------------------------------
+
 	#極好評電影
-	better_keywords = Keyword_Analysis.objects.filter(comment='極好評')
-	better_keywords_datas = list()
-	for better_keyword in better_keywords:
-		better_keywords_datas.append(better_keyword.name)
+	better_keywords_this_week_datas = Keyword_Analysis_This_Week.objects.filter(comment='極好評')
+	better_keywords_this_week_len = len(better_keywords_this_week_datas)
 	
 	#好評電影
-	good_keywords = Keyword_Analysis.objects.filter(comment='好評')
-	good_keywords_datas = list()
-	for good_keyword in good_keywords:
-		good_keywords_datas.append(good_keyword.name)
+	good_keywords_this_week_datas = Keyword_Analysis_This_Week.objects.filter(comment='好評')
+	good_keywords_this_week_len = len(good_keywords_this_week_datas)
 
 	#普評電影
-	ordinary_keywords = Keyword_Analysis.objects.filter(comment='普評')
-	ordinary_keywords_datas = list()
-	for ordinary_keyword in ordinary_keywords:
-		ordinary_keywords_datas.append(ordinary_keyword.name)
+	ordinary_keywords_this_week_datas = Keyword_Analysis_This_Week.objects.filter(comment='普評')
+	ordinary_keywords_this_week_len = len(ordinary_keywords_this_week_datas)
 
 	#壞評電影
-	bad_keywords = Keyword_Analysis.objects.filter(comment='壞評')
-	bad_keywords_datas = list()
-	for bad_keyword in bad_keywords:
-		bad_keywords_datas.append(bad_keyword.name)
+	bad_keywords_this_week_datas = Keyword_Analysis_This_Week.objects.filter(comment='壞評')
+	bad_keywords_this_week_len = len(bad_keywords_this_week_datas)
 	
 	#極壞評電影
-	worse_keywords = Keyword_Analysis.objects.filter(comment='極壞評')
-	worse_keywords_datas = list()
-	for worse_keyword in worse_keywords:
-		worse_keywords_datas.append(worse_keyword.name)
+	worse_keywords_this_week_datas = Keyword_Analysis_This_Week.objects.filter(comment='極壞評')
+	worse_keywords_this_week_len = len(worse_keywords_this_week_datas)
+	
+	#資料量不足
+	insufficient_keywords_this_week_datas = Keyword_Analysis_This_Week.objects.filter(comment='資料不足')
+	insufficient_keywords_this_week_len = len(insufficient_keywords_this_week_datas)
+	
+
+	#---上一周---------------------------------------------------------------
+
+	#極好評電影
+	better_keywords_last_week_datas = Keyword_Analysis_Last_Week.objects.filter(comment='極好評')
+	better_keywords_last_week_len = len(better_keywords_last_week_datas)
+
+	#好評電影
+	good_keywords_last_week_datas = Keyword_Analysis_Last_Week.objects.filter(comment='好評')
+	good_keywords_last_week_len = len(good_keywords_last_week_datas)
+
+	#普評電影
+	ordinary_keywords_last_week_datas = Keyword_Analysis_Last_Week.objects.filter(comment='普評')
+	ordinary_keywords_last_week_len = len(ordinary_keywords_last_week_datas)
+
+	#壞評電影
+	bad_keywords_last_week_datas = Keyword_Analysis_Last_Week.objects.filter(comment='壞評')
+	bad_keywords_last_week_len = len(bad_keywords_last_week_datas)
+	
+	#極壞評電影
+	worse_keywords_last_week_datas = Keyword_Analysis_Last_Week.objects.filter(comment='極壞評')
+	worse_keywords_last_week_len = len(worse_keywords_last_week_datas)
+	
+	#資料量不足
+	insufficient_keywords_last_week_datas = Keyword_Analysis_Last_Week.objects.filter(comment='資料不足')
+	insufficient_keywords_last_week_len = len(insufficient_keywords_last_week_datas)
+	
+	#---這一月---------------------------------------------------------------
+
+	#極好評電影
+	better_keywords_this_month_datas = Keyword_Analysis_This_Month.objects.filter(comment='極好評')
+	better_keywords_this_month_len = len(better_keywords_this_month_datas)
+
+	#好評電影
+	good_keywords_this_month_datas = Keyword_Analysis_This_Month.objects.filter(comment='好評')
+	good_keywords_this_month_len = len(good_keywords_this_month_datas)
+
+	#普評電影
+	ordinary_keywords_this_month_datas = Keyword_Analysis_This_Month.objects.filter(comment='普評')
+	ordinary_keywords_this_month_len = len(ordinary_keywords_this_month_datas)
+
+	#壞評電影
+	bad_keywords_this_month_datas = Keyword_Analysis_This_Month.objects.filter(comment='壞評')
+	bad_keywords_this_month_len = len(bad_keywords_this_month_datas)
+	
+	#極壞評電影
+	worse_keywords_this_month_datas = Keyword_Analysis_This_Month.objects.filter(comment='極壞評')
+	worse_keywords_this_month_len = len(worse_keywords_this_month_datas)
+	
+	#資料量不足
+	insufficient_keywords_this_month_datas = Keyword_Analysis_This_Month.objects.filter(comment='資料不足')
+	insufficient_keywords_this_month_len = len(insufficient_keywords_this_month_datas)
+	
+	#---上一月---------------------------------------------------------------
+
+	#極好評電影
+	better_keywords_last_month_datas = Keyword_Analysis_Last_Month.objects.filter(comment='極好評')
+	better_keywords_last_month_len = len(better_keywords_last_month_datas)
+
+	#好評電影
+	good_keywords_last_month_datas = Keyword_Analysis_Last_Month.objects.filter(comment='好評')
+	good_keywords_last_month_len = len(good_keywords_last_month_datas)
+
+	#普評電影
+	ordinary_keywords_last_month_datas = Keyword_Analysis_Last_Month.objects.filter(comment='普評')
+	ordinary_keywords_last_month_len = len(ordinary_keywords_last_month_datas)
+
+	#壞評電影
+	bad_keywords_last_month_datas = Keyword_Analysis_Last_Month.objects.filter(comment='壞評')
+	bad_keywords_last_month_len = len(bad_keywords_last_month_datas)
+	
+	#極壞評電影
+	worse_keywords_last_month_datas = Keyword_Analysis_Last_Month.objects.filter(comment='極壞評')
+	worse_keywords_last_month_len = len(worse_keywords_last_month_datas)
+	
+	#資料量不足
+	insufficient_keywords_last_month_datas = Keyword_Analysis_Last_Month.objects.filter(comment='資料不足')
+	insufficient_keywords_last_month_len = len(insufficient_keywords_last_month_datas)
+
+	#---總體-----------------------------------------------------------------------
+
+	#極好評電影
+	better_keywords_all_datas = Keyword_Analysis.objects.filter(comment='極好評')
+	better_keywords_all_len = len(better_keywords_all_datas)
+	#better_keywords_datas = list()
+	#for better_keyword in better_keywords:
+	#	better_keywords_datas.append(better_keyword.name)
+	
+	#好評電影
+	good_keywords_all_datas = Keyword_Analysis.objects.filter(comment='好評')
+	good_keywords_all_len = len(good_keywords_all_datas)
+	#good_keywords_datas = list()
+	#for good_keyword in good_keywords:
+	#	good_keywords_datas.append(good_keyword.name)
+
+	#普評電影
+	ordinary_keywords_all_datas = Keyword_Analysis.objects.filter(comment='普評')
+	ordinary_keywords_all_len = len(ordinary_keywords_all_datas)
+	#ordinary_keywords_datas = list()
+	#for ordinary_keyword in ordinary_keywords:
+	#	ordinary_keywords_datas.append(ordinary_keyword.name)
+
+	#壞評電影
+	bad_keywords_all_datas = Keyword_Analysis.objects.filter(comment='壞評')
+	bad_keywords_all_len = len(bad_keywords_all_datas)
+	#bad_keywords_datas = list()
+	#for bad_keyword in bad_keywords:
+	#	bad_keywords_datas.append(bad_keyword.name)
+	
+	#極壞評電影
+	worse_keywords_all_datas = Keyword_Analysis.objects.filter(comment='極壞評')
+	worse_keywords_all_len = len(worse_keywords_all_datas)
+	#worse_keywords_datas = list()
+	#for worse_keyword in worse_keywords:
+	#	worse_keywords_datas.append(worse_keyword.name)
 		
 	#資料量不足
-	insufficient_keywords = Keyword_Analysis.objects.filter(comment='資料不足')
-	insufficient_keywords_datas = list()
-	for insufficient_keyword in insufficient_keywords:
-		insufficient_keywords_datas.append(insufficient_keyword.name)
+	insufficient_keywords_all_datas = Keyword_Analysis.objects.filter(comment='資料不足')
+	insufficient_keywords_all_len = len(insufficient_keywords_all_datas)
+	#insufficient_keywords_datas = list()
+	#for insufficient_keyword in insufficient_keywords:
+	#	insufficient_keywords_datas.append(insufficient_keyword.name)
 		
 	return render(request,'ptt_movie/rank.html',locals())
 
-from ptt_movie.models import Keyword_Analysis_This_Month, Keyword_Analysis_Last_Month, Keyword_Analysis_Last_Week, Keyword_Analysis_This_Week
 def hot(request):
 				
 	movie_keywords = Keyword.objects.all()
