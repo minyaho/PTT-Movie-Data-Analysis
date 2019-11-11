@@ -1,0 +1,15 @@
+<!-- post.html -->
+{% extends 'base.html' %}
+{% load markdown_deux_tags %}
+{% block title %}
+    文章標題 - {{ post.title }}
+{% endblock %}
+{% block headmessage %}
+    <h3 class="card-text" style='font-family: 微軟正黑體'>{{ post.title }}</h3>
+{% endblock %}
+{% block content %}
+    <div class="card-body card-text" style="font-family: 微軟正黑體; font-size: 14pt; letter-spacing: 2pt">
+        {{ post.body | markdown }}
+    </div>
+    <a href="/" style='font-family: 微軟正黑體' class="btn btn-primary">回首頁</a>
+{% endblock %}    

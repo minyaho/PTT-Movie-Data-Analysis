@@ -3,78 +3,253 @@
 {% load crispy_forms_tags %}
 {% block title %}首頁 - Ptt電影溫度計 {% endblock %}
 {% block head %}
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
-	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+
 {% endblock %}
-{% block headmessage %}
-	<h4 style="font-family: 微軟正黑體">歡迎來到電影溫度計</h4>
+
+{% block page_heading %}
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+			<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">歡迎來到電影溫度計</h4>
+          </div>
 {% endblock %}
 {% block content %}
-				<div class="col-12">
-					<h5 style="font-family: 微軟正黑體">今日討論的電影關鍵字</h5>
-					<hr class="mt-0 mb-4">
-					<div class="ml-4 mb-4 row">
-						{% for todays_keyword in todays_keywords %}
-						<p style="font-family: 微軟正黑體" class="col-4">					
-							<a href='keyword/{{todays_keyword}}'>{{ todays_keyword }} </a>
-						</p>
-						{% endfor %}
-					</div>
-					<h5 style="font-family: 微軟正黑體">昨日討論的電影關鍵字</h5>
-					<hr class="mt-0 mb-4">
-					<div class="ml-4 mb-4 row">
-						{% for yesterday_keyword in yesterday_keywords %}
-						<p style="font-family: 微軟正黑體" class="col-4">							
-							<a href='keyword/{{yesterday_keyword}}'>{{ yesterday_keyword }} </a>
-						</p>
-						{% endfor %}
-					</div>
-					<h5 style="font-family: 微軟正黑體">以下是我們所建立好的電影關鍵字</h5>
-					<hr class="mt-0 mb-4">
-					<div class="ml-2">
-						<table id="keyword_table" class="table table-hover table-sm" cellspacing="0" width="100%">
-							<thead class="">
-								<tr>
-									<th scope="col">關鍵字名稱</th>
-								</tr>
-							</thead>
-							<tbody>
-								{% for keyword in keywords %}
-								<tr>
-									<td><a href='keyword/{{keyword.movie}}'>{{ keyword }}</a></td>
-								</tr>
+          <!-- Content Row -->
+          <div class="row" style="font-family: 微軟正黑體">
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="h5 font-weight-bold text-primary mb-1">熱門關鍵字</div>
+                      <div class="h6 font-weight-bold text-gray-800 text-uppercase mb-0">Today</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-primary-300"> <a href='keyword/返校'>返校</a></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="h5 font-weight-bold text-success text-uppercase mb-1">關鍵字討論量</div>
+                      <div class="h6 font-weight-bold text-gray-800 mb-0 ">返校</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-dollar-sign fa-2x text-primary-300"> 40867</i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="h5 font-weight-bold text-info text-uppercase mb-1">分析文章量</div>
+                      <div class="h6 mb-0 font-weight-bold text-gray-800">返校</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-clipboard-list fa-2x text-primary-300"> 577</i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="h5 font-weight-bold text-warning text-uppercase mb-1">更新時間</div>
+                      <div class="h6 mb-0 font-weight-bold text-gray-800">2019-11-11</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-comments fa-2x text-primary-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+           <div class="row">
+            <!-- Area Chart -->
+            <div class="col-xl-8 col-lg-7">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">返校 - 近一周討論量</h5>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Dropdown Header:</div>
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-area">
+                    <canvas id="myAreaChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pie Chart -->
+            <div class="col-xl-4 col-lg-5">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">返校 - 聲量</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Dropdown Header:</div>
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>	
+                  </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-pie pt-4 pb-2">
+                    <canvas id="myPieChart"></canvas>
+                  </div>
+                  <div class="mt-4 text-center small">
+                    <span class="mr-2">
+                      <i class="fas fa-circle text-primary"></i> 正面
+                    </span>
+                    <span class="mr-2">
+                      <i class="fas fa-circle text-danger"></i> 負面
+                    </span>
+                    <span class="mr-2">
+                      <i class="fas fa-circle text-info"></i> 中立
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+			<!-- Content Row -->
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 mb-4">
+					<div class="card shadow">
+						<div class="card-header py-3">
+							<h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">今日討論的電影關鍵字</h5>
+						</div>
+						<div class="card-body">
+							<div class="mx-2 row">
+								{% for todays_keyword in todays_keywords %}
+								<p style="font-family: 微軟正黑體" class="col-3">					
+									<a href='keyword/{{todays_keyword}}'>{{ todays_keyword }} </a>
+								</p>
 								{% endfor %}
-							</tbody>
-						</table>
-						<script>
-							$(document).ready(function() {
-								$('#keyword_table').DataTable({  
-									language: {
-									  "emptyTable": "無資料...",
-									  "processing": "處理中...",
-									  "loadingRecords": "載入中...",
-									  "lengthMenu": "顯示 _MENU_ 項結果",
-									  "zeroRecords": "沒有符合的結果",
-									  "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
-									  "infoEmpty": "顯示第 0 至 0 項結果，共 0 項",
-									  "infoFiltered": "(從 _MAX_ 項結果中過濾)",
-									  "infoPostFix": "",
-									  "search": "搜尋:",
-									  "paginate": {
-										"first": "第一頁",
-										"previous": "上一頁",
-										"next": "下一頁",
-										"last": "最後一頁"
-									  },
-									  "aria": {
-										"sortAscending": ": 升冪排列",
-										"sortDescending": ": 降冪排列"
-									  }
-									}
-								});
-							} );
-						</script>
+							</div>
+						</div>
 					</div>
 				</div>
+			</div>
+			
+			<!-- Content Row -->
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 mb-4">
+					<div class="card shadow">
+						<div class="card-header py-3">
+							<h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">昨日討論的電影關鍵字</h5>
+						</div>
+						<div class="card-body">
+							<div class="mx-2 row">
+								{% for yesterday_keyword in yesterday_keywords %}
+								<p style="font-family: 微軟正黑體" class="col-3">							
+									<a href='keyword/{{yesterday_keyword}}'>{{ yesterday_keyword }} </a>
+								</p>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Content Row -->
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 mb-4">
+					<div class="card shadow">
+						<div class="card-header py-3">
+							<h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">以下是我們所建立好的電影關鍵字</h5>
+						</div>
+						<div class="card-body">
+							<table id="keyword_table" class="table table-hover table-sm" cellspacing="0" width="100%">
+								<thead class="">
+									<tr>
+										<th scope="col">關鍵字名稱</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for keyword in keywords %}
+									<tr>
+										<td><a href='keyword/{{keyword.movie}}'>{{ keyword }}</a></td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+							<script>
+								$(document).ready(function() {
+									$('#keyword_table').DataTable({  
+										language: {
+										  "emptyTable": "無資料...",
+										  "processing": "處理中...",
+										  "loadingRecords": "載入中...",
+										  "lengthMenu": "顯示 _MENU_ 項結果",
+										  "zeroRecords": "沒有符合的結果",
+										  "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+										  "infoEmpty": "顯示第 0 至 0 項結果，共 0 項",
+										  "infoFiltered": "(從 _MAX_ 項結果中過濾)",
+										  "infoPostFix": "",
+										  "search": "搜尋:",
+										  "paginate": {
+											"first": "第一頁",
+											"previous": "上一頁",
+											"next": "下一頁",
+											"last": "最後一頁"
+										  },
+										  "aria": {
+											"sortAscending": ": 升冪排列",
+											"sortDescending": ": 降冪排列"
+										  }
+										}
+									});
+								} );
+							</script>
+						</div>
+					</div>
+				</div>
+			</div>
+  <!-- Page level custom scripts -->
+  <script src="/static/ptt_movie/js/demo/chart-area-demo.js"></script>
+  <script src="/static/ptt_movie/js/demo/chart-pie-demo.js"></script>
+
 {% endblock %}

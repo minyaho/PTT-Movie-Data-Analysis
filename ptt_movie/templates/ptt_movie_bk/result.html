@@ -1,0 +1,18 @@
+<!-- index.html-->
+{% extends 'ptt_movie/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Ptt電影溫度計 {% endblock %}
+{% block headmessage %}
+	<h4 style="font-family: 微軟正黑體">電影 - {{key}}</h4>
+{% endblock %}
+{% block content %}
+				<div class="col-10 ml-3">
+					<h4 class="mt-3">Detial</h4>
+					<hr class="mt-0 mb-4">
+					{% for i in article_for_keyword %}
+						<div>
+							{{ i.1 }} {{ i.0 }} 
+						</div>
+					{% endfor %}
+				</div>
+{% endblock %}
