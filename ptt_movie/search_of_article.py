@@ -2,7 +2,7 @@ from .tendency import make_tendency_score
 from ptt_movie.models import Article,Keyword
 import datetime,time
 
-def article_search(type,movie_name,arg):
+def article_search(type,movie_name,arg=None):
 	article_for_keyword = set()
 					
 	#第一階段搜尋: 只比對與電影關鍵字吻合的文章

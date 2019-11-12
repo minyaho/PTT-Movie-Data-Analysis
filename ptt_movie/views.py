@@ -33,6 +33,7 @@ def index(request):
 """
 from .search_of_article import article_search
 from ptt_movie.models import Keyword_Analysis,Keyword
+from django.db.models import Sum
 def index(request):
 	
 	#今日
@@ -43,6 +44,9 @@ def index(request):
 	
 	#所有關鍵字
 	keywords = Keyword.objects.all()
+	keyword_len = len(keywords)
+	discussion_len = Article.objects.aggregate(Sum('push_message_all'))['push_message_all__sum']
+	article_len = Article.objects.count()
 	
 	#今日文章
 	article_today = Article.objects.filter(time__year=today.strftime('%Y'),time__month=today.strftime('%m'),time__day=today.strftime('%d'))
@@ -66,13 +70,39 @@ def index(request):
 			if(same_keyword.strip()!='') and (same_keyword.strip() in article_str):
 				todays_keywords.add(_keyword.movie)
 	
+	data_of_today_keyword = list()
+	if(len(todays_keywords)>0):
+		for todays_keyword in todays_keywords:
+			data_of_today_keyword.append(article_search(3,todays_keyword,[2019,int(today.strftime('%m')),int(today.strftime('%d'))]))
+		data_of_today_keyword.sort(key=lambda k: k['c_discussion'],reverse=True)
+
+		keyword_today_hot = data_of_today_keyword[0]
+		keyword_today_hot_all_data = article_search(0,data_of_today_keyword[0]['a_movie'])
+		
+		start_date = today - relativedelta(days=7)
+		label_of_7_days = list()
+		for i in range(1,8):
+			label_of_7_days.append((start_date + relativedelta(days=i)).strftime('%m-%d'))
+		label_of_7_days = json.dumps(label_of_7_days)
+
+		data_of_7_days = []
+				
+		for day in range(1,8):
+			data_of_7_days.append(article_search(3,keyword_today_hot['a_movie'],[2019,int((start_date + relativedelta(days=i)).strftime('%m')),int((start_date + relativedelta(days=day)).strftime('%d'))]))
+		article_of_7_days = list()
+
+		discussion_of_7_days = list()
+		for _data in data_of_7_days:
+			discussion_of_7_days.append(_data['c_discussion'])
+		discussion_of_7_days = json.dumps(discussion_of_7_days)
+		
 	#昨日
 	yesterday = datetime.datetime.today().date() - relativedelta(days=1)
 	
-	#今日討論電影關鍵字
+	#昨日討論電影關鍵字
 	yesterday_keywords = set()
 	
-	#今日文章
+	#昨日文章
 	article_yesterday = Article.objects.filter(time__year=yesterday.strftime('%Y'),time__month=yesterday.strftime('%m'),time__day=yesterday.strftime('%d'))
 	
 	"""

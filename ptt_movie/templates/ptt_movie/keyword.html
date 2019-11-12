@@ -59,8 +59,10 @@
 							<h4 class="m-0 font-weight-bold text-primary">評價</h4>
 						</div>
 						<div class="card-body">
-							<div class='row'>
+							<div class="pt-1 pb-1">
 								<canvas id="Chart_of_Comment"></canvas>
+							</div>
+							
 								<script>
 									var ctx = document.getElementById("Chart_of_Comment").getContext('2d');
 									var pieChart = new Chart(ctx, {
@@ -70,15 +72,41 @@
 											datasets: [{
 											//預設資料
 											data:[{{ data.d_good }},{{ data.e_bad }}],
-											backgroundColor: [
-											//資料顏色
-												"#47aeed",
-												"#f7577c"],
+
+											backgroundColor: ['#4e73df', '#df4e4e'],
+											hoverBackgroundColor: ['#5f82e8', '#e85f5f'],
+											hoverBorderColor: "rgba(234, 236, 244, 1)",
 											}],
-										}
+										},
+										options: {
+											maintainAspectRatio: false,
+											tooltips: {
+												backgroundColor: "rgb(255,255,255)",
+												bodyFontColor: "#858796",
+												borderColor: '#dddfeb',
+												borderWidth: 1,
+												xPadding: 15,
+												yPadding: 15,
+												displayColors: false,
+												caretPadding: 10,
+											},
+											legend: {
+												display: false
+											},
+											cutoutPercentage: 80,
+										},
 									});
 								</script>
+								
+							<div class="mt-4 text-center small">
+								<span class="mr-2">
+									<i class="fas fa-circle text-primary"></i> 正面
+								</span>
+								<span class="mr-2">
+									<i class="fas fa-circle text-danger"></i> 負面
+								</span>
 							</div>
+							
 						</div>
 					</div>
 				</div>
