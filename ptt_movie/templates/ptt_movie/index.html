@@ -8,11 +8,268 @@
 {% endblock %}
 
 {% block page_heading %}
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-			<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">今日熱門關鍵字</h4>
+          <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-4">
+			<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">首頁 - 本站資訊</h4>
           </div>
 {% endblock %}
 {% block content %}
+
+
+          <!-- Content Row -->
+          <div class="row" style="font-family: 微軟正黑體">
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="h5 font-weight-bold text-primary mb-1">收藏關鍵字數</div>
+                      <div class="h4 font-weight-bold text-gray-800 text-uppercase mb-0">{{ keyword_len }}</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-primary-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="h5 font-weight-bold text-success text-uppercase mb-1">總討論量</div>
+                      <div class="h4 font-weight-bold text-gray-800 mb-0 ">{{ discussion_len }}</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-dollar-sign fa-2x text-primary-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="h5 font-weight-bold text-info text-uppercase mb-1">總分析文章量</div>
+                      <div class="h4 mb-0 font-weight-bold text-gray-800">{{ article_len }}</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-clipboard-list fa-2x text-primary-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="h5 font-weight-bold text-warning text-uppercase mb-1">更新時間</div>
+                      <div class="h4 mb-0 font-weight-bold text-gray-800">{{ today|date:"Y-m-d" }}</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-comments fa-2x text-primary-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+		  
+           <div class="row">
+            <!-- Area Chart -->
+            <div class="col-xl-8 col-lg-7  mb-4">
+              <div class="card shadow h-100">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">近一周整體討論量</h5>
+				  {% if request.user.is_authenticated %}
+				  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Dropdown Header:</div>
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </div>
+                  {% else %}
+                  {% endif %}
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+				  {% if keyword_analysis_of_this_week %}
+                  <div class="chart-area">
+                    <canvas id="this_week_discussion_AreaChart"></canvas>
+                  </div>
+                  {% else %}
+                  <div class="h4 mb-0 font-weight-bold text-gray-800">等待數據更新</div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
+            <!-- Pie Chart -->
+            <div class="col-xl-4 col-lg-5 mb-4">
+              <div class="card shadow h-100">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">近一周討論比例(最多六筆)</h5>
+				  {% if request.user.is_authenticated %}
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Dropdown Header:</div>
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>	
+                  </div>
+                  {% else %}
+                  {% endif %}
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+				  {% if keyword_analysis_of_this_week %}
+                  <div class="chart-pie2 pt-2 pb-2">
+                    <canvas id="this_week_discussion_PieChart"></canvas>
+                  </div>
+				  <div class = "row mt-4 mx-auto">
+					  {% for keyword in keyword_analysis_of_this_week%}
+					  <div class="col-sm-6 text-center small mt-0">
+						<span class="mr-2">
+						  <i class="fas fa-circle {{keyword.h_color}}"></i> {{keyword.a_movie}}
+						</span>
+					  </div>
+					  {% endfor %}
+				  </div>
+                  {% else %}
+                  <div class="h4 mb-0 font-weight-bold text-gray-800">等待數據更新</div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+		  
+			<!-- Content Row -->
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 mb-4">
+					<div class="card shadow">
+						<div class="card-header py-3">
+							<h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">今日討論的電影關鍵字</h5>
+						</div>
+						<div class="card-body">
+							<div class="mx-4 row">
+								{% for todays_keyword in todays_keywords %}
+								<p style="font-family: 微軟正黑體" class="col-sm-6 col-xl-2 col-md-4">					
+									<a class="text-gray-800" href='keyword/{{todays_keyword}}'>{{ todays_keyword }} </a>
+								</p>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Content Row -->
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 mb-4">
+					<div class="card shadow">
+						<div class="card-header py-3">
+							<h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">昨日討論的電影關鍵字</h5>
+						</div>
+						<div class="card-body">
+							<div class="mx-4 row">
+								{% for yesterday_keyword in yesterday_keywords %}
+								<p style="font-family: 微軟正黑體" class="col-sm-6 col-xl-2 col-md-4">							
+									<a class="text-gray-800" href='keyword/{{yesterday_keyword}}'>{{ yesterday_keyword }} </a>
+								</p>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Content Row -->
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 mb-4">
+					<div class="card shadow">
+						<div class="card-header py-3">
+							<h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">以下是我們所建立好的電影關鍵字</h5>
+						</div>
+						<div class="card-body">
+							<table id="keyword_table" class="table table-hover table-sm" cellspacing="0" width="100%">
+								<thead class="">
+									<tr>
+										<th scope="col">關鍵字名稱</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for keyword in keywords %}
+									<tr>
+										<td><a href='/keyword/{{keyword.movie}}'>{{ keyword }}</a></td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+							<script>
+								var set_table = {  
+										language: {
+										  "emptyTable": "無資料...",
+										  "processing": "處理中...",
+										  "loadingRecords": "載入中...",
+										  "lengthMenu": "顯示 _MENU_ 項結果",
+										  "zeroRecords": "沒有符合的結果",
+										  "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+										  "infoEmpty": "顯示第 0 至 0 項結果，共 0 項",
+										  "infoFiltered": "(從 _MAX_ 項結果中過濾)",
+										  "infoPostFix": "",
+										  "search": "搜尋:",
+										  "paginate": {
+											"first": "第一頁",
+											"previous": "上一頁",
+											"next": "下一頁",
+											"last": "最後一頁"
+										  },
+										  "aria": {
+											"sortAscending": ": 升冪排列",
+											"sortDescending": ": 降冪排列"
+										  }
+										}
+									}
+								$(document).ready(function() {
+									$('#keyword_table').DataTable(set_table);
+								} );
+							</script>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		  <hr>
+		  
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+			<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">今日熱門關鍵字</h4>
+          </div>
+			
           <!-- Content Row -->
           <div class="row" style="font-family: 微軟正黑體">
             <!-- Earnings (Monthly) Card Example -->
@@ -123,7 +380,7 @@
                 <div class="card-body">
 				  {% if keyword_today_hot %}
                   <div class="chart-area">
-                    <canvas id="myAreaChart"></canvas>
+                    <canvas id="today_keyword_AreaChart"></canvas>
                   </div>
                   {% else %}
                   <div class="h4 mb-0 font-weight-bold text-gray-800">等待數據更新</div>
@@ -158,7 +415,7 @@
                 <div class="card-body">
 				  {% if keyword_today_hot %}
                   <div class="chart-pie pt-4 pb-2">
-                    <canvas id="myPieChart"></canvas>
+                    <canvas id="today_keyword_PieChart"></canvas>
                   </div>
                   <div class="mt-4 text-center small">
                     <span class="mr-2">
@@ -178,182 +435,134 @@
               </div>
             </div>
           </div>
-		  <hr>
-          <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-4">
-			<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">網站資訊</h4>
-          </div>
 
-          <!-- Content Row -->
-          <div class="row" style="font-family: 微軟正黑體">
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="h5 font-weight-bold text-primary mb-1">收藏關鍵字數</div>
-                      <div class="h4 font-weight-bold text-gray-800 text-uppercase mb-0">{{ keyword_len }}</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-primary-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="h5 font-weight-bold text-success text-uppercase mb-1">總討論量</div>
-                      <div class="h4 font-weight-bold text-gray-800 mb-0 ">{{ discussion_len }}</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-primary-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="h5 font-weight-bold text-info text-uppercase mb-1">總分析文章量</div>
-                      <div class="h4 mb-0 font-weight-bold text-gray-800">{{ article_len }}</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-clipboard-list fa-2x text-primary-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Pending Requests Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="h5 font-weight-bold text-warning text-uppercase mb-1">更新時間</div>
-                      <div class="h4 mb-0 font-weight-bold text-gray-800">{{ today|date:"Y-m-d" }}</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-comments fa-2x text-primary-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-		  
-			<!-- Content Row -->
-			<div class="row">
-				<div class="col-xl-12 col-lg-12 mb-4">
-					<div class="card shadow">
-						<div class="card-header py-3">
-							<h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">今日討論的電影關鍵字</h5>
-						</div>
-						<div class="card-body">
-							<div class="mx-4 row">
-								{% for todays_keyword in todays_keywords %}
-								<p style="font-family: 微軟正黑體" class="col-sm-6 col-xl-3 col-md-4">					
-									<a class="text-gray-800" href='keyword/{{todays_keyword}}'>{{ todays_keyword }} </a>
-								</p>
-								{% endfor %}
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<!-- Content Row -->
-			<div class="row">
-				<div class="col-xl-12 col-lg-12 mb-4">
-					<div class="card shadow">
-						<div class="card-header py-3">
-							<h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">昨日討論的電影關鍵字</h5>
-						</div>
-						<div class="card-body">
-							<div class="mx-4 row">
-								{% for yesterday_keyword in yesterday_keywords %}
-								<p style="font-family: 微軟正黑體" class="col-sm-6 col-xl-3 col-md-4">							
-									<a class="text-gray-800" href='keyword/{{yesterday_keyword}}'>{{ yesterday_keyword }} </a>
-								</p>
-								{% endfor %}
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<!-- Content Row -->
-			<div class="row">
-				<div class="col-xl-12 col-lg-12 mb-4">
-					<div class="card shadow">
-						<div class="card-header py-3">
-							<h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">以下是我們所建立好的電影關鍵字</h5>
-						</div>
-						<div class="card-body">
-							<table id="keyword_table" class="table table-hover table-sm" cellspacing="0" width="100%">
-								<thead class="">
-									<tr>
-										<th scope="col">關鍵字名稱</th>
-									</tr>
-								</thead>
-								<tbody>
-									{% for keyword in keywords %}
-									<tr>
-										<td><a href='keyword/{{keyword.movie}}'>{{ keyword }}</a></td>
-									</tr>
-									{% endfor %}
-								</tbody>
-							</table>
-							<script>
-								var set_table = {  
-										language: {
-										  "emptyTable": "無資料...",
-										  "processing": "處理中...",
-										  "loadingRecords": "載入中...",
-										  "lengthMenu": "顯示 _MENU_ 項結果",
-										  "zeroRecords": "沒有符合的結果",
-										  "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
-										  "infoEmpty": "顯示第 0 至 0 項結果，共 0 項",
-										  "infoFiltered": "(從 _MAX_ 項結果中過濾)",
-										  "infoPostFix": "",
-										  "search": "搜尋:",
-										  "paginate": {
-											"first": "第一頁",
-											"previous": "上一頁",
-											"next": "下一頁",
-											"last": "最後一頁"
-										  },
-										  "aria": {
-											"sortAscending": ": 升冪排列",
-											"sortDescending": ": 降冪排列"
-										  }
-										}
-									}
-								$(document).ready(function() {
-									$('#keyword_table').DataTable(set_table);
-								} );
-							</script>
-						</div>
-					</div>
-				</div>
-			</div>
 			
 			
 	<script>
-		var ctx = document.getElementById("myAreaChart");
-		var myLineChart = new Chart(ctx, {
+		{% if keyword_analysis_of_this_week %}
+		var twd_Area = document.getElementById("this_week_discussion_AreaChart");
+		var twdLineChart = new Chart(twd_Area, {
+		  type: 'line',
+		  data: {
+			labels: {{ label_of_7_days|safe }},
+			datasets: [{
+			  label: "討論量",
+			  lineTension: 0.3,
+			  backgroundColor: "rgba(86, 202, 105, 0.05)",
+			  borderColor: "rgba(86, 202, 105, 1)",
+			  pointRadius: 3,
+			  pointBackgroundColor: "rgba(86, 202, 105, 1)",
+			  pointBorderColor: "rgba(86, 202, 105, 1)",
+			  pointHoverRadius: 3,
+			  pointHoverBackgroundColor: "rgba(86, 202, 105, 1)",
+			  pointHoverBorderColor: "rgba(86, 202, 105, 1)",
+			  pointHitRadius: 10,
+			  pointBorderWidth: 2,
+			  data: {{ discussion_tihs_week_datas|safe }},
+			}],
+		  },
+		  options: {
+			maintainAspectRatio: false,
+			layout: {
+			  padding: {
+				left: 10,
+				right: 25,
+				top: 25,
+				bottom: 0
+			  }
+			},
+			scales: {
+			  xAxes: [{
+				time: {
+				  unit: 'date'
+				},
+				gridLines: {
+				  display: false,
+				  drawBorder: false
+				},
+				ticks: {
+				  maxTicksLimit: 7
+				}
+			  }],
+			  yAxes: [{
+				ticks: {
+				  maxTicksLimit: 5,
+				  padding: 10,
+				  // Include a dollar sign in the ticks
+				  callback: function(value, index, values) {
+					return '' + number_format(value);
+				  }
+				},
+				gridLines: {
+				  color: "rgb(234, 236, 244)",
+				  zeroLineColor: "rgb(234, 236, 244)",
+				  drawBorder: false,
+				  borderDash: [2],
+				  zeroLineBorderDash: [2]
+				}
+			  }],
+			},
+			legend: {
+			  display: false
+			},
+			tooltips: {
+			  backgroundColor: "rgb(255,255,255)",
+			  bodyFontColor: "#858796",
+			  titleMarginBottom: 10,
+			  titleFontColor: '#6e707e',
+			  titleFontSize: 14,
+			  borderColor: '#dddfeb',
+			  borderWidth: 1,
+			  xPadding: 15,
+			  yPadding: 15,
+			  displayColors: false,
+			  intersect: false,
+			  mode: 'index',
+			  caretPadding: 10,
+			  callbacks: {
+				label: function(tooltipItem, chart) {
+				  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+				  return datasetLabel +' : ' + number_format(tooltipItem.yLabel);
+				}
+			  }
+			}
+		  }
+		});
+		var twdPie = document.getElementById("this_week_discussion_PieChart");
+		var twdPieChart = new Chart(twdPie, {
+		  type: 'doughnut',
+		  data: {
+			labels: {{ keyword_label_of_this_week|safe }},
+			datasets: [{
+			  data: {{ keyword_discussion_of_this_week|safe }},
+			  backgroundColor: ['#4e73df', '#e74a3b','#36b9cc','#f6c23e','#858796','#1cc88a'],
+			  hoverBackgroundColor: ['#5f82e8', '#f56456'],
+			  hoverBorderColor: "rgba(234, 236, 244, 1)",
+			}],
+		  },
+		  options: {
+			maintainAspectRatio: false,
+			tooltips: {
+			  backgroundColor: "rgb(255,255,255)",
+			  bodyFontColor: "#858796",
+			  borderColor: '#dddfeb',
+			  borderWidth: 1,
+			  xPadding: 15,
+			  yPadding: 15,
+			  displayColors: false,
+			  caretPadding: 10,
+			},
+			legend: {
+			  display: false
+			},
+			cutoutPercentage: 80,
+		  },
+		});
+		{% endif %}
+		
+		{% if keyword_today_hot %}
+		var tkAreaChart = document.getElementById("today_keyword_AreaChart");
+		var tkLineChart = new Chart(tkAreaChart, {
 		  type: 'line',
 		  data: {
 			labels: {{ label_of_7_days|safe }},
@@ -441,8 +650,8 @@
 		  }
 		});
 		// Pie Chart Example
-		var ctx = document.getElementById("myPieChart");
-		var myPieChart = new Chart(ctx, {
+		var tkPie = document.getElementById("today_keyword_PieChart");
+		var tkPieChart = new Chart(tkPie, {
 		  type: 'doughnut',
 		  data: {
 			labels: ["正面", "負面"],
@@ -471,9 +680,9 @@
 			cutoutPercentage: 80,
 		  },
 		});
+		{% endif %}
 	</script>
   <!-- Page level custom scripts -->
   <script src="/static/ptt_movie/js/demo/chart-area-demo.js"></script>
-  <script src="/static/ptt_movie/js/demo/chart-pie-demo.js"></script>
 
 {% endblock %}

@@ -1,14 +1,86 @@
 {% extends 'ptt_movie/base.html' %}
 {% load crispy_forms_tags %}
 {% block title %}搜尋電影 - Ptt電影溫度計 {% endblock %}
-{% block headmessage %}
-	<h4 style="font-family: 微軟正黑體">搜尋電影</h4>
+{% block page_heading %}
+		<div class="col-xl-11 col-md-12 mx-auto">
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+			<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">搜尋電影</h4>
+          </div>
+		</div>
 {% endblock %}
 {% block content %}
-				<div class='col-10 mx-auto'>
-					<form method='post'>
-					{% csrf_token %}
-					{{ form|crispy }}
-					<input type="submit"  class="btn btn-success" value="提交">
+
+		<div class="col-xl-11 col-md-12 mb-4 mx-auto">
+			<hr class="mt-1 mb-4">
+			<div class='col-10 mx-auto mb-5'>
+				<form method='post'>
+				{% csrf_token %}
+				{{ form|crispy }}
+				<div class="text-right">
+					<input type="submit" class="btn btn-primary" value="提交">
 				</div>
+			</div>
+
+			<div class="card shadow">						
+				<div class="card-header py-3">
+					<h5 class="m-0 font-weight-bold text-primary">結果</h5>
+				</div>
+				<div class="card-body">
+					<div class=''>
+						<table id="result_table" class="table table-hover table-sm" cellspacing="" width="100%">
+							<thead class="">
+								<tr>
+									<th>關鍵字名稱</th>
+									<th>文章數</th>
+									<th>討論數</th>
+									<th>評比分</th>
+									<th>評比</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for data in return_datas %}
+								<tr>
+									<td><a href='/keyword/{{data.a_movie}}'>{{ data.a_movie }}</a></td>
+									<td>{{ data.b_article }}</td>
+									<td>{{ data.c_discussion }}</td>
+									<td>{{ data.f_score }}</td>
+									<td>{{ data.g_comment }}</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script>
+			var set_table = {  
+				language: {
+					"emptyTable": "{{ return_message }}",
+					"processing": "處理中...",
+					"loadingRecords": "載入中...",
+					"lengthMenu": "顯示 _MENU_ 項結果",
+					"zeroRecords": "沒有符合的結果",
+					"info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+					"infoEmpty": "顯示第 0 至 0 項結果，共 0 項",
+					"infoFiltered": "(從 _MAX_ 項結果中過濾)",
+					"infoPostFix": "",
+					"search": "搜尋:",
+					"paginate": {
+						"first": "第一頁",
+						"previous": "上一頁",
+						"next": "下一頁",
+						"last": "最後一頁"
+					},
+					"aria": {
+						"sortAscending": ": 升冪排列",
+						"sortDescending": ": 降冪排列"
+					}
+				}
+			}
+			$(document).ready(function() {
+				$('#result_table').DataTable(set_table);
+			} );
+		</script>
 {% endblock %}

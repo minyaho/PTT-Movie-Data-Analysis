@@ -1,11 +1,15 @@
 {% extends 'ptt_movie/base.html' %}
 {% load crispy_forms_tags %}
 {% block title %}{{type_name}}查詢 - {{ movie_name }} - Ptt電影溫度計 {% endblock %}
-{% block headmessage %}
-	<h4 style="font-family: 微軟正黑體">{{type_name}}查詢 - {{ movie_name }}</h4>
+{% block page_heading %}
+		<div class="col-xl-11 col-md-12 mx-auto">
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+			<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">{{type_name}}查詢 - {{ movie_name }}</h4>
+          </div>
+		</div>
 {% endblock %}
 {% block content %}
-				<div class='col-10 ml-3'>
+				<div class="col-xl-11 col-md-12 mx-auto" style="font-family: 微軟正黑體">
 				<!--
 					<h4 class="mt-3">Movie - {{ movie_name }}</h4>
 					<hr class="mt-0 mb-4">
@@ -17,123 +21,136 @@
 					<br>
 					-->
 					{% if output_label %}
-					<h4 class="mt-3">Article - {{ movie_name }}</h4>
-					<hr class="mt-0 mb-4">
-					<canvas id="Article_Chart" width="200" height="100"></canvas>
-					<script>
-						var ctx = document.getElementById("Article_Chart");
-						var myChart = new Chart(ctx, {
-							type: 'line',
-							data: {
-								labels: {{ output_label|safe }}, // 換成自己的labels
-								datasets: [{
-									label: '{{ movie_name }}', 
-									data: {{ article_data|safe }}, // 換成自己的data
-									backgroundColor: [
-
-										'rgba(255, 159, 64, 0.2)'
-									],
-									borderColor: [
-
-										'rgba(255, 159, 64, 1)'
-									],
-									borderWidth: 1
-								}]
-							},
-							options: {
-								scales: {
-									yAxes: [{
-										ticks: {
-											beginAtZero:true
+					<div class="col-xl-12 col-lg-12 mx-auto">
+						<div class="card mb-4 shadow">
+							<div class="card-header py-3">
+								<h5 class="m-0 font-weight-bold text-primary">Article - {{ movie_name }}</h4>
+							</div>
+							<div class="card-body">
+								<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Article_Chart" width="200" height="100"></canvas>
+								<script>
+									var ctx = document.getElementById("Article_Chart");
+									var myChart = new Chart(ctx, {
+										type: 'line',
+										data: {
+											labels: {{ output_label|safe }}, // 換成自己的labels
+											datasets: [{
+												label: '{{ movie_name }}', 
+												data: {{ article_data|safe }}, // 換成自己的data
+												backgroundColor: [
+														'rgba(255, 159, 64, 0.2)'
+												],
+												borderColor: [
+													'rgba(255, 159, 64, 1)'
+												],
+												borderWidth: 1
+											}]
+										},
+										options: {
+											scales: {
+												yAxes: [{
+													ticks: {
+														beginAtZero:true
+														}
+												}]
+											}
 										}
-									}]
-								}
-							}
-						});
-					</script>
-					<br>
-					
-					<h4 class="mt-3">Discussion - {{ movie_name }}</h4>
-					<hr class="mt-0 mb-4">
-					<canvas id="Discussion_Chart" width="200" height="100"></canvas>
-					<script>
-						var ctx = document.getElementById("Discussion_Chart");
-						var myChart = new Chart(ctx, {
-							type: 'line',
-							data: {
-								labels: {{ output_label|safe }}, // 換成自己的labels
-								datasets: [{
-									label: '{{ movie_name }}', 
-									data: {{ discussion_data|safe }}, // 換成自己的data
-									backgroundColor: [
+									});
+								</script>
+							</div>
+						</div>
 
-										'rgba(255, 159, 64, 0.2)'
-									],
-									borderColor: [
+						<div class="card mb-4 shadow">
+							<div class="card-header py-3">
+								<h5 class="m-0 font-weight-bold text-primary">Discussion - {{ movie_name }}</h4>
+							</div>
+							<div class="card-body">
+								<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Discussion_Chart" width="200" height="100"></canvas>
+								<script>
+									var ctx = document.getElementById("Discussion_Chart");
+									var myChart = new Chart(ctx, {
+										type: 'line',
+										data: {
+											labels: {{ output_label|safe }}, // 換成自己的labels
+											datasets: [{
+												label: '{{ movie_name }}', 
+												data: {{ discussion_data|safe }}, // 換成自己的data
+												backgroundColor: [
 
-										'rgba(255, 159, 64, 1)'
-									],
-									borderWidth: 1
-								}]
-							},
-							options: {
-								scales: {
-									yAxes: [{
-										ticks: {
-											beginAtZero:true
+													'rgba(255, 159, 64, 0.2)'
+												],
+												borderColor: [
+
+													'rgba(255, 159, 64, 1)'
+												],
+												borderWidth: 1
+											}]
+										},
+										options: {
+											scales: {
+												yAxes: [{
+													ticks: {
+														beginAtZero:true
+													}
+												}]
+											}
 										}
-									}]
-								}
-							}
-						});
-					</script>
-					<br>
-					<h4 class="mt-3">Good or Bad - {{ movie_name }}</h4>
-					<hr class="mt-0 mb-4">
-					<canvas id="GoodorBad_Chart" width="200" height="100"></canvas>
-					<script>
-						var ctx = document.getElementById("GoodorBad_Chart");
-						var myChart = new Chart(ctx, {
-							type: 'line',
-							data: {
-								labels: {{ output_label|safe }}, // 換成自己的labels
-								datasets: [{
-									label: 'good', 
-									data: {{ good_data|safe }}, // 換成自己的data
-									backgroundColor: [
+									});
+								</script>
+							</div>
+						</div>
+						
+						<div class="card mb-4 shadow">
+							<div class="card-header py-3">
+								<h5 class="m-0 font-weight-bold text-primary">Good or Bad - {{ movie_name }}</h4>
+							</div>
+							<div class="card-body">
+								<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="GoodorBad_Chart" width="200" height="100"></canvas>
+								<script>
+									var ctx = document.getElementById("GoodorBad_Chart");
+									var myChart = new Chart(ctx, {
+										type: 'line',
+										data: {
+											labels: {{ output_label|safe }}, // 換成自己的labels
+											datasets: [{
+												label: 'good', 
+												data: {{ good_data|safe }}, // 換成自己的data
+												backgroundColor: [
 
-										'rgba(149, 199, 243, 0.2)'
-									],
-									borderColor: [
+													'rgba(149, 199, 243, 0.2)'
+												],
+												borderColor: [
 
-										'rgba(149, 199, 243, 1)'
-									],
-									borderWidth: 1
-								},{
-									label: 'bad', 
-									data: {{ bad_data|safe }}, // 換成自己的data
-									backgroundColor: [
+													'rgba(149, 199, 243, 1)'
+												],
+												borderWidth: 1
+											},{
+												label: 'bad', 
+												data: {{ bad_data|safe }}, // 換成自己的data
+												backgroundColor: [
 
-										'rgba(255, 129, 64, 0.2)'
-									],
-									borderColor: [
+													'rgba(255, 129, 64, 0.2)'
+												],
+												borderColor: [
 
-										'rgba(255, 109, 64, 1)'
-									],
-									borderWidth: 1
-								}]
-							},
-							options: {
-								scales: {
-									yAxes: [{
-										ticks: {
-											beginAtZero:true
+													'rgba(255, 109, 64, 1)'
+												],
+												borderWidth: 1
+											}]
+										},
+										options: {
+											scales: {
+												yAxes: [{
+													ticks: {
+														beginAtZero:true
+													}
+												}]
+											}
 										}
-									}]
-								}
-							}
-						});
-					</script>
+									});
+								</script>
+							</div>
+						</div>
 					{% else %}
 					{% endif %}
 				</div>

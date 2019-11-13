@@ -28,7 +28,7 @@ def article_search(type,movie_name,arg=None):
 				articles = article_search_type([type,similar_keyword.movie,arg])
 				for article in articles:
 					temp = (article.title,article.author,article.time,article.url,article.push_message_all,article.push_message_good,article.push_message_bad,article.push_message_neutral)
-					print(temp)
+					#print(temp)
 					article_for_keyword.discard(temp)
 				#print(article_for_keyword)
 
@@ -100,12 +100,12 @@ def article_search(type,movie_name,arg=None):
 
 def article_search_type(args):	#[type,movie_name,arg]
 	if(args[0] == 0): #all
-		return Article.objects.filter(time__year=2019,title__contains=args[1])
+		return Article.objects.filter(time__year=2019,title__icontains=args[1])
 	if(args[0] == 1): #year_week
-		return Article.objects.filter(time__year=2019,time__week=args[2],title__contains=args[1])
+		return Article.objects.filter(time__year=2019,time__week=args[2],title__icontains=args[1])
 	if(args[0] == 2): #year_month
-		return Article.objects.filter(time__year=2019,time__month=args[2],title__contains=args[1])
+		return Article.objects.filter(time__year=2019,time__month=args[2],title__icontains=args[1])
 	if(args[0] == 3): #某天
-		return Article.objects.filter(time__year=args[2][0],time__month=args[2][1],time__day=args[2][2],title__contains=args[1]) #2:Start,3:end
+		return Article.objects.filter(time__year=args[2][0],time__month=args[2][1],time__day=args[2][2],title__icontains=args[1]) #2:Start,3:end
 	if(args[0] == 4): #時間範圍
-		return Article.objects.filter(time__range=(args[2][0],args[2][1]) ,title__contains=args[1]) #2:Start,3:end
+		return Article.objects.filter(time__range=(args[2][0],args[2][1]) ,title__icontains=args[1]) #2:Start,3:end

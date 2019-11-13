@@ -48,6 +48,57 @@ def index(request):
 	discussion_len = Article.objects.aggregate(Sum('push_message_all'))['push_message_all__sum']
 	article_len = Article.objects.count()
 	
+	#近一周整體討論量
+	#Article.objects.filter(time__year=today.strftime('%Y'),time__month=today.strftime('%m'),time__day=today.strftime('%d'))
+	start_date = today - relativedelta(days=7)
+	label_of_7_days = list()
+	for i in range(1,8):
+		label_of_7_days.append((start_date + relativedelta(days=i)).strftime('%m-%d'))
+	label_of_7_days = json.dumps(label_of_7_days)
+	
+	discussion_tihs_week_datas = list()
+	for i in range(1,8):
+		discussion_tihs_week_datas.append(Article.objects.filter(time__year=start_date.strftime('%Y'),time__month=start_date.strftime('%m'),time__day=(start_date+relativedelta(days=i)).strftime('%d')).aggregate(Sum('push_message_all'))['push_message_all__sum'])
+	discussion_tihs_week_datas = json.dumps(discussion_tihs_week_datas)
+	
+	#近一周討論比例(最多六筆)	
+	datas = Keyword_Analysis_This_Week.objects.all().order_by("-discussion")[:6]
+	if(len(datas)>0):
+		keyword_analysis_of_this_week = []
+		for data in datas:
+			temp = {
+				"a_movie": data.name,
+				"b_article": data.article,
+				"c_discussion": data.discussion,
+				"d_good": data.good,
+				"e_bad": data.bad,
+				"f_score": data.score,
+				"g_comment": data.comment,
+			}
+			keyword_analysis_of_this_week.append(temp)
+		
+		keyword_discussion_of_this_week = list()
+		keyword_label_of_this_week = list()
+		for i in range(len(keyword_analysis_of_this_week)):
+			if(i%6==0):
+				keyword_analysis_of_this_week[i].update({'h_color':'text-primary'})
+			elif(i%6==1):
+				keyword_analysis_of_this_week[i].update({'h_color':'text-danger'})
+			elif(i%6==2):
+				keyword_analysis_of_this_week[i].update({'h_color':'text-info'})
+			elif(i%6==3):
+				keyword_analysis_of_this_week[i].update({'h_color':'text-warning'})
+			elif(i%6==4):
+				keyword_analysis_of_this_week[i].update({'h_color':'text-muted'})
+			elif(i%6==5):
+				keyword_analysis_of_this_week[i].update({'h_color':'text-success'})
+			keyword_discussion_of_this_week.append(keyword_analysis_of_this_week[i]['c_discussion'])
+			keyword_label_of_this_week.append(keyword_analysis_of_this_week[i]['a_movie'])
+			#print(keyword_analysis_of_this_week[i])
+		#print(keyword_discussion_of_this_week)
+		keyword_discussion_of_this_week = json.dumps(keyword_discussion_of_this_week)
+		keyword_label_of_this_week = json.dumps(keyword_label_of_this_week,ensure_ascii=False)
+	
 	#今日文章
 	article_today = Article.objects.filter(time__year=today.strftime('%Y'),time__month=today.strftime('%m'),time__day=today.strftime('%d'))
 	
@@ -69,7 +120,8 @@ def index(request):
 		for same_keyword in _keyword.keyword.strip().split(' '):
 			if(same_keyword.strip()!='') and (same_keyword.strip() in article_str):
 				todays_keywords.add(_keyword.movie)
-	
+
+	#今日熱門關鍵字
 	data_of_today_keyword = list()
 	if(len(todays_keywords)>0):
 		for todays_keyword in todays_keywords:
@@ -86,10 +138,8 @@ def index(request):
 		label_of_7_days = json.dumps(label_of_7_days)
 
 		data_of_7_days = []
-				
 		for day in range(1,8):
 			data_of_7_days.append(article_search(3,keyword_today_hot['a_movie'],[2019,int((start_date + relativedelta(days=i)).strftime('%m')),int((start_date + relativedelta(days=day)).strftime('%d'))]))
-		article_of_7_days = list()
 
 		discussion_of_7_days = list()
 		for _data in data_of_7_days:
@@ -139,7 +189,7 @@ def keyword(request,key):
 		article_for_keyword = set()
 				
 		#第一階段搜尋: 只比對與電影關鍵字吻合的文章
-		articles = Article.objects.filter(title__contains=movie_name)
+		articles = Article.objects.filter(title__icontains=movie_name)
 		for article in articles:
 			temp = (article.title,article.author,article.time,article.url,article.push_message_all,article.push_message_good,article.push_message_bad,article.push_message_neutral)
 			article_for_keyword.add(temp)
@@ -148,23 +198,20 @@ def keyword(request,key):
 		movie_keywords = Keyword.objects.get(movie=movie_name)
 		if(len(movie_keywords.keyword.strip())>0):
 			for movie_keyword in movie_keywords.keyword.split(' '):
-				articles = Article.objects.filter(title__contains=movie_keyword)
+				articles = Article.objects.filter(title__icontains=movie_keyword)
 				for article in articles:
 					temp = (article.title,article.author,article.time,article.url,article.push_message_all,article.push_message_good,article.push_message_bad,article.push_message_neutral)
 					article_for_keyword.add(temp)
 			
 		#第三階段剃除: 除去內容相似的電影關鍵字資料
-		similar_keywords = Keyword.objects.filter(movie__contains=movie_name)
+		similar_keywords = Keyword.objects.filter(movie__icontains=movie_name)
 		if(len(similar_keywords)!=0):
 			for similar_keyword in similar_keywords:
 				if(similar_keyword.movie!=movie_name):
-					#print(similar_keyword.movie)
-					#print(movie_name)
-					articles = Article.objects.filter(title__contains=similar_keyword.movie)
+					articles = Article.objects.filter(title__icontains=similar_keyword.movie)
 					for article in articles:
 						temp = (article.title,article.author,article.time,article.url,article.push_message_all,article.push_message_good,article.push_message_bad,article.push_message_neutral)
 						article_for_keyword.discard(temp)
-					
 
 					#第二階段搜尋: 比對與電影關鍵字附屬關鍵字吻合的文章
 					if(len(similar_keyword.keyword.strip().split(' '))>0) and (similar_keyword.keyword.strip()!=''):
@@ -172,14 +219,14 @@ def keyword(request,key):
 						#error_len = len(error_)
 						#if(movie_name=='生日'):
 						#	a = 1/0
-						if(len(same_keyword)>0):
+						if(len(similar_keyword.keyword.strip().split(' '))>0):
 							for same_keyword in similar_keyword.keyword.strip().split(' '):
-								#print(same_keyword)
-								articles = Article.objects.filter(title__contains=same_keyword)
-								for article in articles:
-									temp = (article.title,article.author,article.time,article.url,article.push_message_all,article.push_message_good,article.push_message_bad,article.push_message_neutral)
-									article_for_keyword.discard(temp)
-		
+								if(len(same_keyword)>0):
+									articles = Article.objects.filter(title__icontains=same_keyword)
+									for article in articles:
+										temp = (article.title,article.author,article.time,article.url,article.push_message_all,article.push_message_good,article.push_message_bad,article.push_message_neutral)
+										article_for_keyword.discard(temp)
+
 		article_for_keyword = list(article_for_keyword)
 		article_for_keyword.sort(key=lambda k:k[2], reverse=True)
 		
@@ -309,7 +356,8 @@ def keyword(request,key):
 				
 		return render(request,'ptt_movie/keyword.html',locals())
 	else:
-		return HttpResponse(str('電影名稱錯誤'))
+		return_message = '錯誤關鍵字搜尋'
+		return render(request,'ptt_movie/404.html',locals())
 
 def week(request,key):
 
@@ -915,9 +963,10 @@ def analysis(request):
 	return render(request,'ptt_movie/search.html',{'form':form})	
 
 
-from .forms import MoiveTypeForm
+from .forms import MoiveForm
 from .search_of_article import article_search
 def analysis_type(request):
+	"""
 	if request.method == 'POST':
 		form = MoiveTypeForm(request.POST)
 	
@@ -1022,3 +1071,34 @@ def analysis_type(request):
 		form = MoiveTypeForm()
 		
 	return render(request,'ptt_movie/search.html',{'form':form})
+	"""
+	return_message = '無資料...'
+	if request.method == 'POST':
+		form = MoiveForm(request.POST)
+	
+		if form.is_valid():
+			keyword = form.cleaned_data['movie_keyword_name']
+			results = Keyword_Analysis.objects.filter(name__contains=keyword)
+			input_value = 'value='+ keyword 
+			if len(results) == 0:
+				return_message = '未搜尋到任何結果'
+				return render(request,'ptt_movie/search.html',locals())
+			else:
+				return_datas = []
+				for data in results:
+					temp = {
+						"a_movie": data.name,
+						"b_article": data.article,
+						"c_discussion": data.discussion,
+						"d_good": data.good,
+						"e_bad": data.bad,
+						"f_score": data.score,
+						"g_comment": data.comment,
+					}
+					return_datas.append(temp)
+				print(input_value)
+				return render(request,'ptt_movie/search.html',locals())
+	else:
+		form = MoiveForm()
+		return_message = '請輸入關鍵字搜索'
+	return render(request,'ptt_movie/search.html',{'form':form,'return_message':return_message})
