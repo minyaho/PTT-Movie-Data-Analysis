@@ -24,426 +24,977 @@
 					  </li>
 					</ul>
 					
-					<div class="tab-content mt-2 mb-4" id="pills-tabContent">
-						<hr class="mt-3 mb-4">
+					<div class="tab-content mt-2 mb-5" id="pills-tabHotContent">
 						<div class="tab-pane fade show active" id="pills-article" role="tabpanel" aria-labelledby="pills-article_tab">
-							<div class="col-xl-11 col-lg-12 mx-auto">
-								<div class="card mb-4 shadow">
-									<div class="card-header py-3">
-										<h5 class="m-0 font-weight-bold text-primary">這一周</h5>
-									</div>
-									<div class="card-body">
-										<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Article_Chart_This_Week" width="200" height="100"></canvas>
-										<script>
-											var ctx = document.getElementById("Article_Chart_This_Week");
-											var myChart = new Chart(ctx, {
-												type: 'horizontalBar',
-												data: {
-													labels: {{ article_label_this_week |safe }}, // 換成自己的labels
-													datasets: [{
-														label: 'Article (第{{ this_week }}周)', 
-														data: {{ article_data_this_week|safe }}, // 換成自己的data
-														backgroundColor: [
-															'rgba(255,  99, 132, 0.2)',
-															'rgba( 24, 168, 184, 0.2)',
-															'rgba( 64,  24, 184, 0.2)',
-															'rgba( 54, 162, 235, 0.2)',
-															'rgba(255, 206,  86, 0.2)',
-															'rgba( 75, 192, 192, 0.2)',
-															'rgba(153, 102, 255, 0.2)',
-															'rgba(255, 159, 64, 0.2)'
-														],
-														borderColor: [
-															'rgba(255, 99, 132, 1)',
-															'rgba(24, 168, 184, 1)',
-															'rgba(64, 24, 184, 1)',
-															'rgba(54, 162, 235, 1)',
-															'rgba(255, 206, 86, 1)',
-															'rgba(75, 192, 192, 1)',
-															'rgba(153, 102, 255, 1)',
-															'rgba(255, 159, 64, 1)'
-														],
-														borderWidth: 1
-													}]
-												},
-												options: {
-													scales: {
-														yAxes: [{
-															ticks: {
-																beginAtZero:true
-															}
-														}]
-													}
-												}
-											});
-										</script>
+							<ul id="hot_article_pills_tab" class="nav nav-pills nav-fill flex-column flex-sm-row" role="tablist">
+							  <li class="nav-item pill-1">
+								<a class="nav-link active" id="pills-article_this_week-tab" data-toggle="pill" href="#pills-article_this_week" role="tab" aria-controls="pills-article_this_week" aria-selected="true">這一周</a>
+							  </li>
+							  <li class="nav-item pill-1">
+								<a class="nav-link" id="pills-article_last_week-tab" data-toggle="pill" href="#pills-article_last_week" role="tab" aria-controls="pills-article_last_week" aria-selected="false">這上周</a>
+							  </li>
+							  <li class="nav-item pill-1">
+								<a class="nav-link" id="pills-article_this_month-tab" data-toggle="pill" href="#pills-article_this_month" role="tab" aria-controls="pills-article_this_month" aria-selected="false">這個月</a>
+							  </li>
+							  <li class="nav-item pill-1">
+								<a class="nav-link" id="pills-article_last_month-tab" data-toggle="pill" href="#pills-article_last_month" role="tab" aria-controls="pills-article_last_month" aria-selected="false">上個月</a>
+							  </li>
+							</ul>
+							<div class="tab-content mt-2 mb-4" id="pills-articleTabContent">
+								<hr class="mt-3 mb-4">
+								<div class="tab-pane fade show active" id="pills-article_this_week" role="tabpanel" aria-labelledby="pills-article_this_week-tab">
+									<div class="col-xl-11 col-lg-12 mx-auto">
+										<div class="card mb-4 shadow">
+											<div class="card-header py-3">
+												<h5 class="m-0 font-weight-bold text-primary">這一周</h5>
+											</div>
+											<div class="card-body">
+												<div class="chart-bar2">
+													<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Article_Chart_This_Week"></canvas>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
-
-								<div class="card mb-4 shadow">
-									<div class="card-header py-3">
-										<h5 class="m-0 font-weight-bold text-primary">上一周</h5>
-									</div>
-									<div class="card-body">
-										<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Article_Chart_Last_Week" width="200" height="100"></canvas>
-										<script>
-											var ctx = document.getElementById("Article_Chart_Last_Week");
-											var myChart = new Chart(ctx, {
-												type: 'horizontalBar',
-												data: {
-													labels: {{ article_label_last_week|safe }}, // 換成自己的labels
-													datasets: [{
-														label: 'Article (第{{ last_week }}周)', 
-														data: {{ article_data_last_week|safe }}, // 換成自己的data
-														backgroundColor: [
-															'rgba(255, 99, 132, 0.2)',
-															'rgba(24, 168, 184, 0.2)',
-															'rgba(64, 24, 184, 0.2)',
-															'rgba(54, 162, 235, 0.2)',
-															'rgba(255, 206, 86, 0.2)',
-															'rgba(75, 192, 192, 0.2)',
-															'rgba(153, 102, 255, 0.2)',
-															'rgba(255, 159, 64, 0.2)'
-														],
-														borderColor: [
-															'rgba(255, 99, 132, 1)',
-															'rgba(24, 168, 184, 1)',
-															'rgba(64, 24, 184, 1)',
-															'rgba(54, 162, 235, 1)',
-															'rgba(255, 206, 86, 1)',
-															'rgba(75, 192, 192, 1)',
-															'rgba(153, 102, 255, 1)',
-															'rgba(255, 159, 64, 1)'
-														],
-														borderWidth: 1
-													}]
-												},
-												options: {
-													scales: {
-														yAxes: [{
-															ticks: {
-																beginAtZero:true
-															}
-														}]
-													}
-												}
-											});
-										</script>
+								<div class="tab-pane fade show" id="pills-article_last_week" role="tabpanel" aria-labelledby="pills-article_last_week-tab">
+									<div class="col-xl-11 col-lg-12 mx-auto">
+										<div class="card mb-4 shadow">
+											<div class="card-header py-3">
+												<h5 class="m-0 font-weight-bold text-primary">上一周</h5>
+											</div>
+											<div class="card-body">
+												<div class="chart-bar2">
+													<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Article_Chart_Last_Week"></canvas>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
-
-								<div class="card mb-4 shadow">
-									<div class="card-header py-3">
-										<h5 class="m-0 font-weight-bold text-primary">這個月</h5>
-									</div>
-									<div class="card-body">
-										<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Article_Chart_this_month" width="200" height="100"></canvas>
-										<script>
-											var ctx = document.getElementById("Article_Chart_this_month");
-											var myChart = new Chart(ctx, {
-												type: 'horizontalBar',
-												data: {
-													labels: {{ article_label_this_month|safe }}, // 換成自己的labels
-													datasets: [{
-														label: 'Article ({{ this_month }}月)', 
-														data: {{ article_data_this_month|safe }}, // 換成自己的data
-														backgroundColor: [
-															'rgba(255, 99, 132, 0.2)',
-															'rgba(24, 168, 184, 0.2)',
-															'rgba(64, 24, 184, 0.2)',
-															'rgba(54, 162, 235, 0.2)',
-															'rgba(255, 206, 86, 0.2)',
-															'rgba(75, 192, 192, 0.2)',
-															'rgba(153, 102, 255, 0.2)',
-															'rgba(255, 159, 64, 0.2)'
-														],
-														borderColor: [
-															'rgba(255, 99, 132, 1)',
-															'rgba(24, 168, 184, 1)',
-															'rgba(64, 24, 184, 1)',
-															'rgba(54, 162, 235, 1)',
-															'rgba(255, 206, 86, 1)',
-															'rgba(75, 192, 192, 1)',
-															'rgba(153, 102, 255, 1)',
-															'rgba(255, 159, 64, 1)'
-														],
-														borderWidth: 1
-													}]
-												},
-												options: {
-													scales: {
-														yAxes: [{
-															ticks: {
-																beginAtZero:true
-															}
-														}]
-													}
-												}
-											});
-										</script>
+								<div class="tab-pane fade show" id="pills-article_this_month" role="tabpanel" aria-labelledby="pills-article_this_month-tab">
+									<div class="col-xl-11 col-lg-12 mx-auto">
+										<div class="card mb-4 shadow">
+											<div class="card-header py-3">
+												<h5 class="m-0 font-weight-bold text-primary">這個月</h5>
+											</div>
+											<div class="card-body">
+												<div class="chart-bar2">
+													<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Article_Chart_this_month"></canvas>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
-								<div class="card mb-4 shadow">
-									<div class="card-header py-3">
-										<h5 class="m-0 font-weight-bold text-primary">上個月</h5>
-									</div>
-									<div class="card-body">
-										<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Article_Chart_last_month" width="200" height="100"></canvas>
-										<script>
-											var ctx = document.getElementById("Article_Chart_last_month");
-											var myChart = new Chart(ctx, {
-												type: 'horizontalBar',
-												data: {
-													labels: {{ article_label_last_month|safe }}, // 換成自己的labels
-													datasets: [{
-														label: 'Article ({{ last_month }}月)', 
-														data: {{ article_data_last_month|safe }}, // 換成自己的data
-														backgroundColor: [
-															'rgba(255, 99, 132, 0.2)',
-															'rgba(24, 168, 184, 0.2)',
-															'rgba(64, 24, 184, 0.2)',
-															'rgba(54, 162, 235, 0.2)',
-															'rgba(255, 206, 86, 0.2)',
-															'rgba(75, 192, 192, 0.2)',
-															'rgba(153, 102, 255, 0.2)',
-															'rgba(255, 159, 64, 0.2)'
-														],
-														borderColor: [
-															'rgba(255, 99, 132, 1)',
-															'rgba(24, 168, 184, 1)',
-															'rgba(64, 24, 184, 1)',
-															'rgba(54, 162, 235, 1)',
-															'rgba(255, 206, 86, 1)',
-															'rgba(75, 192, 192, 1)',
-															'rgba(153, 102, 255, 1)',
-															'rgba(255, 159, 64, 1)'
-														],
-														borderWidth: 1
-													}]
-												},
-												options: {
-													scales: {
-														yAxes: [{
-															ticks: {
-																beginAtZero:true
-															}
-														}]
-													}
-												}
-											});
-										</script>
+								<div class="tab-pane fade show" id="pills-article_last_month" role="tabpanel" aria-labelledby="pills-article_last_month-tab">
+									<div class="col-xl-11 col-lg-12 mx-auto">
+										<div class="card mb-4 shadow">
+											<div class="card-header py-3">
+												<h5 class="m-0 font-weight-bold text-primary">上個月</h5>
+											</div>
+											<div class="card-body">
+												<div class="chart-bar2">
+													<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Article_Chart_last_month"></canvas>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="tab-pane fade show" id="pills-discussion" role="tabpanel" aria-labelledby="pills-discussion_tab">
-							<div class="col-xl-11 col-lg-12 mx-auto">
-								<div class="card mb-4 shadow">
-									<div class="card-header py-3">
-										<h5 class="m-0 font-weight-bold text-primary">這一周</h5>
-									</div>
-									<div class="card-body">
-										<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Discussion_Chart_of_this_week" width="200" height="100"></canvas>
-										<script>
-											var ctx = document.getElementById("Discussion_Chart_of_this_week");
-											var myChart = new Chart(ctx, {
-												type: 'horizontalBar',
-												data: {
-													labels: {{ discussion_label_this_week |safe }}, // 換成自己的labels
-													datasets: [{
-														label: 'Discussion (第{{ this_week }}周)', 
-														data: {{ discussiond_data_this_week|safe }}, // 換成自己的data
-														backgroundColor: [
-															'rgba(255,  99, 132, 0.2)',
-															'rgba( 24, 168, 184, 0.2)',
-															'rgba( 64,  24, 184, 0.2)',
-															'rgba( 54, 162, 235, 0.2)',
-															'rgba(255, 206,  86, 0.2)',
-															'rgba( 75, 192, 192, 0.2)',
-															'rgba(153, 102, 255, 0.2)',
-															'rgba(255, 159, 64, 0.2)'
-														],
-														borderColor: [
-															'rgba(255, 99, 132, 1)',
-															'rgba(24, 168, 184, 1)',
-															'rgba(64, 24, 184, 1)',
-															'rgba(54, 162, 235, 1)',
-															'rgba(255, 206, 86, 1)',
-															'rgba(75, 192, 192, 1)',
-															'rgba(153, 102, 255, 1)',
-															'rgba(255, 159, 64, 1)'
-														],
-														borderWidth: 1
-													}]
-												},
-												options: {
-													scales: {
-														yAxes: [{
-															ticks: {
-																beginAtZero:true
-															}
-														}]
-													}
-												}
-											});
-										</script>
+							<ul id="hot_discussion_pills_tab" class="nav nav-pills nav-fill flex-column flex-sm-row" role="tablist">
+							  <li class="nav-item pill-1">
+								<a class="nav-link active" id="pills-discussion_this_week-tab" data-toggle="pill" href="#pills-discussion_this_week" role="tab" aria-controls="pills-discussion_this_week" aria-selected="true">這一周</a>
+							  </li>
+							  <li class="nav-item pill-1">
+								<a class="nav-link" id="pills-discussion_last_week-tab" data-toggle="pill" href="#pills-discussion_last_week" role="tab" aria-controls="pills-discussion_last_week" aria-selected="false">這上周</a>
+							  </li>
+							  <li class="nav-item pill-1">
+								<a class="nav-link" id="pills-discussion_this_month-tab" data-toggle="pill" href="#pills-discussion_this_month" role="tab" aria-controls="pills-discussion_this_month" aria-selected="false">這個月</a>
+							  </li>
+							  <li class="nav-item pill-1">
+								<a class="nav-link" id="pills-discussion_last_month-tab" data-toggle="pill" href="#pills-discussion_last_month" role="tab" aria-controls="pills-discussion_last_month" aria-selected="false">上個月</a>
+							  </li>
+							</ul>
+							<div class="tab-content mt-2 mb-4" id="pills-articleTabContent">
+								<hr class="mt-3 mb-4">
+								<div class="tab-pane fade show active" id="pills-discussion_this_week" role="tabpanel" aria-labelledby="pills-discussion_this_week-tab">
+									<div class="col-xl-11 col-lg-12 mx-auto">
+										<div class="card mb-4 shadow">
+											<div class="card-header py-3">
+												<h5 class="m-0 font-weight-bold text-primary">這一周</h5>
+											</div>
+											<div class="card-body">
+												<div class="chart-bar2">
+													<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Discussion_Chart_this_week"></canvas>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
-								<div class="card mb-4 shadow">
-									<div class="card-header py-3">
-										<h5 class="m-0 font-weight-bold text-primary">上一周</h5>
-									</div>
-									<div class="card-body">
-										<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Discussion_Chart_of_7_Days_Last" width="200" height="100"></canvas>
-										<script>
-											var ctx = document.getElementById("Discussion_Chart_of_7_Days_Last");
-											var myChart = new Chart(ctx, {
-												type: 'horizontalBar',
-												data: {
-													labels: {{ discussion_label_last_week|safe }}, // 換成自己的labels
-													datasets: [{
-														label: 'Discussion (第{{ last_week }}周)', 
-														data: {{ discussiond_data_last_week|safe }}, // 換成自己的data
-														backgroundColor: [
-															'rgba(255, 99, 132, 0.2)',
-															'rgba(24, 168, 184, 0.2)',
-															'rgba(64, 24, 184, 0.2)',
-															'rgba(54, 162, 235, 0.2)',
-															'rgba(255, 206, 86, 0.2)',
-															'rgba(75, 192, 192, 0.2)',
-															'rgba(153, 102, 255, 0.2)',
-															'rgba(255, 159, 64, 0.2)'
-														],
-														borderColor: [
-															'rgba(255, 99, 132, 1)',
-															'rgba(24, 168, 184, 1)',
-															'rgba(64, 24, 184, 1)',
-															'rgba(54, 162, 235, 1)',
-															'rgba(255, 206, 86, 1)',
-															'rgba(75, 192, 192, 1)',
-															'rgba(153, 102, 255, 1)',
-															'rgba(255, 159, 64, 1)'
-														],
-														borderWidth: 1
-													}]
-												},
-												options: {
-													scales: {
-														yAxes: [{
-															ticks: {
-																beginAtZero:true
-															}
-														}]
-													}
-												}
-											});
-										</script>
+								<div class="tab-pane fade show" id="pills-discussion_last_week" role="tabpanel" aria-labelledby="pills-discussion_last_week-tab">
+									<div class="col-xl-11 col-lg-12 mx-auto">
+										<div class="card mb-4 shadow">
+											<div class="card-header py-3">
+												<h5 class="m-0 font-weight-bold text-primary">上一周</h5>
+											</div>
+											<div class="card-body">
+												<div class="chart-bar2">
+													<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Discussion_Chart_last_week"></canvas>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
-								<div class="card mb-4 shadow">
-									<div class="card-header py-3">
-										<h5 class="m-0 font-weight-bold text-primary">這個月</h5>
-									</div>
-									<div class="card-body">
-										<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Discussion_Chart_this_month" width="200" height="100"></canvas>
-										<script>
-											var ctx = document.getElementById("Discussion_Chart_this_month");
-											var myChart = new Chart(ctx, {
-												type: 'horizontalBar',
-												data: {
-													labels: {{ discussion_label_this_month|safe }}, // 換成自己的labels
-													datasets: [{
-														label: 'Discussion ({{ this_month }}月)', 
-														data: {{ discussiond_data_this_month|safe }}, // 換成自己的data
-														backgroundColor: [
-															'rgba(255, 99, 132, 0.2)',
-															'rgba(24, 168, 184, 0.2)',
-															'rgba(64, 24, 184, 0.2)',
-															'rgba(54, 162, 235, 0.2)',
-															'rgba(255, 206, 86, 0.2)',
-															'rgba(75, 192, 192, 0.2)',
-															'rgba(153, 102, 255, 0.2)',
-															'rgba(255, 159, 64, 0.2)'
-														],
-														borderColor: [
-															'rgba(255, 99, 132, 1)',
-															'rgba(24, 168, 184, 1)',
-															'rgba(64, 24, 184, 1)',
-															'rgba(54, 162, 235, 1)',
-															'rgba(255, 206, 86, 1)',
-															'rgba(75, 192, 192, 1)',
-															'rgba(153, 102, 255, 1)',
-															'rgba(255, 159, 64, 1)'
-														],
-														borderWidth: 1
-													}]
-												},
-												options: {
-													scales: {
-														yAxes: [{
-															ticks: {
-																beginAtZero:true
-															}
-														}]
-													}
-												}
-											});
-										</script>
+								<div class="tab-pane fade show" id="pills-discussion_this_month" role="tabpanel" aria-labelledby="pills-discussion_this_month-tab">
+									<div class="col-xl-11 col-lg-12 mx-auto">
+										<div class="card mb-4 shadow">
+											<div class="card-header py-3">
+												<h5 class="m-0 font-weight-bold text-primary">這個月</h5>
+											</div>
+											<div class="card-body">
+												<div class="chart-bar2">
+													<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Discussion_Chart_this_month"></canvas>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
-								<div class="card mb-4 shadow">
-									<div class="card-header py-3">
-										<h5 class="m-0 font-weight-bold text-primary">上個月</h5>
-									</div>
-									<div class="card-body">
-										<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Discussion_Chart_last_month" width="200" height="100"></canvas>
-										<script>
-											var ctx = document.getElementById("Discussion_Chart_last_month");
-											var myChart = new Chart(ctx, {
-												type: 'horizontalBar',
-												data: {
-													labels: {{ discussion_label_last_month|safe }}, // 換成自己的labels
-													datasets: [{
-														label: 'Discussion ({{ last_month }}月)', 
-														data: {{ discussiond_data_last_month|safe }}, // 換成自己的data
-														backgroundColor: [
-															'rgba(255, 99, 132, 0.2)',
-															'rgba(24, 168, 184, 0.2)',
-															'rgba(64, 24, 184, 0.2)',
-															'rgba(54, 162, 235, 0.2)',
-															'rgba(255, 206, 86, 0.2)',
-															'rgba(75, 192, 192, 0.2)',
-															'rgba(153, 102, 255, 0.2)',
-															'rgba(255, 159, 64, 0.2)'
-														],
-														borderColor: [
-															'rgba(255, 99, 132, 1)',
-															'rgba(24, 168, 184, 1)',
-															'rgba(64, 24, 184, 1)',
-															'rgba(54, 162, 235, 1)',
-															'rgba(255, 206, 86, 1)',
-															'rgba(75, 192, 192, 1)',
-															'rgba(153, 102, 255, 1)',
-															'rgba(255, 159, 64, 1)'
-														],
-														borderWidth: 1
-													}]
-												},
-												options: {
-													scales: {
-														yAxes: [{
-															ticks: {
-																beginAtZero:true
-															}
-														}]
-													}
-												}
-											});
-										</script>
+								<div class="tab-pane fade show" id="pills-discussion_last_month" role="tabpanel" aria-labelledby="pills-discussion_last_month-tab">
+									<div class="col-xl-11 col-lg-12 mx-auto">
+										<div class="card mb-4 shadow">
+											<div class="card-header py-3">
+												<h5 class="m-0 font-weight-bold text-primary">上個月</h5>
+											</div>
+											<div class="card-body">
+												<div class="chart-bar2">
+													<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Discussion_Chart_last_month"></canvas>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+	<script src="/static/ptt_movie/js/demo/chart-bar-demo.js"></script>
+	<script>
+		var atwChart = document.getElementById("Article_Chart_This_Week");
+		var atwBarChart = new Chart(atwChart, {
+		  type: 'horizontalBar',
+		  data: {
+			labels: {{ article_label_this_week |safe }},
+			datasets: [{
+			  label: "Article (第{{ this_week }}周)",
+			  backgroundColor: ['rgba(78, 115, 223, 1)',
+								'rgba(78, 115, 223, 0.9)',
+								'rgba(78, 115, 223, 0.8)',
+								'rgba(78, 115, 223, 0.7)',
+								'rgba(78, 115, 223, 0.6)',
+								'rgba(78, 115, 223, 0.5)',
+								'rgba(78, 115, 223, 0.4)',
+								'rgba(78, 115, 223, 0.3)',
+								'rgba(78, 115, 223, 0.2)',
+							   ],
+			  hoverBackgroundColor:['rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+							   ],
+			  borderColor: ['rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							],
+			  data: {{ article_data_this_week|safe }},
+			}],
+		  },
+		  options: {
+			maintainAspectRatio: false,
+			layout: {
+			  padding: {
+				left: 10,
+				right: 25,
+				top: 25,
+				bottom: 0
+			  }
+			},
+			scales: {
+			  xAxes: [{
+				gridLines: {
+				  display: false,
+				  drawBorder: false
+				},
+				ticks: {
+				  maxTicksLimit: 10
+				},
+				maxBarThickness: 25,
+			  }],
+			  yAxes: [{
+				ticks: {
+				  // Include a dollar sign in the ticks
+				  callback: function(value, index, values) {
+					return value;
+				  }
+				},
+				gridLines: {
+				  color: "rgb(234, 236, 244)",
+				  zeroLineColor: "rgb(234, 236, 244)",
+				  drawBorder: false,
+				  borderDash: [5],
+				  zeroLineBorderDash: [5]
+				}
+			  }],
+			},
+			legend: {
+			  display: false
+			},
+			tooltips: {
+			  titleMarginBottom: 10,
+			  titleFontColor: '#6e707e',
+			  titleFontSize: 14,
+			  backgroundColor: "rgb(255,255,255)",
+			  bodyFontColor: "#858796",
+			  borderColor: '#dddfeb',
+			  borderWidth: 1,
+			  xPadding: 15,
+			  yPadding: 15,
+			  displayColors: false,
+			  caretPadding: 10,
+			  callbacks: {
+				label: function(tooltipItem, chart) {
+				  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+				  return datasetLabel + ': ' + number_format(tooltipItem.xLabel);
+				}
+			  }
+			},
+		  }
+		});
+		
+		var alwChart = document.getElementById("Article_Chart_Last_Week");
+		var alwBarChart = new Chart(alwChart, {
+		  type: 'horizontalBar',
+		  data: {
+			labels: {{ article_label_last_week |safe }},
+			datasets: [{
+			  label: "Article (第{{ this_week }}周)",
+			  backgroundColor: ['rgba(78, 115, 223, 1)',
+								'rgba(78, 115, 223, 0.9)',
+								'rgba(78, 115, 223, 0.8)',
+								'rgba(78, 115, 223, 0.7)',
+								'rgba(78, 115, 223, 0.6)',
+								'rgba(78, 115, 223, 0.5)',
+								'rgba(78, 115, 223, 0.4)',
+								'rgba(78, 115, 223, 0.3)',
+								'rgba(78, 115, 223, 0.2)',
+							   ],
+			  hoverBackgroundColor:['rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+							   ],
+			  borderColor: ['rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							],
+			  data: {{ article_data_last_week|safe }},
+			}],
+		  },
+		  options: {
+			maintainAspectRatio: false,
+			layout: {
+			  padding: {
+				left: 10,
+				right: 25,
+				top: 25,
+				bottom: 0
+			  }
+			},
+			scales: {
+			  xAxes: [{
+				gridLines: {
+				  display: false,
+				  drawBorder: false
+				},
+				ticks: {
+				  maxTicksLimit: 10
+				},
+				maxBarThickness: 25,
+			  }],
+			  yAxes: [{
+				ticks: {
+				  // Include a dollar sign in the ticks
+				  callback: function(value, index, values) {
+					return value;
+				  }
+				},
+				gridLines: {
+				  color: "rgb(234, 236, 244)",
+				  zeroLineColor: "rgb(234, 236, 244)",
+				  drawBorder: false,
+				  borderDash: [5],
+				  zeroLineBorderDash: [5]
+				}
+			  }],
+			},
+			legend: {
+			  display: false
+			},
+			tooltips: {
+			  titleMarginBottom: 10,
+			  titleFontColor: '#6e707e',
+			  titleFontSize: 14,
+			  backgroundColor: "rgb(255,255,255)",
+			  bodyFontColor: "#858796",
+			  borderColor: '#dddfeb',
+			  borderWidth: 1,
+			  xPadding: 15,
+			  yPadding: 15,
+			  displayColors: false,
+			  caretPadding: 10,
+			  callbacks: {
+				label: function(tooltipItem, chart) {
+				  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+				  return datasetLabel + ': ' + number_format(tooltipItem.xLabel);
+				}
+			  }
+			},
+		  }
+		});
+		
+		var atmChart = document.getElementById("Article_Chart_this_month");
+		var atmBarChart = new Chart(atmChart, {
+		  type: 'horizontalBar',
+		  data: {
+			labels: {{ article_label_this_month |safe }},
+			datasets: [{
+			  label: "Article (第{{ this_week }}周)",
+			  backgroundColor: ['rgba(78, 115, 223, 1)',
+								'rgba(78, 115, 223, 0.9)',
+								'rgba(78, 115, 223, 0.8)',
+								'rgba(78, 115, 223, 0.7)',
+								'rgba(78, 115, 223, 0.6)',
+								'rgba(78, 115, 223, 0.5)',
+								'rgba(78, 115, 223, 0.4)',
+								'rgba(78, 115, 223, 0.3)',
+								'rgba(78, 115, 223, 0.2)',
+							   ],
+			  hoverBackgroundColor:['rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+							   ],
+			  borderColor: ['rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							],
+			  data: {{ article_data_this_month|safe }},
+			}],
+		  },
+		  options: {
+			maintainAspectRatio: false,
+			layout: {
+			  padding: {
+				left: 10,
+				right: 25,
+				top: 25,
+				bottom: 0
+			  }
+			},
+			scales: {
+			  xAxes: [{
+				gridLines: {
+				  display: false,
+				  drawBorder: false
+				},
+				ticks: {
+				  maxTicksLimit: 10
+				},
+				maxBarThickness: 25,
+			  }],
+			  yAxes: [{
+				ticks: {
+				  // Include a dollar sign in the ticks
+				  callback: function(value, index, values) {
+					return value;
+				  }
+				},
+				gridLines: {
+				  color: "rgb(234, 236, 244)",
+				  zeroLineColor: "rgb(234, 236, 244)",
+				  drawBorder: false,
+				  borderDash: [5],
+				  zeroLineBorderDash: [5]
+				}
+			  }],
+			},
+			legend: {
+			  display: false
+			},
+			tooltips: {
+			  titleMarginBottom: 10,
+			  titleFontColor: '#6e707e',
+			  titleFontSize: 14,
+			  backgroundColor: "rgb(255,255,255)",
+			  bodyFontColor: "#858796",
+			  borderColor: '#dddfeb',
+			  borderWidth: 1,
+			  xPadding: 15,
+			  yPadding: 15,
+			  displayColors: false,
+			  caretPadding: 10,
+			  callbacks: {
+				label: function(tooltipItem, chart) {
+				  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+				  return datasetLabel + ': ' + number_format(tooltipItem.xLabel);
+				}
+			  }
+			},
+		  }
+		});
+		
+		var almChart = document.getElementById("Article_Chart_last_month");
+		var almBarChart = new Chart(almChart, {
+		  type: 'horizontalBar',
+		  data: {
+			labels: {{ article_label_last_month |safe }},
+			datasets: [{
+			  label: "Article (第{{ this_week }}周)",
+			  backgroundColor: ['rgba(78, 115, 223, 1)',
+								'rgba(78, 115, 223, 0.9)',
+								'rgba(78, 115, 223, 0.8)',
+								'rgba(78, 115, 223, 0.7)',
+								'rgba(78, 115, 223, 0.6)',
+								'rgba(78, 115, 223, 0.5)',
+								'rgba(78, 115, 223, 0.4)',
+								'rgba(78, 115, 223, 0.3)',
+								'rgba(78, 115, 223, 0.2)',
+							   ],
+			  hoverBackgroundColor:['rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+							   ],
+			  borderColor: ['rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							],
+			  data: {{ article_data_last_month|safe }},
+			}],
+		  },
+		  options: {
+			maintainAspectRatio: false,
+			layout: {
+			  padding: {
+				left: 10,
+				right: 25,
+				top: 25,
+				bottom: 0
+			  }
+			},
+			scales: {
+			  xAxes: [{
+				gridLines: {
+				  display: false,
+				  drawBorder: false
+				},
+				ticks: {
+				  maxTicksLimit: 10
+				},
+				maxBarThickness: 25,
+			  }],
+			  yAxes: [{
+				ticks: {
+				  // Include a dollar sign in the ticks
+				  callback: function(value, index, values) {
+					return value;
+				  }
+				},
+				gridLines: {
+				  color: "rgb(234, 236, 244)",
+				  zeroLineColor: "rgb(234, 236, 244)",
+				  drawBorder: false,
+				  borderDash: [5],
+				  zeroLineBorderDash: [5]
+				}
+			  }],
+			},
+			legend: {
+			  display: false
+			},
+			tooltips: {
+			  titleMarginBottom: 10,
+			  titleFontColor: '#6e707e',
+			  titleFontSize: 14,
+			  backgroundColor: "rgb(255,255,255)",
+			  bodyFontColor: "#858796",
+			  borderColor: '#dddfeb',
+			  borderWidth: 1,
+			  xPadding: 15,
+			  yPadding: 15,
+			  displayColors: false,
+			  caretPadding: 10,
+			  callbacks: {
+				label: function(tooltipItem, chart) {
+				  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+				  return datasetLabel + ': ' + number_format(tooltipItem.xLabel);
+				}
+			  }
+			},
+		  }
+		});
+		
+		
+		
+		var dtwChart = document.getElementById("Discussion_Chart_this_week");
+		var dtwBarChart = new Chart(dtwChart, {
+		  type: 'horizontalBar',
+		  data: {
+			labels: {{ discussion_label_this_week |safe }},
+			datasets: [{
+			  label: "Article (第{{ this_week }}周)",
+			  backgroundColor: ['rgba(78, 115, 223, 1)',
+								'rgba(78, 115, 223, 0.9)',
+								'rgba(78, 115, 223, 0.8)',
+								'rgba(78, 115, 223, 0.7)',
+								'rgba(78, 115, 223, 0.6)',
+								'rgba(78, 115, 223, 0.5)',
+								'rgba(78, 115, 223, 0.4)',
+								'rgba(78, 115, 223, 0.3)',
+								'rgba(78, 115, 223, 0.2)',
+							   ],
+			  hoverBackgroundColor:['rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+							   ],
+			  borderColor: ['rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							],
+			  data: {{ discussion_data_this_week|safe }},
+			}],
+		  },
+		  options: {
+			maintainAspectRatio: false,
+			layout: {
+			  padding: {
+				left: 10,
+				right: 25,
+				top: 25,
+				bottom: 0
+			  }
+			},
+			scales: {
+			  xAxes: [{
+				gridLines: {
+				  display: false,
+				  drawBorder: false
+				},
+				ticks: {
+				  maxTicksLimit: 10
+				},
+				maxBarThickness: 25,
+			  }],
+			  yAxes: [{
+				ticks: {
+				  // Include a dollar sign in the ticks
+				  callback: function(value, index, values) {
+					return value;
+				  }
+				},
+				gridLines: {
+				  color: "rgb(234, 236, 244)",
+				  zeroLineColor: "rgb(234, 236, 244)",
+				  drawBorder: false,
+				  borderDash: [5],
+				  zeroLineBorderDash: [5]
+				}
+			  }],
+			},
+			legend: {
+			  display: false
+			},
+			tooltips: {
+			  titleMarginBottom: 10,
+			  titleFontColor: '#6e707e',
+			  titleFontSize: 14,
+			  backgroundColor: "rgb(255,255,255)",
+			  bodyFontColor: "#858796",
+			  borderColor: '#dddfeb',
+			  borderWidth: 1,
+			  xPadding: 15,
+			  yPadding: 15,
+			  displayColors: false,
+			  caretPadding: 10,
+			  callbacks: {
+				label: function(tooltipItem, chart) {
+				  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+				  return datasetLabel + ': ' + number_format(tooltipItem.xLabel);
+				}
+			  }
+			},
+		  }
+		});
+		
+		var dlwChart = document.getElementById("Discussion_Chart_last_week");
+		var dlwBarChart = new Chart(dlwChart, {
+		  type: 'horizontalBar',
+		  data: {
+			labels: {{ discussion_label_last_week |safe }},
+			datasets: [{
+			  label: "Article (第{{ this_week }}周)",
+			  backgroundColor: ['rgba(78, 115, 223, 1)',
+								'rgba(78, 115, 223, 0.9)',
+								'rgba(78, 115, 223, 0.8)',
+								'rgba(78, 115, 223, 0.7)',
+								'rgba(78, 115, 223, 0.6)',
+								'rgba(78, 115, 223, 0.5)',
+								'rgba(78, 115, 223, 0.4)',
+								'rgba(78, 115, 223, 0.3)',
+								'rgba(78, 115, 223, 0.2)',
+							   ],
+			  hoverBackgroundColor:['rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+							   ],
+			  borderColor: ['rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							],
+			  data: {{ discussion_data_last_week|safe }},
+			}],
+		  },
+		  options: {
+			maintainAspectRatio: false,
+			layout: {
+			  padding: {
+				left: 10,
+				right: 25,
+				top: 25,
+				bottom: 0
+			  }
+			},
+			scales: {
+			  xAxes: [{
+				gridLines: {
+				  display: false,
+				  drawBorder: false
+				},
+				ticks: {
+				  maxTicksLimit: 10
+				},
+				maxBarThickness: 25,
+			  }],
+			  yAxes: [{
+				ticks: {
+				  // Include a dollar sign in the ticks
+				  callback: function(value, index, values) {
+					return value;
+				  }
+				},
+				gridLines: {
+				  color: "rgb(234, 236, 244)",
+				  zeroLineColor: "rgb(234, 236, 244)",
+				  drawBorder: false,
+				  borderDash: [5],
+				  zeroLineBorderDash: [5]
+				}
+			  }],
+			},
+			legend: {
+			  display: false
+			},
+			tooltips: {
+			  titleMarginBottom: 10,
+			  titleFontColor: '#6e707e',
+			  titleFontSize: 14,
+			  backgroundColor: "rgb(255,255,255)",
+			  bodyFontColor: "#858796",
+			  borderColor: '#dddfeb',
+			  borderWidth: 1,
+			  xPadding: 15,
+			  yPadding: 15,
+			  displayColors: false,
+			  caretPadding: 10,
+			  callbacks: {
+				label: function(tooltipItem, chart) {
+				  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+				  return datasetLabel + ': ' + number_format(tooltipItem.xLabel);
+				}
+			  }
+			},
+		  }
+		});
+		
+		var dtmChart = document.getElementById("Discussion_Chart_this_month");
+		var dtmBarChart = new Chart(dtmChart, {
+		  type: 'horizontalBar',
+		  data: {
+			labels: {{ discussion_label_this_month |safe }},
+			datasets: [{
+			  label: "Article (第{{ this_week }}周)",
+			  backgroundColor: ['rgba(78, 115, 223, 1)',
+								'rgba(78, 115, 223, 0.9)',
+								'rgba(78, 115, 223, 0.8)',
+								'rgba(78, 115, 223, 0.7)',
+								'rgba(78, 115, 223, 0.6)',
+								'rgba(78, 115, 223, 0.5)',
+								'rgba(78, 115, 223, 0.4)',
+								'rgba(78, 115, 223, 0.3)',
+								'rgba(78, 115, 223, 0.2)',
+							   ],
+			  hoverBackgroundColor:['rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+							   ],
+			  borderColor: ['rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							],
+			  data: {{ discussion_data_this_month|safe }},
+			}],
+		  },
+		  options: {
+			maintainAspectRatio: false,
+			layout: {
+			  padding: {
+				left: 10,
+				right: 25,
+				top: 25,
+				bottom: 0
+			  }
+			},
+			scales: {
+			  xAxes: [{
+				gridLines: {
+				  display: false,
+				  drawBorder: false
+				},
+				ticks: {
+				  maxTicksLimit: 10
+				},
+				maxBarThickness: 25,
+			  }],
+			  yAxes: [{
+				ticks: {
+				  // Include a dollar sign in the ticks
+				  callback: function(value, index, values) {
+					return value;
+				  }
+				},
+				gridLines: {
+				  color: "rgb(234, 236, 244)",
+				  zeroLineColor: "rgb(234, 236, 244)",
+				  drawBorder: false,
+				  borderDash: [5],
+				  zeroLineBorderDash: [5]
+				}
+			  }],
+			},
+			legend: {
+			  display: false
+			},
+			tooltips: {
+			  titleMarginBottom: 10,
+			  titleFontColor: '#6e707e',
+			  titleFontSize: 14,
+			  backgroundColor: "rgb(255,255,255)",
+			  bodyFontColor: "#858796",
+			  borderColor: '#dddfeb',
+			  borderWidth: 1,
+			  xPadding: 15,
+			  yPadding: 15,
+			  displayColors: false,
+			  caretPadding: 10,
+			  callbacks: {
+				label: function(tooltipItem, chart) {
+				  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+				  return datasetLabel + ': ' + number_format(tooltipItem.xLabel);
+				}
+			  }
+			},
+		  }
+		});
+		
+		var dlmChart = document.getElementById("Discussion_Chart_last_month");
+		var dlmBarChart = new Chart(dlmChart, {
+		  type: 'horizontalBar',
+		  data: {
+			labels: {{ discussion_label_last_month |safe }},
+			datasets: [{
+			  label: "Article (第{{ this_week }}周)",
+			  backgroundColor: ['rgba(78, 115, 223, 1)',
+								'rgba(78, 115, 223, 0.9)',
+								'rgba(78, 115, 223, 0.8)',
+								'rgba(78, 115, 223, 0.7)',
+								'rgba(78, 115, 223, 0.6)',
+								'rgba(78, 115, 223, 0.5)',
+								'rgba(78, 115, 223, 0.4)',
+								'rgba(78, 115, 223, 0.3)',
+								'rgba(78, 115, 223, 0.2)',
+							   ],
+			  hoverBackgroundColor:['rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+								'rgba(46, 89, 217, 1)',
+							   ],
+			  borderColor: ['rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							'rgba(78, 115, 223, 1)',
+							],
+			  data: {{ discussion_data_last_month|safe }},
+			}],
+		  },
+		  options: {
+			maintainAspectRatio: false,
+			layout: {
+			  padding: {
+				left: 10,
+				right: 25,
+				top: 25,
+				bottom: 0
+			  }
+			},
+			scales: {
+			  xAxes: [{
+				gridLines: {
+				  display: false,
+				  drawBorder: false
+				},
+				ticks: {
+				  maxTicksLimit: 10
+				},
+				maxBarThickness: 25,
+			  }],
+			  yAxes: [{
+				ticks: {
+				  // Include a dollar sign in the ticks
+				  callback: function(value, index, values) {
+					return value;
+				  }
+				},
+				gridLines: {
+				  color: "rgb(234, 236, 244)",
+				  zeroLineColor: "rgb(234, 236, 244)",
+				  drawBorder: false,
+				  borderDash: [5],
+				  zeroLineBorderDash: [5]
+				}
+			  }],
+			},
+			legend: {
+			  display: false
+			},
+			tooltips: {
+			  titleMarginBottom: 10,
+			  titleFontColor: '#6e707e',
+			  titleFontSize: 14,
+			  backgroundColor: "rgb(255,255,255)",
+			  bodyFontColor: "#858796",
+			  borderColor: '#dddfeb',
+			  borderWidth: 1,
+			  xPadding: 15,
+			  yPadding: 15,
+			  displayColors: false,
+			  caretPadding: 10,
+			  callbacks: {
+				label: function(tooltipItem, chart) {
+				  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+				  return datasetLabel + ': ' + number_format(tooltipItem.xLabel);
+				}
+			  }
+			},
+		  }
+		});
+	</script>
 {% endblock %}

@@ -34,6 +34,7 @@ def index(request):
 from .search_of_article import article_search
 from ptt_movie.models import Keyword_Analysis,Keyword
 from django.db.models import Sum
+from decimal import Decimal
 def index(request):
 	
 	#今日
@@ -93,9 +94,16 @@ def index(request):
 			elif(i%6==5):
 				keyword_analysis_of_this_week[i].update({'h_color':'text-success'})
 			keyword_discussion_of_this_week.append(keyword_analysis_of_this_week[i]['c_discussion'])
-			keyword_label_of_this_week.append(keyword_analysis_of_this_week[i]['a_movie'])
+			#keyword_label_of_this_week.append(keyword_analysis_of_this_week[i]['a_movie'])
 			#print(keyword_analysis_of_this_week[i])
 		#print(keyword_discussion_of_this_week)
+
+		for i in range(len(keyword_analysis_of_this_week)):
+			#label = keyword_analysis_of_this_week[i]['a_movie']
+			label = keyword_analysis_of_this_week[i]['a_movie'] + ' (' + str( round(keyword_analysis_of_this_week[i]['c_discussion'] / sum(keyword_discussion_of_this_week) *100, 1) ) + '%)'
+			keyword_analysis_of_this_week[i].update({'a_movie':label})
+			keyword_label_of_this_week.append(label)
+			
 		keyword_discussion_of_this_week = json.dumps(keyword_discussion_of_this_week)
 		keyword_label_of_this_week = json.dumps(keyword_label_of_this_week,ensure_ascii=False)
 	
@@ -278,7 +286,7 @@ def keyword(request,key):
 			"c_discussion": number_of_discussion,
 			"d_good": number_of_good,
 			"e_bad": number_of_bad,
-			"f_score": round(ration_of_score,3),
+			"f_score": round(ration_of_score*100,1),
 			"g_comment": comment_good_bad,
 		}
 		
@@ -366,6 +374,7 @@ def week(request,key):
 	if len(keyword_result) != 0:
 	
 		type_name = '周'
+		another_type_name = ['月','month']
 		movie_name = key
 		data = []
 				
@@ -400,7 +409,8 @@ def week(request,key):
 		
 		return render(request,'ptt_movie/result2.html',locals())
 	else:
-		return HttpResponse(str('電影名稱錯誤'))
+		return_message = '錯誤關鍵字'
+		return render(request,'ptt_movie/404.html',locals())
 			
 def month(request,key):
 
@@ -409,6 +419,7 @@ def month(request,key):
 	if len(keyword_result) != 0:
 	
 		type_name = '月'
+		another_type_name = ['周','week']
 		movie_name = key
 		data = []
 				
@@ -443,7 +454,8 @@ def month(request,key):
 		
 		return render(request,'ptt_movie/result2.html',locals())
 	else:
-		return HttpResponse(str('電影名稱錯誤'))
+		return_message = '錯誤關鍵字'
+		return render(request,'ptt_movie/404.html',locals())
 
 from .search_of_article import article_search
 from ptt_movie.models import Keyword_Analysis
@@ -676,10 +688,10 @@ def hot(request):
 		article_data_this_week.append(_data['b_article'])
 	article_data_this_week = json.dumps(article_data_this_week)
 
-	discussiond_data_this_week = list()			#討
+	discussion_data_this_week = list()			#討
 	for _data in d_data_this_week:
-		discussiond_data_this_week.append(_data['c_discussion'])
-	discussiond_data_this_week = json.dumps(discussiond_data_this_week)
+		discussion_data_this_week.append(_data['c_discussion'])
+	discussion_data_this_week = json.dumps(discussion_data_this_week)
 	
 	
 	#上一周
@@ -750,10 +762,10 @@ def hot(request):
 		article_data_last_week.append(_data['b_article'])
 	article_data_last_week = json.dumps(article_data_last_week)
 
-	discussiond_data_last_week = list()				#討
+	discussion_data_last_week = list()				#討
 	for _data in d_data_last_week:
-		discussiond_data_last_week.append(_data['c_discussion'])
-	discussiond_data_last_week = json.dumps(discussiond_data_last_week)
+		discussion_data_last_week.append(_data['c_discussion'])
+	discussion_data_last_week = json.dumps(discussion_data_last_week)
 	
 	
 	#這一月
@@ -824,10 +836,10 @@ def hot(request):
 		article_data_this_month.append(_data['b_article'])
 	article_data_this_month = json.dumps(article_data_this_month)
 	
-	discussiond_data_this_month = list()		#討
+	discussion_data_this_month = list()		#討
 	for _data in d_data_this_month:
-		discussiond_data_this_month.append(_data['c_discussion'])
-	discussiond_data_this_month = json.dumps(discussiond_data_this_month)
+		discussion_data_this_month.append(_data['c_discussion'])
+	discussion_data_this_month = json.dumps(discussion_data_this_month)
 
 	#上一月
 	
@@ -897,10 +909,10 @@ def hot(request):
 		article_data_last_month.append(_data['b_article'])
 	article_data_last_month = json.dumps(article_data_last_month)
 	
-	discussiond_data_last_month = list()	#討
+	discussion_data_last_month = list()	#討
 	for _data in d_data_last_month:
-		discussiond_data_last_month.append(_data['c_discussion'])
-	discussiond_data_last_month = json.dumps(discussiond_data_last_month)
+		discussion_data_last_month.append(_data['c_discussion'])
+	discussion_data_last_month = json.dumps(discussion_data_last_month)
 	
 	return render(request,'ptt_movie/hot.html',locals())
 
@@ -1102,3 +1114,9 @@ def analysis_type(request):
 		form = MoiveForm()
 		return_message = '請輸入關鍵字搜索'
 	return render(request,'ptt_movie/search.html',{'form':form,'return_message':return_message})
+	
+def handler404(request, exception):
+	return_message = '錯誤，網頁不存在'
+	response = render(request,'ptt_movie/404.html',locals())
+	response.status_code = 404
+	return response

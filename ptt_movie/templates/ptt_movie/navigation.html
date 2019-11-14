@@ -8,7 +8,6 @@
             <i class="fa fa-bars"></i>
           </button>
 
-
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 		  
@@ -16,7 +15,7 @@
           <form action="/search/" class="d-none d-sm-inline-block form-inline ml-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="post">
 		    {% csrf_token %}
             <div class="input-group">
-              <input id="id_movie_keyword_name" name="movie_keyword_name" type="text" class="form-control bg-light border-0 small" placeholder="Search for Movie Keyword..." aria-label="Search" aria-describedby="basic-addon2" required="required" {{ input_value }}>
+              <input id="id_movie_keyword_name" name="movie_keyword_name" type="text" class="form-control bg-light border-0 small h-auto" placeholder="Search for Movie Keyword..." aria-label="Search" aria-describedby="basic-addon2" required="required" {{ input_value }}>
               <div class="input-group-append">
                 <button class="btn btn-primary" type="submit">
                   <i class="fas fa-search fa-sm"></i>
@@ -35,7 +34,7 @@
                 <form action="/search/" class="form-inline mr-auto w-100 navbar-search" method="post">
 					{% csrf_token %}
                   <div class="input-group">
-                    <input id="id_movie_keyword_name" name="movie_keyword_name" type="text" class="form-control bg-light border-0 small" placeholder="Search for Movie Keyword..." aria-label="Search" aria-describedby="basic-addon2" required="required" {{ input_value }}>
+                    <input id="id_movie_keyword_name" name="movie_keyword_name" type="text" class="form-control bg-light border-0 small h-auto" placeholder="Search for Movie Keyword..." aria-label="Search" aria-describedby="basic-addon2" required="required" {{ input_value }}>
                     <div class="input-group-append">
                       <button class="btn btn-primary" type="button">
                         <i class="fas fa-search fa-sm"></i>

@@ -7,62 +7,195 @@
 {% endblock %}
 
 {% block page_heading %}
+		<div class="row ml-2">
+		  <button onClick="javascript :history.back(-1);" class="btn btn-link rounded-circle border-0 mr-3 mb-4">
+			<i class="fa fa-arrow-left"></i>
+		  </button>
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-			<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">關鍵字 - {{key}}</h4>
+			<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">關鍵字數據</h4>
           </div>
+		</div>
 {% endblock %}
 
 {% block content %}
-			<div style="font-family: 微軟正黑體;" class="row row-eq-height">
-				<div class="col-xl-7 col-lg-8 mb-4">
-					<div class="card shadow pb-auto h-100">
-						<div class="card-header py-3">
-							<h4 class="m-0 font-weight-bold text-primary">總數據</h4>
-						</div>
+
+
+				  <div class="row" style="font-family: 微軟正黑體">
+					<!-- Earnings (Monthly) Card Example -->
+					<div class="col-xl-6 col-md-4 mb-4">
+					  <div class="card border-left-success shadow h-100 py-2">
 						<div class="card-body">
-							<div class='h5 row'>
-								<div class='col-sm mx-2 text-left'>
-										<div class='row my-0'>
-											<p class="col">文章數: </p>
-											<p class="col">{{ data.b_article }}</p>
-										</div>
-										<div class='row my-0'>
-											<p class="col">討論數: </p>
-											<p class="col">{{ data.c_discussion }}</p>
-										</div>
-										<div class='row my-0'>
-											<p class="col">好評數: </p>
-											<p class="col">{{ data.d_good }}</p>
-										</div>
-										<div class='row my-0'>
-											<p class="col">負評數: </p>
-											<p class="col">{{ data.e_bad }}</p>
-										</div>
-								</div>
-								<div class='col-sm mx-2 text-left'>
-									<div class='row'>
-										<p class="col">評比分: </p>
-										<p class="col">{{ data.f_score }}</p>
-									</div>
-									<div class='row'>
-										<p class="col">評比:</p>
-										<p class="col h3">{{ data.g_comment }}</p>
-									</div>
-								</div>
+						  <div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+							  <div class="h4 font-weight-bold text-success text-uppercase mb-1"><i class="fas fa-fw fa-search mr-2"></i>關鍵字</div>
+							  <div class="h4 font-weight-bold text-gray-800 mb-0"></div>
 							</div>
+							<div class="col-auto">
+							  <span style="font-family: 微軟正黑體" class="h4 pl-2 mb-0 font-weight-bold text-gray-800">{{key}}</span>
+							</div>
+						  </div>
 						</div>
+					  </div>
 					</div>
+					
+					<!-- Earnings (Monthly) Card Example -->
+					<div class="col-xl-3 col-md-4 mb-4">
+					  <div class="card border-left-info shadow h-100 py-2">
+						<div class="card-body">
+						  <div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+							  <div class="h4 font-weight-bold text-info text-uppercase mb-1"><i class="far fa-fw fa-thumbs-up mr-2"></i>評分</div>
+							  <div class="h4 font-weight-bold text-gray-800 mb-0 "></div>
+							</div>
+							<div class="col-auto">
+							  <span style="font-family: 微軟正黑體" class="h4 pl-2 mb-0 font-weight-bold text-gray-800">{{ data.f_score }}</span>
+							</div>
+						  </div>
+						</div>
+					  </div>
+					</div>
+					
+					<!-- Earnings (Monthly) Card Example -->
+					<div class="col-xl-3 col-md-4 mb-4">
+					  <div class="card border-left-warning shadow h-100 py-2">
+						<div class="card-body">
+						  <div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+							  <div class="h4 font-weight-bold text-warning text-uppercase mb-1"><i class="far fa-fw fa-thumbs-up mr-2"></i>評比</div>
+							  <div class="h4 mb-0 font-weight-bold text-gray-800"></div>
+							</div>
+							<div class="col-auto">
+							  <span style="font-family: 微軟正黑體" class="h4 pl-2 mb-0 font-weight-bold text-gray-800">{{ data.g_comment }}</span>
+							</div>
+						  </div>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				  
+			<div style="font-family: 微軟正黑體;" class="row row-eq-height">
+				<div class="col-xl-8 col-lg-8">
+
+				<!-- Content Row -->
+				  <div class="row" style="font-family: 微軟正黑體">
+					<!-- Earnings (Monthly) Card Example -->
+					<div class="col-xl-6 col-md-6 mb-4">
+					  <div class="card border-left-info shadow h-100 py-2">
+						<div class="card-body">
+						  <div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+							  <div class="h4 font-weight-bold text-info mb-1"><i class="far fa-fw fa-edit mr-2"></i>文章數</div>
+							  <div class="h4 font-weight-bold text-gray-800 text-uppercase mb-0"></div>
+							</div>
+							<div class="col-auto">
+							  <span style="font-family: 微軟正黑體" class="h4 pl-2 mb-0 font-weight-bold text-gray-800">{{ data.b_article }}</span>
+							</div>
+						  </div>
+						</div>
+					  </div>
+					</div>
+
+					<!-- Earnings (Monthly) Card Example -->
+					<div class="col-xl-6 col-md-6 mb-4">
+					  <div class="card border-left-success shadow h-100 py-2">
+						<div class="card-body">
+						  <div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+							  <div class="h4 font-weight-bold text-success text-uppercase mb-1"><i class="far fa-fw fa-comments mr-2"></i>討論數</div>
+							  <div class="h4 font-weight-bold text-gray-800 mb-0 "></div>
+							</div>
+							<div class="col-auto">
+							  <span style="font-family: 微軟正黑體" class="h4 pl-2 mb-0 font-weight-bold text-gray-800">{{ data.c_discussion }}</span>
+							</div>
+						  </div>
+						</div>
+					  </div>
+					</div>
+				  </div>	
+
+
+				  <div class="row" style="font-family: 微軟正黑體">
+					<!-- Earnings (Monthly) Card Example -->
+					<div class="col-xl-12 col-md-12 mb-4">
+					  <div class="card border-left-primary shadow h-100 py-2">
+						<div class="card-body">
+						  <div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+							  <div class="h4 font-weight-bold text-primary text-uppercase mb-1"><i class="far fa-fw fa-thumbs-up mr-2"></i>好評數</div>
+							  <div class="h4 mb-0 font-weight-bold text-gray-800"></div>
+							</div>
+							<div class="col-auto">
+							  <span style="font-family: 微軟正黑體" class="h4 pl-2 mb-0 font-weight-bold text-gray-800">{{ data.d_good }}</span>
+							</div>
+						  </div>
+						</div>
+					  </div>
+					</div>
+				  </div>	
+				  <div class="row" style="font-family: 微軟正黑體">
+					<div class="col-xl-12 col-md-12 mb-4">
+					  <div class="card border-left-danger shadow h-100 py-2">
+						<div class="card-body">
+						  <div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+							  <div class="h4 font-weight-bold text-danger mb-1"><i class="far fa-fw fa-thumbs-down mr-2"></i>負評數</div>
+							  <div class="h4 font-weight-bold text-gray-800 text-uppercase mb-0"></div>
+							</div>
+							<div class="col-auto">
+							  <span style="font-family: 微軟正黑體" class="h4 pl-2 mb-0 font-weight-bold text-gray-800">{{ data.e_bad }}</span>
+							</div>
+						  </div>
+						</div>
+					  </div>
+					</div>
+				  </div>	
+				  
+				<div class="row" style="font-family: 微軟正黑體">
+					<!-- Earnings (Monthly) Card Example -->
+					<div class="col-xl-6 col-md-6 mb-4">
+					  <div class="card border-left-info shadow h-100 py-2">
+						<div class="card-body">
+						  <div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+							  <div class="h4 font-weight-bold text-info text-uppercase mb-1"><i class="far fa-fw fa-calendar mr-2"></i>周圖表</div>
+							  <div class="h4 font-weight-bold text-gray-800 mb-0 "></div>
+							</div>
+							<div class="col-auto">
+							  <a href='/week/{{key}}'><i class="fas fa-fw fa-chart-area fa-2x text-info"></i></a>
+							</div>
+						  </div>
+						</div>
+					  </div>
+					</div>
+
+					<!-- Earnings (Monthly) Card Example -->
+					<div class="col-xl-6 col-md-6 mb-4">
+					  <div class="card border-left-success shadow h-100 py-2">
+						<div class="card-body">
+						  <div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+							  <div class="h4 font-weight-bold text-success text-uppercase mb-1"><i class="far fa-fw fa-calendar-alt mr-2"></i>月圖表</div>
+							  <div class="h4 mb-0 font-weight-bold text-gray-800"></div>
+							</div>
+							<div class="col-auto">
+							  <a href='/month/{{key}}'><i class="fas fa-fw fa-chart-area fa-2x text-success"></i></a>
+							</div>
+						  </div>
+						</div>
+					  </div>
+					</div>
+				  </div>
+
 				</div>
-				<div class="col-xl-5 col-lg-4 mb-4">
+				<div class="col-xl-4 col-lg-4 mb-4">
 					<div class="card shadow h-100">
 						<div class="card-header py-3">
 							<h4 class="m-0 font-weight-bold text-primary">評價</h4>
 						</div>
 						<div class="card-body">
-							<div class="pt-1 pb-1">
+							<div class="chart-pie  pt-4 pb-2">
 								<canvas id="Chart_of_Comment"></canvas>
 							</div>
-							
 								<script>
 									var ctx = document.getElementById("Chart_of_Comment").getContext('2d');
 									var pieChart = new Chart(ctx, {
@@ -97,13 +230,12 @@
 										},
 									});
 								</script>
-								
 							<div class="mt-4 text-center small">
 								<span class="mr-2">
-									<i class="fas fa-circle text-primary"></i> 正面
+									<i class="fas fa-circle text-primary"></i> 好評數
 								</span>
 								<span class="mr-2">
-									<i class="fas fa-circle text-danger"></i> 負面
+									<i class="fas fa-circle text-danger"></i> 負評數
 								</span>
 							</div>
 							
@@ -111,289 +243,120 @@
 					</div>
 				</div>
 			</div>
-
-			<div style="font-family: 微軟正黑體" class="row">
-				<div class="col-xl-12 col-lg-12 mb-4">
-					<div class="card shadow">
-						<div class="card-header py-3">
-							<h4 class="m-0 font-weight-bold text-primary">近7天數據</h4>
-						</div>
-						<div class="card-body">
-							<ul class="list-group mx-4">
-								<li class="mt-2">
-									<h4>文章數</h4>
-									<canvas class="col-xl-9 col-lg-12 my-2 mx-auto" id="Article_Chart_of_7_Days" width="100" height="40"></canvas>
-									<script>
-										var ctx = document.getElementById("Article_Chart_of_7_Days");
-										var myChart = new Chart(ctx, {
-											type: 'line',
-											data: {
-												labels: {{ label_of_7_days|safe }}, // 換成自己的labels
-												datasets: [{
-													label: '{{ movie_name }}', 
-													data: {{ article_of_7_days|safe }}, // 換成自己的data
-													backgroundColor: [
-
-														'rgba(255, 159, 64, 0.2)'
-													],
-													borderColor: [
-
-														'rgba(255, 159, 64, 1)'
-													],
-													borderWidth: 1
-												}]
-											},
-											options: {
-												scales: {
-													yAxes: [{
-														ticks: {
-															beginAtZero:true
-														}
-													}]
-												}
-											}
-										});
-									</script>
-								</li>
-								<li class="mt-4">									
-									<h4>討論數</h4>
-									<canvas class="col-xl-9 col-lg-12 my-2 mx-auto" id="Discussion_Chart_of_7_Days" width="100" height="40"></canvas>
-									<script>
-										var ctx = document.getElementById("Discussion_Chart_of_7_Days");
-										var myChart = new Chart(ctx, {
-											type: 'line',
-											data: {
-												labels: {{ label_of_7_days|safe }}, // 換成自己的labels
-												datasets: [{
-													label: '{{ movie_name }}', 
-													data: {{ discussion_of_7_days|safe }}, // 換成自己的data
-													backgroundColor: [
-
-														'rgba(255, 159, 64, 0.2)'
-													],
-													borderColor: [
-
-														'rgba(255, 159, 64, 1)'
-													],
-													borderWidth: 1
-												}]
-											},
-											options: {
-												scales: {
-													yAxes: [{
-														ticks: {
-															beginAtZero:true
-														}
-													}]
-												}
-											}
-										});
-									</script>
-								</li>
-								<li class="mt-4">
-									<h4>好壞評價數</h4>
-									<canvas class="col-xl-9 col-lg-12 my-2 mx-auto" id="GoodorBad_Chart_of_7_Days" width="100" height="40"></canvas>
-									<script>
-										var ctx = document.getElementById("GoodorBad_Chart_of_7_Days");
-										var myChart = new Chart(ctx, {
-											type: 'line',
-											data: {
-												labels: {{ label_of_7_days|safe }}, // 換成自己的labels
-												datasets: [{
-													label: 'good', 
-													data: {{ good_of_7_days|safe }}, // 換成自己的data
-													backgroundColor: [
-
-														'rgba(149, 199, 243, 0.2)'
-													],
-													borderColor: [
-
-														'rgba(149, 199, 243, 1)'
-													],
-													borderWidth: 1
-												},{
-													label: 'bad', 
-													data: {{ bad_of_7_days|safe }}, // 換成自己的data
-													backgroundColor: [
-
-														'rgba(255, 129, 64, 0.2)'
-													],
-													borderColor: [
-
-														'rgba(255, 109, 64, 1)'
-													],
-													borderWidth: 1
-												}]
-											},
-											options: {
-												scales: {
-													yAxes: [{
-														ticks: {
-															beginAtZero:true
-														}
-													}]
-												}
-											}
-										});
-									</script>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
+			
+			<div class="row ml-2 mt-4 mb-1">
+			  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+				<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">近7天數據</h4>
+			  </div>
 			</div>
-
+			
 			<div style="font-family: 微軟正黑體" class="row">
-				<div class="col-xl-12 col-lg-12 mb-4">
-					<div class="card shadow">
+				<div class="col-xl-12 col-lg-12 mx-auto">
+					<div class="card mb-4 shadow">
 						<div class="card-header py-3">
-							<h4 class="m-0 font-weight-bold text-primary">近5周數據</h4>
+							<h5 class="m-0 font-weight-bold text-primary">文章數</h5>
 						</div>
 						<div class="card-body">
-							<ul class="list-group mx-4">
-								<li class="mt-2">
-									<h4>文章數</h4>
-									<canvas class="col-xl-9 col-lg-12 my-2 mx-auto" id="Article_Chart_of_5_weeks" width="100" height="40"></canvas>
-									<script>
-										var ctx = document.getElementById("Article_Chart_of_5_weeks");
-										var myChart = new Chart(ctx, {
-											type: 'line',
-											data: {
-												labels: {{ label_of_5_weeks|safe }}, // 換成自己的labels
-												datasets: [{
-													label: '{{ movie_name }}', 
-													data: {{ article_of_5_weeks|safe }}, // 換成自己的data
-													backgroundColor: [
-
-														'rgba(255, 159, 64, 0.2)'
-													],
-													borderColor: [
-
-														'rgba(255, 159, 64, 1)'
-													],
-													borderWidth: 1
-												}]
-											},
-											options: {
-												scales: {
-													yAxes: [{
-														ticks: {
-															beginAtZero:true
-														}
-													}]
-												}
-											}
-										});
-									</script>
-								</li>
-								<li class="mt-4">
-									<h4>討論數</h4>
-									<canvas  class="col-xl-9 col-lg-12 my-2 mx-auto" id="Discussion_Chart_of_5_weeks" width="100" height="40"></canvas>
-									<script>
-										var ctx = document.getElementById("Discussion_Chart_of_5_weeks");
-										var myChart = new Chart(ctx, {
-											type: 'line',
-											data: {
-												labels: {{ label_of_5_weeks|safe }}, // 換成自己的labels
-												datasets: [{
-													label: '{{ movie_name }}', 
-													data: {{ discussion_of_5_weeks|safe }}, // 換成自己的data
-													backgroundColor: [
-
-														'rgba(255, 159, 64, 0.2)'
-													],
-													borderColor: [
-
-														'rgba(255, 159, 64, 1)'
-													],
-													borderWidth: 1
-												}]
-											},
-											options: {
-												scales: {
-													yAxes: [{
-														ticks: {
-															beginAtZero:true
-														}
-													}]
-												}
-											}
-										});
-									</script>
-								</li>
-								<li class="mt-4">
-									<h4>好壞評數</h4>
-									<canvas class="col-xl-9 col-lg-12 my-2 mx-auto" id="GoodorBad_Chart_of_5_weeks" width="100" height="40"></canvas>
-									<script>
-										var ctx = document.getElementById("GoodorBad_Chart_of_5_weeks");
-										var myChart = new Chart(ctx, {
-											type: 'line',
-											data: {
-												labels: {{ label_of_5_weeks|safe }}, // 換成自己的labels
-												datasets: [{
-													label: 'good', 
-													data: {{ good_of_5_weeks|safe }}, // 換成自己的data
-													backgroundColor: [
-
-														'rgba(149, 199, 243, 0.2)'
-													],
-													borderColor: [
-
-														'rgba(149, 199, 243, 1)'
-													],
-													borderWidth: 1
-												},{
-													label: 'bad', 
-													data: {{ bad_of_5_weeks|safe }}, // 換成自己的data
-													backgroundColor: [
-
-														'rgba(255, 129, 64, 0.2)'
-													],
-													borderColor: [
-
-														'rgba(255, 109, 64, 1)'
-													],
-													borderWidth: 1
-												}]
-											},
-											options: {
-												scales: {
-													yAxes: [{
-														ticks: {
-															beginAtZero:true
-														}
-													}]
-												}
-											}
-										});
-									</script>
-								</li>
-							</ul>
+							<div class="chart-area">
+								<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Article_Chart_of_7_Days">
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			
 			<div style="font-family: 微軟正黑體" class="row">
-				<div class="col-xl-12 col-lg-12 mb-4">
-					<div class="card shadow">
+				<div class="col-xl-12 col-lg-12 mx-auto">
+					<div class="card mb-4 shadow">
 						<div class="card-header py-3">
-							<h4 class="m-0 font-weight-bold text-primary">其他</h4>
+							<h5 class="m-0 font-weight-bold text-primary">討論數</h5>
 						</div>
 						<div class="card-body">
-							<a href='/week/{{key}}'>周份資料表</a>
-							<a href='/month/{{key}}'>月份資料表</a>
+							<div class="chart-area">
+								<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Discussion_Chart_of_7_Days">
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-					
+			
+			<div style="font-family: 微軟正黑體" class="row">
+				<div class="col-xl-12 col-lg-12 mx-auto">
+					<div class="card mb-4 shadow">
+						<div class="card-header py-3">
+							<h5 class="m-0 font-weight-bold text-primary">好壞評價數</h5>
+						</div>
+						<div class="card-body">
+							<div class="chart-area">
+								<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="GoodorBad_Chart_of_7_Days">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row ml-2 mt-4 mb-1">
+			  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+				<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">近5周數據</h4>
+			  </div>
+			</div>
+			
+			<div style="font-family: 微軟正黑體" class="row">
+				<div class="col-xl-12 col-lg-12 mx-auto">
+					<div class="card mb-4 shadow">
+						<div class="card-header py-3">
+							<h5 class="m-0 font-weight-bold text-primary">文章數</h5>
+						</div>
+						<div class="card-body">
+							<div class="chart-area">
+								<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Article_Chart_of_5_weeks">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div style="font-family: 微軟正黑體" class="row">
+				<div class="col-xl-12 col-lg-12 mx-auto">
+					<div class="card mb-4 shadow">
+						<div class="card-header py-3">
+							<h5 class="m-0 font-weight-bold text-primary">討論數</h5>
+						</div>
+						<div class="card-body">
+							<div class="chart-area">
+								<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Discussion_Chart_of_5_weeks">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div style="font-family: 微軟正黑體" class="row">
+				<div class="col-xl-12 col-lg-12 mx-auto">
+					<div class="card mb-4 shadow">
+						<div class="card-header py-3">
+							<h5 class="m-0 font-weight-bold text-primary">好壞評價數</h5>
+						</div>
+						<div class="card-body">
+							<div class="chart-area">
+								<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="GoodorBad_Chart_of_5_weeks">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
+			<div class="row ml-2 mt-4 mb-1">
+			  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+				<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">其他</h4>
+			  </div>
+			</div>
+			
 			<div style="font-family: 微軟正黑體" class="row">
 				<div class="col-xl-12 col-lg-12 mb-4">
 					<div class="card shadow">
 						<div class="card-header py-3">
-							<h4 class="m-0 font-weight-bold text-primary">其他</h4>
+							<h4 class="m-0 font-weight-bold text-primary">文章</h4>
 						</div>
 						<div class="card-body">
 							<table id="article_table" class="table table-hover table-sm" cellspacing="0" width="100%">
@@ -450,5 +413,563 @@
 					</div>
 				</div>
 			</div>
+			
+	<script>
+		var a7_Area = document.getElementById("Article_Chart_of_7_Days");
+		var a7LineChart = new Chart(a7_Area, {
+		  type: 'line',
+		  data: {
+			labels: {{ label_of_7_days|safe }},
+			datasets: [{
+			  label: "文章數",
+			  lineTension: 0.3,
+			  backgroundColor: "rgba(54, 185, 204, 0.05)",
+			  borderColor: "rgba(54, 185, 204, 1)",
+			  pointRadius: 3,
+			  pointBackgroundColor: "rgba(54, 185, 204, 1)",
+			  pointBorderColor: "rgba(54, 185, 204, 1)",
+			  pointHoverRadius: 3,
+			  pointHoverBackgroundColor: "rgba(54, 185, 2045, 1)",
+			  pointHoverBorderColor: "rgba(54, 185, 204, 1)",
+			  pointHitRadius: 10,
+			  pointBorderWidth: 2,
+			  data: {{ article_of_7_days|safe }},
+			}],
+		  },
+		  options: {
+			maintainAspectRatio: false,
+			layout: {
+			  padding: {
+				left: 10,
+				right: 25,
+				top: 25,
+				bottom: 0
+			  }
+			},
+			scales: {
+			  xAxes: [{
+				time: {
+				  unit: 'date'
+				},
+				gridLines: {
+				  display: false,
+				  drawBorder: false
+				},
+				ticks: {
+				  maxTicksLimit: 7
+				}
+			  }],
+			  yAxes: [{
+				ticks: {
+				  maxTicksLimit: 10,
+				  padding: 10,
+				  // Include a dollar sign in the ticks
+				  callback: function(value, index, values) {
+					return '' + number_format(value);
+				  }
+				},
+				gridLines: {
+				  color: "rgb(234, 236, 244)",
+				  zeroLineColor: "rgb(234, 236, 244)",
+				  drawBorder: false,
+				  borderDash: [2],
+				  zeroLineBorderDash: [2]
+				}
+			  }],
+			},
+			legend: {
+			  display: false
+			},
+			tooltips: {
+			  backgroundColor: "rgb(255,255,255)",
+			  bodyFontColor: "#858796",
+			  titleMarginBottom: 10,
+			  titleFontColor: '#6e707e',
+			  titleFontSize: 14,
+			  borderColor: '#dddfeb',
+			  borderWidth: 1,
+			  xPadding: 15,
+			  yPadding: 15,
+			  displayColors: false,
+			  intersect: false,
+			  mode: 'index',
+			  caretPadding: 10,
+			  callbacks: {
+				label: function(tooltipItem, chart) {
+				  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+				  return datasetLabel +' : ' + number_format(tooltipItem.yLabel);
+				}
+			  }
+			}
+		  }
+		});
+		
+		var d7_Area = document.getElementById("Discussion_Chart_of_7_Days");
+		var d7LineChart = new Chart(d7_Area, {
+		  type: 'line',
+		  data: {
+			labels: {{ label_of_7_days|safe }},
+			datasets: [{
+			  label: "討論數",
+			  lineTension: 0.3,
+			  backgroundColor: "rgba(86, 202, 105, 0.05)",
+			  borderColor: "rgba(86, 202, 105, 1)",
+			  pointRadius: 3,
+			  pointBackgroundColor: "rgba(86, 202, 105, 1)",
+			  pointBorderColor: "rgba(86, 202, 105, 1)",
+			  pointHoverRadius: 3,
+			  pointHoverBackgroundColor: "rgba(86, 202, 105, 1)",
+			  pointHoverBorderColor: "rgba(86, 202, 105, 1)",
+			  pointHitRadius: 10,
+			  pointBorderWidth: 2,
+			  data: {{ discussion_of_7_days|safe }},
+			}],
+		  },
+		  options: {
+			maintainAspectRatio: false,
+			layout: {
+			  padding: {
+				left: 10,
+				right: 25,
+				top: 25,
+				bottom: 0
+			  }
+			},
+			scales: {
+			  xAxes: [{
+				time: {
+				  unit: 'date'
+				},
+				gridLines: {
+				  display: false,
+				  drawBorder: false
+				},
+				ticks: {
+				  maxTicksLimit: 7
+				}
+			  }],
+			  yAxes: [{
+				ticks: {
+				  maxTicksLimit: 10,
+				  padding: 10,
+				  // Include a dollar sign in the ticks
+				  callback: function(value, index, values) {
+					return '' + number_format(value);
+				  }
+				},
+				gridLines: {
+				  color: "rgb(234, 236, 244)",
+				  zeroLineColor: "rgb(234, 236, 244)",
+				  drawBorder: false,
+				  borderDash: [2],
+				  zeroLineBorderDash: [2]
+				}
+			  }],
+			},
+			legend: {
+			  display: false
+			},
+			tooltips: {
+			  backgroundColor: "rgb(255,255,255)",
+			  bodyFontColor: "#858796",
+			  titleMarginBottom: 10,
+			  titleFontColor: '#6e707e',
+			  titleFontSize: 14,
+			  borderColor: '#dddfeb',
+			  borderWidth: 1,
+			  xPadding: 15,
+			  yPadding: 15,
+			  displayColors: false,
+			  intersect: false,
+			  mode: 'index',
+			  caretPadding: 10,
+			  callbacks: {
+				label: function(tooltipItem, chart) {
+				  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+				  return datasetLabel +' : ' + number_format(tooltipItem.yLabel);
+				}
+			  }
+			}
+		  }
+		});
+		
+		var gb7_Area = document.getElementById("GoodorBad_Chart_of_7_Days");
+		var gb7LineChart = new Chart(gb7_Area, {
+		  type: 'line',
+		  data: {
+			labels: {{ label_of_7_days|safe }},
+			datasets: [{
+			  label: "好評數",
+			  lineTension: 0.3,
+			  backgroundColor: "rgba(78, 114, 223, 0.05)",
+			  borderColor: "rgba(78, 114, 223, 1)",
+			  pointRadius: 3,
+			  pointBackgroundColor: "rgba(78, 114, 223, 1)",
+			  pointBorderColor: "rgba(78, 114, 223, 1)",
+			  pointHoverRadius: 3,
+			  pointHoverBackgroundColor: "rgba(78, 114, 223, 1)",
+			  pointHoverBorderColor: "rgba(78, 114, 223, 1)",
+			  pointHitRadius: 10,
+			  pointBorderWidth: 2,
+			  data: {{ good_of_7_days|safe }},
+			},
+			{
+			  label: "負評數",
+			  lineTension: 0.3,
+			  backgroundColor: "rgba(231, 74, 59, 0.05)",
+			  borderColor: "rgba(231, 74, 59, 1)",
+			  pointRadius: 3,
+			  pointBackgroundColor: "rgba(231, 74, 59, 1)",
+			  pointBorderColor: "rgba(231, 74, 59, 1)",
+			  pointHoverRadius: 3,
+			  pointHoverBackgroundColor: "rgba(231, 74, 59, 1)",
+			  pointHoverBorderColor: "rgba(231, 74, 59, 1)",
+			  pointHitRadius: 10,
+			  pointBorderWidth: 2,
+			  data: {{ bad_of_7_days|safe }},
+			}],
+		  },
+		  options: {
+			maintainAspectRatio: false,
+			layout: {
+			  padding: {
+				left: 10,
+				right: 25,
+				top: 25,
+				bottom: 0
+			  }
+			},
+			scales: {
+			  xAxes: [{
+				time: {
+				  unit: 'date'
+				},
+				gridLines: {
+				  display: false,
+				  drawBorder: false
+				},
+				ticks: {
+				  maxTicksLimit: 7
+				}
+			  }],
+			  yAxes: [{
+				ticks: {
+				  maxTicksLimit: 10,
+				  padding: 10,
+				  // Include a dollar sign in the ticks
+				  callback: function(value, index, values) {
+					return '' + number_format(value);
+				  }
+				},
+				gridLines: {
+				  color: "rgb(234, 236, 244)",
+				  zeroLineColor: "rgb(234, 236, 244)",
+				  drawBorder: false,
+				  borderDash: [2],
+				  zeroLineBorderDash: [2]
+				}
+			  }],
+			},
+			legend: {
+			  display: true
+			},
+			tooltips: {
+			  backgroundColor: "rgb(255,255,255)",
+			  bodyFontColor: "#858796",
+			  titleMarginBottom: 10,
+			  titleFontColor: '#6e707e',
+			  titleFontSize: 14,
+			  borderColor: '#dddfeb',
+			  borderWidth: 1,
+			  xPadding: 15,
+			  yPadding: 15,
+			  displayColors: false,
+			  intersect: false,
+			  caretPadding: 10,
+			  callbacks: {
+
+			  }
+			}
+		  }
+		});
+		
+		var a5_Area = document.getElementById("Article_Chart_of_5_weeks");
+		var a5LineChart = new Chart(a5_Area, {
+		  type: 'line',
+		  data: {
+			labels: {{ label_of_5_weeks|safe }},
+			datasets: [{
+			  label: "文章數",
+			  lineTension: 0.3,
+			  backgroundColor: "rgba(54, 185, 204, 0.05)",
+			  borderColor: "rgba(54, 185, 204, 1)",
+			  pointRadius: 3,
+			  pointBackgroundColor: "rgba(54, 185, 204, 1)",
+			  pointBorderColor: "rgba(54, 185, 204, 1)",
+			  pointHoverRadius: 3,
+			  pointHoverBackgroundColor: "rgba(54, 185, 2045, 1)",
+			  pointHoverBorderColor: "rgba(54, 185, 204, 1)",
+			  pointHitRadius: 10,
+			  pointBorderWidth: 2,
+			  data: {{ article_of_5_weeks|safe }},
+			}],
+		  },
+		  options: {
+			maintainAspectRatio: false,
+			layout: {
+			  padding: {
+				left: 10,
+				right: 25,
+				top: 25,
+				bottom: 0
+			  }
+			},
+			scales: {
+			  xAxes: [{
+				time: {
+				  unit: 'date'
+				},
+				gridLines: {
+				  display: false,
+				  drawBorder: false
+				},
+				ticks: {
+				  maxTicksLimit: 7
+				}
+			  }],
+			  yAxes: [{
+				ticks: {
+				  maxTicksLimit: 10,
+				  padding: 10,
+				  // Include a dollar sign in the ticks
+				  callback: function(value, index, values) {
+					return '' + number_format(value);
+				  }
+				},
+				gridLines: {
+				  color: "rgb(234, 236, 244)",
+				  zeroLineColor: "rgb(234, 236, 244)",
+				  drawBorder: false,
+				  borderDash: [2],
+				  zeroLineBorderDash: [2]
+				}
+			  }],
+			},
+			legend: {
+			  display: false
+			},
+			tooltips: {
+			  backgroundColor: "rgb(255,255,255)",
+			  bodyFontColor: "#858796",
+			  titleMarginBottom: 10,
+			  titleFontColor: '#6e707e',
+			  titleFontSize: 14,
+			  borderColor: '#dddfeb',
+			  borderWidth: 1,
+			  xPadding: 15,
+			  yPadding: 15,
+			  displayColors: false,
+			  intersect: false,
+			  mode: 'index',
+			  caretPadding: 10,
+			  callbacks: {
+				label: function(tooltipItem, chart) {
+				  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+				  return datasetLabel +' : ' + number_format(tooltipItem.yLabel);
+				}
+			  }
+			}
+		  }
+		});
+		
+		var d5_Area = document.getElementById("Discussion_Chart_of_5_weeks");
+		var d5LineChart = new Chart(d5_Area, {
+		  type: 'line',
+		  data: {
+			labels: {{ label_of_5_weeks|safe }},
+			datasets: [{
+			  label: "討論數",
+			  lineTension: 0.3,
+			  backgroundColor: "rgba(86, 202, 105, 0.05)",
+			  borderColor: "rgba(86, 202, 105, 1)",
+			  pointRadius: 3,
+			  pointBackgroundColor: "rgba(86, 202, 105, 1)",
+			  pointBorderColor: "rgba(86, 202, 105, 1)",
+			  pointHoverRadius: 3,
+			  pointHoverBackgroundColor: "rgba(86, 202, 105, 1)",
+			  pointHoverBorderColor: "rgba(86, 202, 105, 1)",
+			  pointHitRadius: 10,
+			  pointBorderWidth: 2,
+			  data: {{ discussion_of_5_weeks|safe }},
+			}],
+		  },
+		  options: {
+			maintainAspectRatio: false,
+			layout: {
+			  padding: {
+				left: 10,
+				right: 25,
+				top: 25,
+				bottom: 0
+			  }
+			},
+			scales: {
+			  xAxes: [{
+				time: {
+				  unit: 'date'
+				},
+				gridLines: {
+				  display: false,
+				  drawBorder: false
+				},
+				ticks: {
+				  maxTicksLimit: 7
+				}
+			  }],
+			  yAxes: [{
+				ticks: {
+				  maxTicksLimit: 10,
+				  padding: 10,
+				  // Include a dollar sign in the ticks
+				  callback: function(value, index, values) {
+					return '' + number_format(value);
+				  }
+				},
+				gridLines: {
+				  color: "rgb(234, 236, 244)",
+				  zeroLineColor: "rgb(234, 236, 244)",
+				  drawBorder: false,
+				  borderDash: [2],
+				  zeroLineBorderDash: [2]
+				}
+			  }],
+			},
+			legend: {
+			  display: false
+			},
+			tooltips: {
+			  backgroundColor: "rgb(255,255,255)",
+			  bodyFontColor: "#858796",
+			  titleMarginBottom: 10,
+			  titleFontColor: '#6e707e',
+			  titleFontSize: 14,
+			  borderColor: '#dddfeb',
+			  borderWidth: 1,
+			  xPadding: 15,
+			  yPadding: 15,
+			  displayColors: false,
+			  intersect: false,
+			  mode: 'index',
+			  caretPadding: 10,
+			  callbacks: {
+				label: function(tooltipItem, chart) {
+				  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+				  return datasetLabel +' : ' + number_format(tooltipItem.yLabel);
+				}
+			  }
+			}
+		  }
+		});
+		
+		var gb5_Area = document.getElementById("GoodorBad_Chart_of_5_weeks");
+		var gb5LineChart = new Chart(gb5_Area, {
+		  type: 'line',
+		  data: {
+			labels: {{ label_of_5_weeks|safe }},
+			datasets: [{
+			  label: "好評數",
+			  lineTension: 0.3,
+			  backgroundColor: "rgba(78, 114, 223, 0.05)",
+			  borderColor: "rgba(78, 114, 223, 1)",
+			  pointRadius: 3,
+			  pointBackgroundColor: "rgba(78, 114, 223, 1)",
+			  pointBorderColor: "rgba(78, 114, 223, 1)",
+			  pointHoverRadius: 3,
+			  pointHoverBackgroundColor: "rgba(78, 114, 223, 1)",
+			  pointHoverBorderColor: "rgba(78, 114, 223, 1)",
+			  pointHitRadius: 10,
+			  pointBorderWidth: 2,
+			  data: {{ good_of_5_weeks|safe }},
+			},
+			{
+			  label: "負評數",
+			  lineTension: 0.3,
+			  backgroundColor: "rgba(231, 74, 59, 0.05)",
+			  borderColor: "rgba(231, 74, 59, 1)",
+			  pointRadius: 3,
+			  pointBackgroundColor: "rgba(231, 74, 59, 1)",
+			  pointBorderColor: "rgba(231, 74, 59, 1)",
+			  pointHoverRadius: 3,
+			  pointHoverBackgroundColor: "rgba(231, 74, 59, 1)",
+			  pointHoverBorderColor: "rgba(231, 74, 59, 1)",
+			  pointHitRadius: 10,
+			  pointBorderWidth: 2,
+			  data: {{ bad_of_5_weeks|safe }},
+			}],
+		  },
+		  options: {
+			maintainAspectRatio: false,
+			layout: {
+			  padding: {
+				left: 10,
+				right: 25,
+				top: 25,
+				bottom: 0
+			  }
+			},
+			scales: {
+			  xAxes: [{
+				time: {
+				  unit: 'date'
+				},
+				gridLines: {
+				  display: false,
+				  drawBorder: false
+				},
+				ticks: {
+				  maxTicksLimit: 7
+				}
+			  }],
+			  yAxes: [{
+				ticks: {
+				  maxTicksLimit: 10,
+				  padding: 10,
+				  // Include a dollar sign in the ticks
+				  callback: function(value, index, values) {
+					return '' + number_format(value);
+				  }
+				},
+				gridLines: {
+				  color: "rgb(234, 236, 244)",
+				  zeroLineColor: "rgb(234, 236, 244)",
+				  drawBorder: false,
+				  borderDash: [2],
+				  zeroLineBorderDash: [2]
+				}
+			  }],
+			},
+			legend: {
+			  display: true
+			},
+			tooltips: {
+			  backgroundColor: "rgb(255,255,255)",
+			  bodyFontColor: "#858796",
+			  titleMarginBottom: 10,
+			  titleFontColor: '#6e707e',
+			  titleFontSize: 14,
+			  borderColor: '#dddfeb',
+			  borderWidth: 1,
+			  xPadding: 15,
+			  yPadding: 15,
+			  displayColors: false,
+			  intersect: false,
+			  caretPadding: 10,
+			  callbacks: {
+
+			  }
+			}
+		  }
+		});
+	</script>
 
 {% endblock %}

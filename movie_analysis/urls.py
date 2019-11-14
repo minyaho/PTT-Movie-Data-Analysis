@@ -28,3 +28,5 @@ urlpatterns = [
 	path('hot/',movie_analysis_views.hot,name='hot'),
 	path('rank/',movie_analysis_views.rank,name='rnk'),
 ]
+
+handler404 = movie_analysis_views.handler404

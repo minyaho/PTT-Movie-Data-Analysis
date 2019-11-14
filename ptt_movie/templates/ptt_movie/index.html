@@ -8,9 +8,11 @@
 {% endblock %}
 
 {% block page_heading %}
-          <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-4">
+		<div class="row ml-2">
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
 			<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">首頁 - 本站資訊</h4>
           </div>
+		</div>
 {% endblock %}
 {% block content %}
 
@@ -27,7 +29,7 @@
                       <div class="h4 font-weight-bold text-gray-800 text-uppercase mb-0">{{ keyword_len }}</div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-primary-300"></i>
+                      <i class="fas fa-database fa-2x text-primary-300"></i>
                     </div>
                   </div>
                 </div>
@@ -44,7 +46,7 @@
                       <div class="h4 font-weight-bold text-gray-800 mb-0 ">{{ discussion_len }}</div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-primary-300"></i>
+                      <i class="fas fa-comments fa-2x text-primary-300"></i>
                     </div>
                   </div>
                 </div>
@@ -78,7 +80,7 @@
                       <div class="h4 mb-0 font-weight-bold text-gray-800">{{ today|date:"Y-m-d" }}</div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-comments fa-2x text-primary-300"></i>
+                      <i class="fas fa-clock fa-2x text-primary-300"></i>
                     </div>
                   </div>
                 </div>
@@ -152,7 +154,7 @@
                   </div>
 				  <div class = "row mt-4 mx-auto">
 					  {% for keyword in keyword_analysis_of_this_week%}
-					  <div class="col-sm-6 text-center small mt-0">
+					  <div class="col-sm-6  small mt-0">
 						<span class="mr-2">
 						  <i class="fas fa-circle {{keyword.h_color}}"></i> {{keyword.a_movie}}
 						</span>
@@ -213,7 +215,7 @@
 				<div class="col-xl-12 col-lg-12 mb-4">
 					<div class="card shadow">
 						<div class="card-header py-3">
-							<h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">以下是我們所建立好的電影關鍵字</h5>
+							<h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">電影關鍵字</h5>
 						</div>
 						<div class="card-body">
 							<table id="keyword_table" class="table table-hover table-sm" cellspacing="0" width="100%">
@@ -264,11 +266,13 @@
 				</div>
 			</div>
 			
-		  <hr>
+		  <hr class="mt-4 mb-4">
 		  
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+		<div class="row ml-2">
+          <div class="d-sm-flex align-items-center justify-content-between mt-2 mb-4">
 			<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">今日熱門關鍵字</h4>
           </div>
+		</div>
 			
           <!-- Content Row -->
           <div class="row" style="font-family: 微軟正黑體">
@@ -286,7 +290,7 @@
 					  {% endif %}
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-primary-300"></i>
+                      <i class="fas fa-tag fa-2x text-primary-300"></i>
                     </div>
                   </div>
                 </div>
@@ -307,7 +311,7 @@
 					  {% endif %}
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-primary-300"></i>
+                      <i class="fas fa-comments fa-2x text-primary-300"></i>
                     </div>
                   </div>
                 </div>
@@ -345,7 +349,7 @@
                       <div class="h4 mb-0 font-weight-bold text-gray-800">{{ today|date:"Y-m-d" }}</div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-comments fa-2x text-primary-300"></i>
+                      <i class="fas fa-clock fa-2x text-primary-300"></i>
                     </div>
                   </div>
                 </div>

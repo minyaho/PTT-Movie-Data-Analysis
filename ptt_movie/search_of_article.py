@@ -92,7 +92,7 @@ def article_search(type,movie_name,arg=None):
 		"c_discussion": number_of_discussion,
 		"d_good": number_of_good,
 		"e_bad": number_of_bad,
-		"f_score": round(ration_of_score,3),
+		"f_score": round(ration_of_score*100,1),
 		"g_comment": comment_good_bad,
 	}
 	return temp

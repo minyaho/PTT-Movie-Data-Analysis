@@ -1,11 +1,20 @@
 {% extends 'ptt_movie/base.html' %}
 {% load crispy_forms_tags %}
-{% block title %}{{type_name}}查詢 - {{ movie_name }} - Ptt電影溫度計 {% endblock %}
+{% block title %}{{ movie_name }} - {{type_name}}圖表 - Ptt電影溫度計 {% endblock %}
 {% block page_heading %}
 		<div class="col-xl-11 col-md-12 mx-auto">
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-			<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">{{type_name}}查詢 - {{ movie_name }}</h4>
-          </div>
+			<div class="d-sm-flex align-items-center justify-content-between mb-4">
+				<button onClick="javascript :history.back(-1);" class="btn btn-link rounded-circle border-0 mr-3 d-none d-md-block">
+					<i class="fa fa-arrow-left"></i>
+				</button>
+				<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">{{type_name}}查詢 - {{ movie_name }}</h4>
+				<a href="/{{another_type_name.1}}/{{ movie_name }}" class="btn btn-primary btn-icon-split d-none d-md-block">
+					<span class="icon text-white-50">
+						<i class="fas fa-chevron-right"></i>
+					</span>
+					<span style="font-family: 微軟正黑體" class="text">{{another_type_name.0}}圖表</span>
+				</a>
+			</div>
 		</div>
 {% endblock %}
 {% block content %}
@@ -27,36 +36,9 @@
 								<h5 class="m-0 font-weight-bold text-primary">Article - {{ movie_name }}</h4>
 							</div>
 							<div class="card-body">
-								<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Article_Chart" width="200" height="100"></canvas>
-								<script>
-									var ctx = document.getElementById("Article_Chart");
-									var myChart = new Chart(ctx, {
-										type: 'line',
-										data: {
-											labels: {{ output_label|safe }}, // 換成自己的labels
-											datasets: [{
-												label: '{{ movie_name }}', 
-												data: {{ article_data|safe }}, // 換成自己的data
-												backgroundColor: [
-														'rgba(255, 159, 64, 0.2)'
-												],
-												borderColor: [
-													'rgba(255, 159, 64, 1)'
-												],
-												borderWidth: 1
-											}]
-										},
-										options: {
-											scales: {
-												yAxes: [{
-													ticks: {
-														beginAtZero:true
-														}
-												}]
-											}
-										}
-									});
-								</script>
+								<div class="chart-area2">
+									<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Article_Chart" width="200" height="100"></canvas>
+								</div>
 							</div>
 						</div>
 
@@ -65,38 +47,9 @@
 								<h5 class="m-0 font-weight-bold text-primary">Discussion - {{ movie_name }}</h4>
 							</div>
 							<div class="card-body">
-								<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Discussion_Chart" width="200" height="100"></canvas>
-								<script>
-									var ctx = document.getElementById("Discussion_Chart");
-									var myChart = new Chart(ctx, {
-										type: 'line',
-										data: {
-											labels: {{ output_label|safe }}, // 換成自己的labels
-											datasets: [{
-												label: '{{ movie_name }}', 
-												data: {{ discussion_data|safe }}, // 換成自己的data
-												backgroundColor: [
-
-													'rgba(255, 159, 64, 0.2)'
-												],
-												borderColor: [
-
-													'rgba(255, 159, 64, 1)'
-												],
-												borderWidth: 1
-											}]
-										},
-										options: {
-											scales: {
-												yAxes: [{
-													ticks: {
-														beginAtZero:true
-													}
-												}]
-											}
-										}
-									});
-								</script>
+								<div class="chart-area2">
+									<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="Discussion_Chart" width="200" height="100"></canvas>
+								</div>
 							</div>
 						</div>
 						
@@ -105,53 +58,292 @@
 								<h5 class="m-0 font-weight-bold text-primary">Good or Bad - {{ movie_name }}</h4>
 							</div>
 							<div class="card-body">
-								<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="GoodorBad_Chart" width="200" height="100"></canvas>
-								<script>
-									var ctx = document.getElementById("GoodorBad_Chart");
-									var myChart = new Chart(ctx, {
-										type: 'line',
-										data: {
-											labels: {{ output_label|safe }}, // 換成自己的labels
-											datasets: [{
-												label: 'good', 
-												data: {{ good_data|safe }}, // 換成自己的data
-												backgroundColor: [
-
-													'rgba(149, 199, 243, 0.2)'
-												],
-												borderColor: [
-
-													'rgba(149, 199, 243, 1)'
-												],
-												borderWidth: 1
-											},{
-												label: 'bad', 
-												data: {{ bad_data|safe }}, // 換成自己的data
-												backgroundColor: [
-
-													'rgba(255, 129, 64, 0.2)'
-												],
-												borderColor: [
-
-													'rgba(255, 109, 64, 1)'
-												],
-												borderWidth: 1
-											}]
-										},
-										options: {
-											scales: {
-												yAxes: [{
-													ticks: {
-														beginAtZero:true
-													}
-												}]
-											}
-										}
-									});
-								</script>
+								<div class="chart-area2">
+									<canvas class="col-xl-11 col-lg-12 my-1 mx-auto" id="GoodorBad_Chart" width="200" height="100"></canvas>
+								</div>
 							</div>
 						</div>
 					{% else %}
 					{% endif %}
 				</div>
+	<script>
+		var a_Area = document.getElementById("Article_Chart");
+		var aLineChart = new Chart(a_Area, {
+		  type: 'line',
+		  data: {
+			labels: {{ output_label|safe }},
+			datasets: [{
+			  label: "文章數",
+			  lineTension: 0.3,
+			  backgroundColor: "rgba(54, 185, 204, 0.05)",
+			  borderColor: "rgba(54, 185, 204, 1)",
+			  pointRadius: 3,
+			  pointBackgroundColor: "rgba(54, 185, 204, 1)",
+			  pointBorderColor: "rgba(54, 185, 204, 1)",
+			  pointHoverRadius: 3,
+			  pointHoverBackgroundColor: "rgba(54, 185, 2045, 1)",
+			  pointHoverBorderColor: "rgba(54, 185, 204, 1)",
+			  pointHitRadius: 10,
+			  pointBorderWidth: 2,
+			  data: {{ article_data|safe }},
+			}],
+		  },
+		  options: {
+			maintainAspectRatio: false,
+			layout: {
+			  padding: {
+				left: 10,
+				right: 25,
+				top: 25,
+				bottom: 0
+			  }
+			},
+			scales: {
+			  xAxes: [{
+				time: {
+				  unit: 'date'
+				},
+				gridLines: {
+				  display: false,
+				  drawBorder: false
+				},
+				ticks: {
+				  maxTicksLimit: 16
+				}
+			  }],
+			  yAxes: [{
+				ticks: {
+				  maxTicksLimit: 10,
+				  padding: 10,
+				  // Include a dollar sign in the ticks
+				  callback: function(value, index, values) {
+					return '' + number_format(value);
+				  }
+				},
+				gridLines: {
+				  color: "rgb(234, 236, 244)",
+				  zeroLineColor: "rgb(234, 236, 244)",
+				  drawBorder: false,
+				  borderDash: [2],
+				  zeroLineBorderDash: [2]
+				}
+			  }],
+			},
+			legend: {
+			  display: false
+			},
+			tooltips: {
+			  backgroundColor: "rgb(255,255,255)",
+			  bodyFontColor: "#858796",
+			  titleMarginBottom: 10,
+			  titleFontColor: '#6e707e',
+			  titleFontSize: 14,
+			  borderColor: '#dddfeb',
+			  borderWidth: 1,
+			  xPadding: 15,
+			  yPadding: 15,
+			  displayColors: false,
+			  intersect: false,
+			  mode: 'index',
+			  caretPadding: 10,
+			  callbacks: {
+				label: function(tooltipItem, chart) {
+				  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+				  return datasetLabel +' : ' + number_format(tooltipItem.yLabel);
+				}
+			  }
+			}
+		  }
+		});
+		
+		var d_Area = document.getElementById("Discussion_Chart");
+		var dLineChart = new Chart(d_Area, {
+		  type: 'line',
+		  data: {
+			labels: {{ output_label|safe }},
+			datasets: [{
+			  label: "討論數",
+			  lineTension: 0.3,
+			  backgroundColor: "rgba(86, 202, 105, 0.05)",
+			  borderColor: "rgba(86, 202, 105, 1)",
+			  pointRadius: 3,
+			  pointBackgroundColor: "rgba(86, 202, 105, 1)",
+			  pointBorderColor: "rgba(86, 202, 105, 1)",
+			  pointHoverRadius: 3,
+			  pointHoverBackgroundColor: "rgba(86, 202, 105, 1)",
+			  pointHoverBorderColor: "rgba(86, 202, 105, 1)",
+			  pointHitRadius: 10,
+			  pointBorderWidth: 2,
+			  data: {{ discussion_data|safe }},
+			}],
+		  },
+		  options: {
+			maintainAspectRatio: false,
+			layout: {
+			  padding: {
+				left: 10,
+				right: 25,
+				top: 25,
+				bottom: 0
+			  }
+			},
+			scales: {
+			  xAxes: [{
+				time: {
+				  unit: 'date'
+				},
+				gridLines: {
+				  display: false,
+				  drawBorder: false
+				},
+				ticks: {
+				  maxTicksLimit: 16
+				}
+			  }],
+			  yAxes: [{
+				ticks: {
+				  maxTicksLimit: 10,
+				  padding: 10,
+				  // Include a dollar sign in the ticks
+				  callback: function(value, index, values) {
+					return '' + number_format(value);
+				  }
+				},
+				gridLines: {
+				  color: "rgb(234, 236, 244)",
+				  zeroLineColor: "rgb(234, 236, 244)",
+				  drawBorder: false,
+				  borderDash: [2],
+				  zeroLineBorderDash: [2]
+				}
+			  }],
+			},
+			legend: {
+			  display: false
+			},
+			tooltips: {
+			  backgroundColor: "rgb(255,255,255)",
+			  bodyFontColor: "#858796",
+			  titleMarginBottom: 10,
+			  titleFontColor: '#6e707e',
+			  titleFontSize: 14,
+			  borderColor: '#dddfeb',
+			  borderWidth: 1,
+			  xPadding: 15,
+			  yPadding: 15,
+			  displayColors: false,
+			  intersect: false,
+			  mode: 'index',
+			  caretPadding: 10,
+			  callbacks: {
+				label: function(tooltipItem, chart) {
+				  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+				  return datasetLabel +' : ' + number_format(tooltipItem.yLabel);
+				}
+			  }
+			}
+		  }
+		});
+		
+		var gb5_Area = document.getElementById("GoodorBad_Chart");
+		var gb5LineChart = new Chart(gb5_Area, {
+		  type: 'line',
+		  data: {
+			labels: {{ output_label|safe }},
+			datasets: [{
+			  label: "好評數",
+			  lineTension: 0.3,
+			  backgroundColor: "rgba(78, 114, 223, 0.05)",
+			  borderColor: "rgba(78, 114, 223, 1)",
+			  pointRadius: 3,
+			  pointBackgroundColor: "rgba(78, 114, 223, 1)",
+			  pointBorderColor: "rgba(78, 114, 223, 1)",
+			  pointHoverRadius: 3,
+			  pointHoverBackgroundColor: "rgba(78, 114, 223, 1)",
+			  pointHoverBorderColor: "rgba(78, 114, 223, 1)",
+			  pointHitRadius: 10,
+			  pointBorderWidth: 2,
+			  data: {{ good_data|safe }},
+			},
+			{
+			  label: "負評數",
+			  lineTension: 0.3,
+			  backgroundColor: "rgba(231, 74, 59, 0.05)",
+			  borderColor: "rgba(231, 74, 59, 1)",
+			  pointRadius: 3,
+			  pointBackgroundColor: "rgba(231, 74, 59, 1)",
+			  pointBorderColor: "rgba(231, 74, 59, 1)",
+			  pointHoverRadius: 3,
+			  pointHoverBackgroundColor: "rgba(231, 74, 59, 1)",
+			  pointHoverBorderColor: "rgba(231, 74, 59, 1)",
+			  pointHitRadius: 10,
+			  pointBorderWidth: 2,
+			  data: {{ bad_data|safe }},
+			}],
+		  },
+		  options: {
+			maintainAspectRatio: false,
+			layout: {
+			  padding: {
+				left: 10,
+				right: 25,
+				top: 25,
+				bottom: 0
+			  }
+			},
+			scales: {
+			  xAxes: [{
+				time: {
+				  unit: 'date'
+				},
+				gridLines: {
+				  display: false,
+				  drawBorder: false
+				},
+				ticks: {
+				  maxTicksLimit: 16
+				}
+			  }],
+			  yAxes: [{
+				ticks: {
+				  maxTicksLimit: 10,
+				  padding: 10,
+				  // Include a dollar sign in the ticks
+				  callback: function(value, index, values) {
+					return '' + number_format(value);
+				  }
+				},
+				gridLines: {
+				  color: "rgb(234, 236, 244)",
+				  zeroLineColor: "rgb(234, 236, 244)",
+				  drawBorder: false,
+				  borderDash: [2],
+				  zeroLineBorderDash: [2]
+				}
+			  }],
+			},
+			legend: {
+			  display: true
+			},
+			tooltips: {
+			  backgroundColor: "rgb(255,255,255)",
+			  bodyFontColor: "#858796",
+			  titleMarginBottom: 10,
+			  titleFontColor: '#6e707e',
+			  titleFontSize: 14,
+			  borderColor: '#dddfeb',
+			  borderWidth: 1,
+			  xPadding: 15,
+			  yPadding: 15,
+			  displayColors: false,
+			  intersect: false,
+			  caretPadding: 10,
+			  callbacks: {
+
+			  }
+			}
+		  }
+		});
+	</script>
+
 {% endblock %}
