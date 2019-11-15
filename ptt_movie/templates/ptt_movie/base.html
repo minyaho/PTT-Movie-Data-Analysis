@@ -1,4 +1,5 @@
 <!--base.html-->
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,6 +12,7 @@
   <meta name="author" content="">
 
   <title>{% block title %} {% endblock %}</title>
+  <link rel="shortcut icon" type="image/png" href="{% static 'ptt_movie/img/favicon.ico' %}"/>
 
   <!-- Custom fonts for this template-->
   <link href="/static/ptt_movie/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -27,7 +29,7 @@
   <script src="/static/ptt_movie/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="/static/ptt_movie/js/sb-admin-2.min.js"></script>
+  <script src="/static/ptt_movie/js/sb-admin-2.js"></script>
 
   <!-- Page level plugins -->
   <script src="/static/ptt_movie/vendor/chart.js/Chart.min.js"></script>
@@ -48,7 +50,7 @@
 
 </head>
 
-<body id="page-top">
+<body id="page-top" class="sidebar-toggled">
 
   <!-- Page Wrapper -->
   <div id="wrapper">
@@ -91,6 +93,7 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
+  {% if request.user.is_authenticated %}	
   <!-- Logout Modal-->
   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -104,14 +107,15 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <a class="btn btn-primary" href="/admin/logout/">Logout</a>
         </div>
       </div>
     </div>
   </div>
+  {% endif %}
 
   <!-- Custom scripts for all pages-->
-  <script src="/static/ptt_movie/js/sb-admin-2.min.js"></script>
+  <script src="/static/ptt_movie/js/sb-admin-2.js"></script>
 
 
 </body>

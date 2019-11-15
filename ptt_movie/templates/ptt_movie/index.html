@@ -255,7 +255,8 @@
 											"sortAscending": ": 升冪排列",
 											"sortDescending": ": 降冪排列"
 										  }
-										}
+										},
+										"pagingType": "numbers",
 									}
 								$(document).ready(function() {
 									$('#keyword_table').DataTable(set_table);
@@ -418,9 +419,18 @@
                 <!-- Card Body -->
                 <div class="card-body">
 				  {% if keyword_today_hot %}
+					{% if keyword_today_hot_all_data.d_good is 0 and keyword_today_hot_all_data.e_bad is 0%}
+					<div class="row chart-pie align-items-center">
+						<div class="col"> 
+							<div class="h5 text-center font-weight-bold text-gray-800">評分數據尚且不足</div>
+						</div>
+					</div>
+					{% else %}
+				</div>
                   <div class="chart-pie pt-4 pb-2">
                     <canvas id="today_keyword_PieChart"></canvas>
                   </div>
+					{% endif %}
                   <div class="mt-4 text-center small">
                     <span class="mr-2">
                       <i class="fas fa-circle text-primary"></i> 正面
@@ -653,6 +663,9 @@
 			}
 		  }
 		});
+		
+		{% if keyword_today_hot_all_data.d_good is 0 and keyword_today_hot_all_data.e_bad is 0%}
+		{% else %}
 		// Pie Chart Example
 		var tkPie = document.getElementById("today_keyword_PieChart");
 		var tkPieChart = new Chart(tkPie, {
@@ -685,8 +698,10 @@
 		  },
 		});
 		{% endif %}
+		{% endif %}
 	</script>
   <!-- Page level custom scripts -->
   <script src="/static/ptt_movie/js/demo/chart-area-demo.js"></script>
+
 
 {% endblock %}

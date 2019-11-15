@@ -7,25 +7,50 @@
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars"></i>
           </button>
+		  
+		  <a id="nav_brand" class="navbar-brand ml-2" style="font-family: 微軟正黑體" href="/">PTT 電影溫度計</a>
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
-		  
-          <!-- Topbar Search -->
-          <form action="/search/" class="d-none d-sm-inline-block form-inline ml-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="post">
-		    {% csrf_token %}
-            <div class="input-group">
-              <input id="id_movie_keyword_name" name="movie_keyword_name" type="text" class="form-control bg-light border-0 small h-auto" placeholder="Search for Movie Keyword..." aria-label="Search" aria-describedby="basic-addon2" required="required" {{ input_value }}>
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="submit">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
+		  {% if request.user.is_authenticated %}
+            <li class="nav-item dropdown no-arrow d-none d-sm-inline-block">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <!-- Dropdown - Messages -->
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                <form action="/search/" class="form-inline m-auto w-100 navbar-search" method="post">
+					{% csrf_token %}
+                  <div class="input-group">
+                    <input id="id_movie_keyword_name" name="movie_keyword_name" type="text" class="form-control bg-light border-0 small h-auto" placeholder="Search for Movie Keyword..." aria-label="Search" aria-describedby="basic-addon2" required="required" {{ input_value }}>
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
               </div>
-            </div>
-          </form>
+            </li>
+		  {% else %}
+		  <li class="nav-item my-auto">
+			  <!-- Topbar Search -->
+			  <form action="/search/" class="d-none d-md-inline-block form-inline ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="post">
+				{% csrf_token %}
+				<div class="input-group">
+				  <input id="id_movie_keyword_name" name="movie_keyword_name" type="text" class="form-control bg-light border-0 small h-auto" placeholder="Search for Movie Keyword..." aria-label="Search" aria-describedby="basic-addon2" required="required" {{ input_value }}>
+				  <div class="input-group-append">
+					<button class="btn btn-primary" type="submit">
+					  <i class="fas fa-search fa-sm"></i>
+					</button>
+				  </div>
+				</div>
+			  </form>
+		  </li>
+		  {% endif %}
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
+            <li class="nav-item dropdown no-arrow d-md-none">
               <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-search fa-fw"></i>
               </a>
@@ -36,7 +61,7 @@
                   <div class="input-group">
                     <input id="id_movie_keyword_name" name="movie_keyword_name" type="text" class="form-control bg-light border-0 small h-auto" placeholder="Search for Movie Keyword..." aria-label="Search" aria-describedby="basic-addon2" required="required" {{ input_value }}>
                     <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
+                      <button class="btn btn-primary" type="submit">
                         <i class="fas fa-search fa-sm"></i>
                       </button>
                     </div>
@@ -187,28 +212,3 @@
           </ul>
         </nav>
         <!-- End of Topbar -->
-	
-<!--
-			<div class="card">
-                <div class="card-header">
-                    <h4>menu</h4>
-                </div>
-                <div class="card-body">
-                    <div class="list-group">
-                        <a href="/" class="list-group-item">回到首頁</a>
-                        <a href="/hot/" class="list-group-item">熱門電影</a>
-                        <a href="/rank/" class="list-group-item">電影評論分類</a>
-						<a href="/search/" class="list-group-item">電影搜尋</a>
-                        <a href="/admin/" class="list-group-item">後台</a>
-                    </div>
-                </div>
-				<div class="card-footer text-center">
-					{% if request.user.is_authenticated %}
-						{{ request.user.username }},您好!
-					{% else %}
-						請登入，按我登入
-					{% endif %}
-				</div>
-            </div>
-            <br>
--->

@@ -193,7 +193,14 @@
 							<h4 class="m-0 font-weight-bold text-primary">評價</h4>
 						</div>
 						<div class="card-body">
-							<div class="chart-pie  pt-4 pb-2">
+							{% if data.d_good|add:data.e_bad < 10 %}
+							<div class="row chart-pie align-items-center">
+								<div class="col"> 
+									<div class="h5 text-center font-weight-bold text-gray-800">評分數據尚且不足</div>
+								</div>
+							</div>
+							{% else %}
+							<div class="chart-pie pt-4 pb-2">
 								<canvas id="Chart_of_Comment"></canvas>
 							</div>
 								<script>
@@ -230,6 +237,7 @@
 										},
 									});
 								</script>
+							{% endif %}
 							<div class="mt-4 text-center small">
 								<span class="mr-2">
 									<i class="fas fa-circle text-primary"></i> 好評數
@@ -246,10 +254,33 @@
 			
 			<div class="row ml-2 mt-4 mb-1">
 			  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-				<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">近7天數據</h4>
+				<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">時間數據</h4>
 			  </div>
 			</div>
+			<div style="font-family: 微軟正黑體" class="row">
+				<div class="col-xl-8 col-lg-12 mx-auto">
+				<div class="card mb-2">
+				<div class="card-body">
+				
+					<ul id="hot_pills_tab" class="nav nav-pills nav-fill flex-column flex-sm-row" role="tablist">
+					  <li class="nav-item">
+						<a class="nav-link active" id="pills-7days-tab" data-toggle="pill" href="#pills-7days" role="tab" aria-controls="pills-7days" aria-selected="true">近7天數據</a>
+					  </li>
+					  <li class="nav-item">
+						<a class="nav-link" id="pills-5weeks-tab" data-toggle="pill" href="#pills-5weeks" role="tab" aria-controls="pills-5weeks" aria-selected="false">近5周數據</a>
+					  </li>
+					</ul>
+				</div>
+				</div>
+				</div>
+			</div>
 			
+			
+			
+			<div style="font-family: 微軟正黑體" class="row">
+				<div class="col-xl-12 col-lg-12 mx-auto">
+					<div class="tab-content mt-2 " id="pills-tabTimeContent">
+						<div class="tab-pane fade show active" id="pills-7days" role="tabpanel" aria-labelledby="pills-7days-tab">
 			<div style="font-family: 微軟正黑體" class="row">
 				<div class="col-xl-12 col-lg-12 mx-auto">
 					<div class="card mb-4 shadow">
@@ -294,13 +325,8 @@
 					</div>
 				</div>
 			</div>
-			
-			<div class="row ml-2 mt-4 mb-1">
-			  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-				<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">近5周數據</h4>
-			  </div>
-			</div>
-			
+						</div>
+						<div class="tab-pane fade show" id="pills-5weeks" role="tabpanel" aria-labelledby="pills-5weeks-tab">
 			<div style="font-family: 微軟正黑體" class="row">
 				<div class="col-xl-12 col-lg-12 mx-auto">
 					<div class="card mb-4 shadow">
@@ -345,6 +371,15 @@
 					</div>
 				</div>
 			</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			
+
+			
+
 
 			<div class="row ml-2 mt-4 mb-1">
 			  <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -356,7 +391,7 @@
 				<div class="col-xl-12 col-lg-12 mb-4">
 					<div class="card shadow">
 						<div class="card-header py-3">
-							<h4 class="m-0 font-weight-bold text-primary">文章</h4>
+							<h4 class="m-0 font-weight-bold text-primary">相關文章</h4>
 						</div>
 						<div class="card-body">
 							<table id="article_table" class="table table-hover table-sm" cellspacing="0" width="100%">
@@ -405,7 +440,8 @@
 										"sortDescending": ": 降冪排列"
 									  }
 									}
-									,"order": [[ 1, "desc" ]]
+									,"order": [[ 1, "desc" ]],
+									"pagingType": "numbers",
 								});
 							} );
 							</script>

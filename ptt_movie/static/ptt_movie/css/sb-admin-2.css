@@ -12038,7 +12038,7 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 /* not active */
-.nav-pills .pill-1 .nav-link:not(.active) {
+.nav-pills .pill-success .nav-link:not(.active) {
     background-color: rgba(28, 200, 137, 0.0);
 	color: #6c757d;
 }
@@ -12054,7 +12054,7 @@ body.sidebar-toggled footer.sticky-footer {
 
 
 /* active (faded) */
-.nav-pills .pill-1 .nav-link {
+.nav-pills .pill-success .nav-link {
     background-color: rgba(28, 200, 137, 1);
 	color: white;
 }
