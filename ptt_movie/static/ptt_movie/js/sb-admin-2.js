@@ -8,7 +8,7 @@
     if ($(".sidebar").hasClass("toggled")) {
       $('.sidebar .collapse').collapse('hide');
     };
-	$("#nav_brand").toggleClass("d-none"); 
+	$("#nav_brand").toggleClass("d-md-none"); 
   });
 
   // Close any open menu accordions when window is resized below 768px

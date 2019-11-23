@@ -64,49 +64,97 @@ def index(request):
 	
 	#近一周討論比例(最多六筆)	
 	datas = Keyword_Analysis_This_Week.objects.all().order_by("-discussion")[:6]
-	if(len(datas)>0):
-		keyword_analysis_of_this_week = []
-		for data in datas:
-			temp = {
-				"a_movie": data.name,
-				"b_article": data.article,
-				"c_discussion": data.discussion,
-				"d_good": data.good,
-				"e_bad": data.bad,
-				"f_score": data.score,
-				"g_comment": data.comment,
-			}
-			keyword_analysis_of_this_week.append(temp)
-		
-		keyword_discussion_of_this_week = list()
-		keyword_label_of_this_week = list()
-		for i in range(len(keyword_analysis_of_this_week)):
-			if(i%6==0):
-				keyword_analysis_of_this_week[i].update({'h_color':'text-primary'})
-			elif(i%6==1):
-				keyword_analysis_of_this_week[i].update({'h_color':'text-danger'})
-			elif(i%6==2):
-				keyword_analysis_of_this_week[i].update({'h_color':'text-info'})
-			elif(i%6==3):
-				keyword_analysis_of_this_week[i].update({'h_color':'text-warning'})
-			elif(i%6==4):
-				keyword_analysis_of_this_week[i].update({'h_color':'text-muted'})
-			elif(i%6==5):
-				keyword_analysis_of_this_week[i].update({'h_color':'text-success'})
-			keyword_discussion_of_this_week.append(keyword_analysis_of_this_week[i]['c_discussion'])
-			#keyword_label_of_this_week.append(keyword_analysis_of_this_week[i]['a_movie'])
-			#print(keyword_analysis_of_this_week[i])
-		#print(keyword_discussion_of_this_week)
-
-		for i in range(len(keyword_analysis_of_this_week)):
-			#label = keyword_analysis_of_this_week[i]['a_movie']
-			label = keyword_analysis_of_this_week[i]['a_movie'] + ' (' + str( round(keyword_analysis_of_this_week[i]['c_discussion'] / sum(keyword_discussion_of_this_week) *100, 1) ) + '%)'
-			keyword_analysis_of_this_week[i].update({'a_movie':label})
-			keyword_label_of_this_week.append(label)
-			
-		keyword_discussion_of_this_week = json.dumps(keyword_discussion_of_this_week)
-		keyword_label_of_this_week = json.dumps(keyword_label_of_this_week,ensure_ascii=False)
 	
+	if(len(datas)>0):
+		if(datas[0].discussion>0):
+			keyword_analysis_of_this_week = []
+			for data in datas:
+				temp = {
+					"a_movie": data.name,
+					"b_article": data.article,
+					"c_discussion": data.discussion,
+					"d_good": data.good,
+					"e_bad": data.bad,
+					"f_score": data.score,
+					"g_comment": data.comment,
+				}
+				keyword_analysis_of_this_week.append(temp)
+			
+			keyword_discussion_of_this_week = list()
+			keyword_label_of_this_week = list()
+			for i in range(len(keyword_analysis_of_this_week)):
+				if(i%6==0):
+					keyword_analysis_of_this_week[i].update({'h_color':'text-primary'})
+				elif(i%6==1):
+					keyword_analysis_of_this_week[i].update({'h_color':'text-danger'})
+				elif(i%6==2):
+					keyword_analysis_of_this_week[i].update({'h_color':'text-info'})
+				elif(i%6==3):
+					keyword_analysis_of_this_week[i].update({'h_color':'text-warning'})
+				elif(i%6==4):
+					keyword_analysis_of_this_week[i].update({'h_color':'text-muted'})
+				elif(i%6==5):
+					keyword_analysis_of_this_week[i].update({'h_color':'text-success'})
+				keyword_discussion_of_this_week.append(keyword_analysis_of_this_week[i]['c_discussion'])
+				#keyword_label_of_this_week.append(keyword_analysis_of_this_week[i]['a_movie'])
+				#print(keyword_analysis_of_this_week[i])
+			#print(keyword_discussion_of_this_week)
+			
+			for i in range(len(keyword_analysis_of_this_week)):
+				#label = keyword_analysis_of_this_week[i]['a_movie']
+				label = keyword_analysis_of_this_week[i]['a_movie'] + ' (' + str( round(keyword_analysis_of_this_week[i]['c_discussion'] / sum(keyword_discussion_of_this_week) *100, 1) ) + '%)'
+				keyword_analysis_of_this_week[i].update({'a_movie':label})
+				keyword_label_of_this_week.append(label)
+				
+			keyword_discussion_of_this_week = json.dumps(keyword_discussion_of_this_week)
+			keyword_label_of_this_week = json.dumps(keyword_label_of_this_week,ensure_ascii=False)
+		
+		else:
+		
+			datas = Keyword_Analysis_This_Week.objects.all().order_by("-article")[:6]
+			keyword_analysis_of_this_week = []
+			for data in datas:
+				temp = {
+					"a_movie": data.name,
+					"b_article": data.article,
+					"c_discussion": data.discussion,
+					"d_good": data.good,
+					"e_bad": data.bad,
+					"f_score": data.score,
+					"g_comment": data.comment,
+				}
+				keyword_analysis_of_this_week.append(temp)
+			
+			keyword_discussion_of_this_week = list()
+			keyword_label_of_this_week = list()
+			for i in range(len(keyword_analysis_of_this_week)):
+				if(i%6==0):
+					keyword_analysis_of_this_week[i].update({'h_color':'text-primary'})
+				elif(i%6==1):
+					keyword_analysis_of_this_week[i].update({'h_color':'text-danger'})
+				elif(i%6==2):
+					keyword_analysis_of_this_week[i].update({'h_color':'text-info'})
+				elif(i%6==3):
+					keyword_analysis_of_this_week[i].update({'h_color':'text-warning'})
+				elif(i%6==4):
+					keyword_analysis_of_this_week[i].update({'h_color':'text-muted'})
+				elif(i%6==5):
+					keyword_analysis_of_this_week[i].update({'h_color':'text-success'})
+				keyword_discussion_of_this_week.append(keyword_analysis_of_this_week[i]['b_article'])
+				#keyword_label_of_this_week.append(keyword_analysis_of_this_week[i]['a_movie'])
+				#print(keyword_analysis_of_this_week[i])
+			#print(keyword_discussion_of_this_week)
+			
+			for i in range(len(keyword_analysis_of_this_week)):
+				#label = keyword_analysis_of_this_week[i]['a_movie']
+				label = keyword_analysis_of_this_week[i]['a_movie'] + ' (' + str( round(keyword_analysis_of_this_week[i]['b_article'] / sum(keyword_discussion_of_this_week) *100, 1) ) + '%)'
+				keyword_analysis_of_this_week[i].update({'a_movie':label})
+				keyword_label_of_this_week.append(label)
+				
+			keyword_discussion_of_this_week = json.dumps(keyword_discussion_of_this_week)
+			keyword_label_of_this_week = json.dumps(keyword_label_of_this_week,ensure_ascii=False)
+
+		
 	#今日文章
 	article_today = Article.objects.filter(time__year=today.strftime('%Y'),time__month=today.strftime('%m'),time__day=today.strftime('%d'))
 	
