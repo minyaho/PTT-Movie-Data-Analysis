@@ -1,6 +1,6 @@
 {% extends 'ptt_movie/base.html' %}
 {% load crispy_forms_tags %}
-{% block title %}{{ movie_name }} - {{type_name}}圖表 - Ptt電影溫度計 {% endblock %}
+{% block title %}{{ movie_name }} - {{type_name}}圖表 - 電影溫度計 {% endblock %}
 {% block page_heading %}
 		<div class="col-xl-11 col-md-12 mx-auto">
 			<div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -202,7 +202,7 @@
 			  }],
 			  yAxes: [{
 				ticks: {
-				  maxTicksLimit: 10,
+				  maxTicksLimit: 100,
 				  padding: 10,
 				  // Include a dollar sign in the ticks
 				  callback: function(value, index, values) {
@@ -323,7 +323,7 @@
 			  }],
 			},
 			legend: {
-			  display: true
+			  display: false
 			},
 			tooltips: {
 			  backgroundColor: "rgb(255,255,255)",

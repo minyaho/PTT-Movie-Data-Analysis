@@ -49,7 +49,7 @@ def index(request):
 	discussion_len = Article.objects.aggregate(Sum('push_message_all'))['push_message_all__sum']
 	article_len = Article.objects.count()
 	
-	#近一周整體討論量
+	#近一週整體討論量
 	#Article.objects.filter(time__year=today.strftime('%Y'),time__month=today.strftime('%m'),time__day=today.strftime('%d'))
 	start_date = today - relativedelta(days=7)
 	label_of_7_days = list()
@@ -62,7 +62,7 @@ def index(request):
 		discussion_tihs_week_datas.append(Article.objects.filter(time__year=start_date.strftime('%Y'),time__month=start_date.strftime('%m'),time__day=(start_date+relativedelta(days=i)).strftime('%d')).aggregate(Sum('push_message_all'))['push_message_all__sum'])
 	discussion_tihs_week_datas = json.dumps(discussion_tihs_week_datas)
 	
-	#近一周討論比例(最多六筆)	
+	#近一週討論比例(最多六筆)	
 	datas = Keyword_Analysis_This_Week.objects.all().order_by("-discussion")[:6]
 	
 	if(len(datas)>0):
@@ -77,6 +77,7 @@ def index(request):
 					"e_bad": data.bad,
 					"f_score": data.score,
 					"g_comment": data.comment,
+					"i_name": data.name,
 				}
 				keyword_analysis_of_this_week.append(temp)
 			
@@ -102,8 +103,8 @@ def index(request):
 			
 			for i in range(len(keyword_analysis_of_this_week)):
 				#label = keyword_analysis_of_this_week[i]['a_movie']
-				label = keyword_analysis_of_this_week[i]['a_movie'] + ' (' + str( round(keyword_analysis_of_this_week[i]['c_discussion'] / sum(keyword_discussion_of_this_week) *100, 1) ) + '%)'
-				keyword_analysis_of_this_week[i].update({'a_movie':label})
+				label = keyword_analysis_of_this_week[i]['i_name'] + ' (' + str( round(keyword_analysis_of_this_week[i]['c_discussion'] / sum(keyword_discussion_of_this_week) *100, 1) ) + '%)'
+				keyword_analysis_of_this_week[i].update({'i_name':label})
 				keyword_label_of_this_week.append(label)
 				
 			keyword_discussion_of_this_week = json.dumps(keyword_discussion_of_this_week)
@@ -195,7 +196,7 @@ def index(request):
 
 		data_of_7_days = []
 		for day in range(1,8):
-			data_of_7_days.append(article_search(3,keyword_today_hot['a_movie'],[2019,int((start_date + relativedelta(days=i)).strftime('%m')),int((start_date + relativedelta(days=day)).strftime('%d'))]))
+			data_of_7_days.append(article_search(3,keyword_today_hot['a_movie'],[2019,int((start_date + relativedelta(days=day)).strftime('%m')),int((start_date + relativedelta(days=day)).strftime('%d'))]))
 
 		discussion_of_7_days = list()
 		for _data in data_of_7_days:
@@ -341,6 +342,7 @@ def keyword(request,key):
 		#近7天
 		end_date = datetime.datetime.today().date()
 		start_date = end_date - relativedelta(days=7)
+		print(start_date)
 		
 		label_of_7_days = list()
 		for i in range(1,8):
@@ -350,7 +352,9 @@ def keyword(request,key):
 		data_of_7_days = []
 			
 		for day in range(1,8):
-			data_of_7_days.append(article_search(3,movie_name,[2019,int((start_date + relativedelta(days=i)).strftime('%m')),int((start_date + relativedelta(days=day)).strftime('%d'))]))
+			data_of_7_days.append(article_search(3,movie_name,[2019,int((start_date + relativedelta(days=day)).strftime('%m')),int((start_date + relativedelta(days=day)).strftime('%d'))]))
+		
+		#print(data_of_7_days)
 
 		article_of_7_days = list()
 		for _data in data_of_7_days:
@@ -373,7 +377,7 @@ def keyword(request,key):
 		bad_of_7_days = json.dumps(bad_of_7_days)	
 		
 		
-		#近5周
+		#近5週
 		end_date = datetime.datetime.today().date()+ relativedelta(days=1)
 		start_date = end_date - relativedelta(days=7*5)
 		
@@ -421,7 +425,7 @@ def week(request,key):
 	
 	if len(keyword_result) != 0:
 	
-		type_name = '周'
+		type_name = '週'
 		another_type_name = ['月','month']
 		movie_name = key
 		data = []
@@ -467,7 +471,7 @@ def month(request,key):
 	if len(keyword_result) != 0:
 	
 		type_name = '月'
-		another_type_name = ['周','week']
+		another_type_name = ['週','week']
 		movie_name = key
 		data = []
 				
@@ -512,7 +516,7 @@ def rank(request):
 	# 極好評 好評 普評 壞評 極壞評
 	# better good ordinary bad worse
 
-	#---這一周---------------------------------------------------------------
+	#---這一週---------------------------------------------------------------
 
 	#極好評電影
 	better_keywords_this_week_datas = Keyword_Analysis_This_Week.objects.filter(comment='極好評')
@@ -539,7 +543,7 @@ def rank(request):
 	insufficient_keywords_this_week_len = len(insufficient_keywords_this_week_datas)
 	
 
-	#---上一周---------------------------------------------------------------
+	#---上一週---------------------------------------------------------------
 
 	#極好評電影
 	better_keywords_last_week_datas = Keyword_Analysis_Last_Week.objects.filter(comment='極好評')
@@ -668,14 +672,14 @@ def hot(request):
 	movie_keywords = Keyword.objects.all()
 	num_movie_keyword = 8					#輸出電影的數量
 		
-	#這一周
+	#這一週
 	timenow = datetime.datetime.now()		#現在時間
-	this_week = timenow.isocalendar()[1]	#找出目前第幾周
+	this_week = timenow.isocalendar()[1]	#找出目前第幾週
 	
 	"""
-	this_week_keywords = set()				#這周的電影關鍵字
+	this_week_keywords = set()				#這週的電影關鍵字
 
-	article_this_week = Article.objects.filter(time__year=2019,time__week=this_week)	#這周的文章
+	article_this_week = Article.objects.filter(time__year=2019,time__week=this_week)	#這週的文章
 	
 	article_str = ''	#從文章標題去找電影關鍵字
 	for _article_this_week in article_this_week:
@@ -692,9 +696,9 @@ def hot(request):
 				this_week_keywords.add(_keyword.movie)
 				
 				
-	data_this_week = []	#裝這周電影關鍵字的資料
+	data_this_week = []	#裝這週電影關鍵字的資料
 		
-	for _keyword in this_week_keywords:			#抓取這周的電影資料
+	for _keyword in this_week_keywords:			#抓取這週的電影資料
 		movie_name = _keyword
 		data_this_week.append(article_search(1,movie_name,this_week))
 	"""
@@ -742,14 +746,14 @@ def hot(request):
 	discussion_data_this_week = json.dumps(discussion_data_this_week)
 	
 	
-	#上一周
+	#上一週
 	
 	timenow = datetime.datetime.now()		#現在時間
-	last_week = timenow.isocalendar()[1]-1	#找出目前第幾周
+	last_week = timenow.isocalendar()[1]-1	#找出目前第幾週
 	"""
-	last_week_keywords = set()				#這周的電影關鍵字
+	last_week_keywords = set()				#這週的電影關鍵字
 
-	article_last_week = Article.objects.filter(time__year=2019,time__week=last_week)	#這周的文章
+	article_last_week = Article.objects.filter(time__year=2019,time__week=last_week)	#這週的文章
 	
 	article_str = ''	#從文章標題去找電影關鍵字
 	for _article_last_week in article_last_week:
@@ -766,9 +770,9 @@ def hot(request):
 				last_week_keywords.add(_keyword.movie)
 				
 				
-	data_last_week = []	#裝這周電影關鍵字的資料
+	data_last_week = []	#裝這週電影關鍵字的資料
 		
-	for _keyword in last_week_keywords:			#抓取這周的電影資料
+	for _keyword in last_week_keywords:			#抓取這週的電影資料
 		movie_name = _keyword
 		data_last_week.append(article_search(1,movie_name,last_week))
 	"""
@@ -822,9 +826,9 @@ def hot(request):
 	
 	this_month = int(timenow.strftime('%m'))
 	"""
-	this_month_keywords = set()				#這周的電影關鍵字
+	this_month_keywords = set()				#這週的電影關鍵字
 
-	article_this_month =  Article.objects.filter(time__year=timenow.strftime('%Y'),time__month=timenow.strftime('%m'))	#這周的文章
+	article_this_month =  Article.objects.filter(time__year=timenow.strftime('%Y'),time__month=timenow.strftime('%m'))	#這週的文章
 	
 	article_str = ''	#從文章標題去找電影關鍵字
 	for _article_this_month in article_this_month:
@@ -841,9 +845,9 @@ def hot(request):
 				this_month_keywords.add(_keyword.movie)
 				
 				
-	data_this_month = []	#裝這周電影關鍵字的資料
+	data_this_month = []	#裝這週電影關鍵字的資料
 		
-	for _keyword in last_week_keywords:			#抓取這周的電影資料
+	for _keyword in last_week_keywords:			#抓取這週的電影資料
 		movie_name = _keyword
 		data_this_month.append(article_search(2,movie_name,timenow.strftime('%m')))
 	"""
@@ -895,9 +899,9 @@ def hot(request):
 	
 	last_month = int(timenow.strftime('%m'))
 	"""
-	last_month_keywords = set()				#這周的電影關鍵字
+	last_month_keywords = set()				#這週的電影關鍵字
 
-	article_last_month =  Article.objects.filter(time__year=timenow.strftime('%Y'),time__month=timenow.strftime('%m'))	#這周的文章
+	article_last_month =  Article.objects.filter(time__year=timenow.strftime('%Y'),time__month=timenow.strftime('%m'))	#這週的文章
 	
 	article_str = ''	#從文章標題去找電影關鍵字
 	for _article_last_month in article_last_month:
@@ -914,9 +918,9 @@ def hot(request):
 				last_month_keywords.add(_keyword.movie)
 				
 				
-	data_last_month = []	#裝這周電影關鍵字的資料
+	data_last_month = []	#裝這週電影關鍵字的資料
 	
-	for _keyword in last_month_keywords:			#抓取這周的電影資料
+	for _keyword in last_month_keywords:			#抓取這週的電影資料
 		movie_name = _keyword
 		data_last_month.append(article_search(2,movie_name,timenow.strftime('%m')))
 	"""
@@ -1047,7 +1051,7 @@ def analysis_type(request):
 				
 			elif (type == 1):
 			
-				type_name = '周'
+				type_name = '週'
 				
 				data = []
 				

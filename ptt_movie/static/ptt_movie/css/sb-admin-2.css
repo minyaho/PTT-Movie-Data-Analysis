@@ -4427,6 +4427,53 @@ input[type="button"].btn-block {
   padding: 0.5rem 1rem;
 }
 
+.navbar-default{
+
+}
+@media (max-width: 767.9px) {
+	.navbar-default {
+		position: fixed;
+		width: 100%;
+		z-index: 999;
+	}
+	.container-fluid{
+		padding-top: 90px;
+	}
+	.navbar-default2 {
+		position: fixed;
+		width: 100%;
+		z-index: 999;
+		padding-right: 7.5rem;
+		margin-left: 6.5rem;
+	}
+	.sidebar{
+		position: fixed;
+		z-index: 999;
+	}
+}
+/*
+@media(min-width:768px) {
+    .navbar-default {
+        
+		position: fixed;
+		width: 100%;
+		z-index: 999;
+		padding: 0px 8rem 0 20px;
+        border-left: 1px solid #e7e7e7;
+    }
+}
+
+@media(min-width:768px) {
+    .navbar-default2 {
+        
+		position: fixed;
+		width: 100%;
+		z-index: 999;
+		padding: 0px 15.5rem 0 20px;
+        border-left: 1px solid #e7e7e7;
+    }
+}*/
+
 .navbar > .container,
 .navbar > .container-fluid {
   display: -webkit-box;

@@ -8,6 +8,7 @@
     if ($(".sidebar").hasClass("toggled")) {
       $('.sidebar .collapse').collapse('hide');
     };
+	$(".navbar").toggleClass("navbar-default2");
 	$("#nav_brand").toggleClass("d-md-none"); 
   });
 

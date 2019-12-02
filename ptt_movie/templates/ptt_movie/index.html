@@ -1,7 +1,7 @@
 <!-- index.html-->
 {% extends 'ptt_movie/base.html' %}
 {% load crispy_forms_tags %}
-{% block title %}首頁 - Ptt電影溫度計 {% endblock %}
+{% block title %}首頁 - 電影溫度計 {% endblock %}
 {% block head %}
 
 
@@ -94,7 +94,7 @@
               <div class="card shadow h-100">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">近一周整體討論量</h5>
+                  <h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">近一週整體討論量</h5>
 				  {% if request.user.is_authenticated %}
 				  <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -129,7 +129,7 @@
               <div class="card shadow h-100">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">近一周討論比例(最多六筆)</h5>
+                  <h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">近一週討論比例(最多六筆)</h5>
 				  {% if request.user.is_authenticated %}
                   <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -147,7 +147,7 @@
                   {% endif %}
                 </div>
                 <!-- Card Body -->
-                <div class="card-body">
+                <div class="card-body" style="font-family: 微軟正黑體">
 				  {% if keyword_analysis_of_this_week %}
                   <div class="chart-pie2 pt-2 pb-2">
                     <canvas id="this_week_discussion_PieChart"></canvas>
@@ -156,7 +156,7 @@
 					  {% for keyword in keyword_analysis_of_this_week%}
 					  <div class="col-sm-6  small mt-0">
 						<span class="mr-2">
-						  <i class="fas fa-circle {{keyword.h_color}}"></i> {{keyword.a_movie}}
+						  <i class="fas fa-circle {{keyword.h_color}}"></i><a class="text-gray-800" href='keyword/{{keyword.a_movie}}'> {{keyword.i_name}}</a>
 						</span>
 					  </div>
 					  {% endfor %}
@@ -271,7 +271,7 @@
 		  
 		<div class="row ml-2">
           <div class="d-sm-flex align-items-center justify-content-between mt-2 mb-4">
-			<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">今日熱門關鍵字</h4>
+			<h4 class="h3 mb-0 text-gray-800" style="font-family: 微軟正黑體">今日焦點</h4>
           </div>
 		</div>
 			
@@ -364,7 +364,7 @@
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">近一周討論量</h5>
+                  <h5 class="m-0 font-weight-bold text-primary" style="font-family: 微軟正黑體">近一週討論量</h5>
 				  {% if request.user.is_authenticated %}
 				  <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -4,6 +4,8 @@ import datetime,time
 
 def article_search(type,movie_name,arg=None):
 	article_for_keyword = set()
+	
+	#print(type,movie_name,arg)
 					
 	#第一階段搜尋: 只比對與電影關鍵字吻合的文章
 	articles = article_search_type([type,movie_name,arg])

@@ -1,7 +1,7 @@
 <!-- index.html-->
 {% extends 'ptt_movie/base.html' %}
 {% load crispy_forms_tags %}
-{% block title %} 熱門電影排行 - Ptt電影溫度計{% endblock %}
+{% block title %} 熱門電影排行 - 電影溫度計{% endblock %}
 {% block page_heading %}
 		<div class="col-xl-11 col-md-12 mx-auto">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -28,10 +28,10 @@
 						<div class="tab-pane fade show active" id="pills-article" role="tabpanel" aria-labelledby="pills-article_tab">
 							<ul id="hot_article_pills_tab" class="nav nav-pills nav-fill flex-column flex-sm-row" role="tablist">
 							  <li class="nav-item pill-success">
-								<a class="nav-link active" id="pills-article_this_week-tab" data-toggle="pill" href="#pills-article_this_week" role="tab" aria-controls="pills-article_this_week" aria-selected="true">這一周</a>
+								<a class="nav-link active" id="pills-article_this_week-tab" data-toggle="pill" href="#pills-article_this_week" role="tab" aria-controls="pills-article_this_week" aria-selected="true">這一週</a>
 							  </li>
 							  <li class="nav-item pill-success">
-								<a class="nav-link" id="pills-article_last_week-tab" data-toggle="pill" href="#pills-article_last_week" role="tab" aria-controls="pills-article_last_week" aria-selected="false">上一周</a>
+								<a class="nav-link" id="pills-article_last_week-tab" data-toggle="pill" href="#pills-article_last_week" role="tab" aria-controls="pills-article_last_week" aria-selected="false">上一週</a>
 							  </li>
 							  <li class="nav-item pill-success">
 								<a class="nav-link" id="pills-article_this_month-tab" data-toggle="pill" href="#pills-article_this_month" role="tab" aria-controls="pills-article_this_month" aria-selected="false">這個月</a>
@@ -46,7 +46,7 @@
 									<div class="col-xl-11 col-lg-12 mx-auto">
 										<div class="card mb-4 shadow">
 											<div class="card-header py-3">
-												<h5 class="m-0 font-weight-bold text-primary">這一周</h5>
+												<h5 class="m-0 font-weight-bold text-primary">這一週</h5>
 											</div>
 											<div class="card-body">
 												<div class="chart-bar2">
@@ -60,7 +60,7 @@
 									<div class="col-xl-11 col-lg-12 mx-auto">
 										<div class="card mb-4 shadow">
 											<div class="card-header py-3">
-												<h5 class="m-0 font-weight-bold text-primary">上一周</h5>
+												<h5 class="m-0 font-weight-bold text-primary">上一週</h5>
 											</div>
 											<div class="card-body">
 												<div class="chart-bar2">
@@ -103,10 +103,10 @@
 						<div class="tab-pane fade show" id="pills-discussion" role="tabpanel" aria-labelledby="pills-discussion_tab">
 							<ul id="hot_discussion_pills_tab" class="nav nav-pills nav-fill flex-column flex-sm-row" role="tablist">
 							  <li class="nav-item pill-success">
-								<a class="nav-link active" id="pills-discussion_this_week-tab" data-toggle="pill" href="#pills-discussion_this_week" role="tab" aria-controls="pills-discussion_this_week" aria-selected="true">這一周</a>
+								<a class="nav-link active" id="pills-discussion_this_week-tab" data-toggle="pill" href="#pills-discussion_this_week" role="tab" aria-controls="pills-discussion_this_week" aria-selected="true">這一週</a>
 							  </li>
 							  <li class="nav-item pill-success">
-								<a class="nav-link" id="pills-discussion_last_week-tab" data-toggle="pill" href="#pills-discussion_last_week" role="tab" aria-controls="pills-discussion_last_week" aria-selected="false">這上周</a>
+								<a class="nav-link" id="pills-discussion_last_week-tab" data-toggle="pill" href="#pills-discussion_last_week" role="tab" aria-controls="pills-discussion_last_week" aria-selected="false">上一週</a>
 							  </li>
 							  <li class="nav-item pill-success">
 								<a class="nav-link" id="pills-discussion_this_month-tab" data-toggle="pill" href="#pills-discussion_this_month" role="tab" aria-controls="pills-discussion_this_month" aria-selected="false">這個月</a>
@@ -121,7 +121,7 @@
 									<div class="col-xl-11 col-lg-12 mx-auto">
 										<div class="card mb-4 shadow">
 											<div class="card-header py-3">
-												<h5 class="m-0 font-weight-bold text-primary">這一周</h5>
+												<h5 class="m-0 font-weight-bold text-primary">這一週</h5>
 											</div>
 											<div class="card-body">
 												<div class="chart-bar2">
@@ -135,7 +135,7 @@
 									<div class="col-xl-11 col-lg-12 mx-auto">
 										<div class="card mb-4 shadow">
 											<div class="card-header py-3">
-												<h5 class="m-0 font-weight-bold text-primary">上一周</h5>
+												<h5 class="m-0 font-weight-bold text-primary">上一週</h5>
 											</div>
 											<div class="card-body">
 												<div class="chart-bar2">
@@ -185,7 +185,7 @@
 		  data: {
 			labels: {{ article_label_this_week |safe }},
 			datasets: [{
-			  label: "Article (第{{ this_week }}周)",
+			  label: "Article (第{{ this_week }}週)",
 			  backgroundColor: ['rgba(78, 115, 223, 1)',
 								'rgba(78, 115, 223, 0.9)',
 								'rgba(78, 115, 223, 0.8)',
@@ -287,7 +287,7 @@
 		  data: {
 			labels: {{ article_label_last_week |safe }},
 			datasets: [{
-			  label: "Article (第{{ this_week }}周)",
+			  label: "Article (第{{ this_week }}週)",
 			  backgroundColor: ['rgba(78, 115, 223, 1)',
 								'rgba(78, 115, 223, 0.9)',
 								'rgba(78, 115, 223, 0.8)',
@@ -389,7 +389,7 @@
 		  data: {
 			labels: {{ article_label_this_month |safe }},
 			datasets: [{
-			  label: "Article (第{{ this_week }}周)",
+			  label: "Article (第{{ this_week }}週)",
 			  backgroundColor: ['rgba(78, 115, 223, 1)',
 								'rgba(78, 115, 223, 0.9)',
 								'rgba(78, 115, 223, 0.8)',
@@ -491,7 +491,7 @@
 		  data: {
 			labels: {{ article_label_last_month |safe }},
 			datasets: [{
-			  label: "Article (第{{ this_week }}周)",
+			  label: "Article (第{{ this_week }}週)",
 			  backgroundColor: ['rgba(78, 115, 223, 1)',
 								'rgba(78, 115, 223, 0.9)',
 								'rgba(78, 115, 223, 0.8)',
@@ -595,7 +595,7 @@
 		  data: {
 			labels: {{ discussion_label_this_week |safe }},
 			datasets: [{
-			  label: "Article (第{{ this_week }}周)",
+			  label: "Discussion (第{{ this_week }}週)",
 			  backgroundColor: ['rgba(78, 115, 223, 1)',
 								'rgba(78, 115, 223, 0.9)',
 								'rgba(78, 115, 223, 0.8)',
@@ -697,7 +697,7 @@
 		  data: {
 			labels: {{ discussion_label_last_week |safe }},
 			datasets: [{
-			  label: "Article (第{{ this_week }}周)",
+			  label: "Discussion (第{{ this_week }}週)",
 			  backgroundColor: ['rgba(78, 115, 223, 1)',
 								'rgba(78, 115, 223, 0.9)',
 								'rgba(78, 115, 223, 0.8)',
@@ -799,7 +799,7 @@
 		  data: {
 			labels: {{ discussion_label_this_month |safe }},
 			datasets: [{
-			  label: "Article (第{{ this_week }}周)",
+			  label: "Discussion (第{{ this_week }}週)",
 			  backgroundColor: ['rgba(78, 115, 223, 1)',
 								'rgba(78, 115, 223, 0.9)',
 								'rgba(78, 115, 223, 0.8)',
@@ -901,7 +901,7 @@
 		  data: {
 			labels: {{ discussion_label_last_month |safe }},
 			datasets: [{
-			  label: "Article (第{{ this_week }}周)",
+			  label: "Discussion (第{{ this_week }}週)",
 			  backgroundColor: ['rgba(78, 115, 223, 1)',
 								'rgba(78, 115, 223, 0.9)',
 								'rgba(78, 115, 223, 0.8)',

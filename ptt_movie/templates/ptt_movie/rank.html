@@ -1,7 +1,7 @@
 <!-- index.html-->
 {% extends 'ptt_movie/base.html' %}
 {% load crispy_forms_tags %}
-{% block title %} 電影評比篩選 - Ptt電影溫度計{% endblock %}
+{% block title %} 電影評比篩選 - 電影溫度計{% endblock %}
 {% block head %}{% endblock %}
 {% block page_heading %}
 		<div class="col-xl-11 col-md-12 mx-auto">
@@ -17,7 +17,7 @@
 						  歡迎來到電影溫度計
 					</h3>-->
 					<!--
-					<h4 class="mt-3">近1周<h4>
+					<h4 class="mt-3">近1週<h4>
 					<hr class="mt-0 mb-4">
 					<div class='ml-3'>
 						<ul>
@@ -36,10 +36,10 @@
 					</div>-->
 					<ul id="rank_pills_tab" class="nav nav-pills nav-fill flex-column flex-sm-row" role="tablist">
 					  <li class="nav-item">
-						<a class="nav-link active" id="pills-this_week_tab" data-toggle="pill" href="#pills-this_week" role="tab" aria-controls="pills-this_week" aria-selected="true">這一周</a>
+						<a class="nav-link active" id="pills-this_week_tab" data-toggle="pill" href="#pills-this_week" role="tab" aria-controls="pills-this_week" aria-selected="true">這一週</a>
 					  </li>
 					  <li class="nav-item">
-						<a class="nav-link" id="pills-last_week_tab" data-toggle="pill" href="#pills-last_week" role="tab" aria-controls="pills-last_week" aria-selected="false">上一周</a>
+						<a class="nav-link" id="pills-last_week_tab" data-toggle="pill" href="#pills-last_week" role="tab" aria-controls="pills-last_week" aria-selected="false">上一週</a>
 					  </li>
 					  <li class="nav-item">
 						<a class="nav-link" id="pills-this_month_tab" data-toggle="pill" href="#pills-this_month" role="tab" aria-controls="pills-this_month" aria-selected="false">這個月</a>
@@ -79,7 +79,7 @@
 								<div class="tab-pane fade show active" id="pills-this_week_better" role="tabpanel" aria-labelledby="pills-this_week_better_tab">
 									<div class="card shadow">						
 										<div class="card-header py-3">
-											<h5 class="m-0 font-weight-bold text-primary">這一周 極好評電影 (共{{ better_keywords_this_week_len }}筆)</h5>
+											<h5 class="m-0 font-weight-bold text-primary">這一週 極好評電影 (共{{ better_keywords_this_week_len }}筆)</h5>
 										</div>
 										<div id="better_this_week" class="card-body mb-1">
 											<div class=''>
@@ -106,7 +106,7 @@
 								<div class="tab-pane fade" id="pills-this_week_good" role="tabpanel" aria-labelledby="pills-this_week_good_tab">
 									<div class="card shadow">						
 										<div class="card-header py-3">
-											<h5 class="m-0 font-weight-bold text-primary">這一周 好評電影 (共{{ good_keywords_this_week_len }}筆) </h5>
+											<h5 class="m-0 font-weight-bold text-primary">這一週 好評電影 (共{{ good_keywords_this_week_len }}筆) </h5>
 										</div>
 										<div id="good_this_week" class="card-body mb-1">
 											<div class=''>
@@ -133,7 +133,7 @@
 								<div class="tab-pane fade" id="pills-this_week_ordinary" role="tabpanel" aria-labelledby="pills-this_week_ordinary_tab">
 									<div class="card shadow">						
 										<div class="card-header py-3">
-											<h5 class="m-0 font-weight-bold text-primary">這一周 普評電影 (共{{ ordinary_keywords_this_week_len }}筆)</h5>
+											<h5 class="m-0 font-weight-bold text-primary">這一週 普評電影 (共{{ ordinary_keywords_this_week_len }}筆)</h5>
 										</div>
 										<div id="ordinary_this_week" class="card-body mb-1">
 											<div class=''>
@@ -160,7 +160,7 @@
 								<div class="tab-pane fade" id="pills-this_week_bad" role="tabpanel" aria-labelledby="pills-this_week_bad_tab">
 									<div class="card shadow">						
 										<div class="card-header py-3">
-											<h5 class="m-0 font-weight-bold text-primary">這一周 負評電影 (共{{ bad_keywords_this_week_len }}筆)</h5>
+											<h5 class="m-0 font-weight-bold text-primary">這一週 負評電影 (共{{ bad_keywords_this_week_len }}筆)</h5>
 										</div>
 										<div id="bad_this_week" class="card-body mb-1">
 											<div class=''>
@@ -187,7 +187,7 @@
 								<div class="tab-pane fade" id="pills-this_week_worse" role="tabpanel" aria-labelledby="pills-this_week_worse_tab">
 									<div class="card shadow">						
 										<div class="card-header py-3">
-											<h5 class="m-0 font-weight-bold text-primary">這一周 極負評電影 (共{{ worse_keywords_this_week_len }}筆)</h5>
+											<h5 class="m-0 font-weight-bold text-primary">這一週 極負評電影 (共{{ worse_keywords_this_week_len }}筆)</h5>
 										</div>
 										<div id="worse_this_week" class="card-body mb-1 ">
 											<div class=''>
@@ -214,7 +214,7 @@
 								<div class="tab-pane fade" id="pills-this_week_insufficient" role="tabpanel" aria-labelledby="pills-this_week_insufficient_tab">
 									<div class="card shadow">						
 										<div class="card-header py-3">
-											<h5 class="m-0 font-weight-bold text-primary">這一周 尚未分類 (共{{ insufficient_keywords_this_week_len }}筆)</h5>
+											<h5 class="m-0 font-weight-bold text-primary">這一週 尚未分類 (共{{ insufficient_keywords_this_week_len }}筆)</h5>
 										</div>
 										<div id="insufficient_this_week" class="card-body mb-1">
 											<div class=''>
@@ -266,7 +266,7 @@
 								<div class="tab-pane fade show active" id="pills-last_week_better" role="tabpanel" aria-labelledby="pills-last_week_better_tab">
 									<div class="card shadow">						
 										<div class="card-header py-3">
-											<h5 class="m-0 font-weight-bold text-primary">上一周 極好評電影 (共{{ better_keywords_last_week_len }}筆)</h5>
+											<h5 class="m-0 font-weight-bold text-primary">上一週 極好評電影 (共{{ better_keywords_last_week_len }}筆)</h5>
 										</div>
 										<div id="better_last_week" class="card-body mb-1">
 											<div class=''>
@@ -293,7 +293,7 @@
 								<div class="tab-pane fade" id="pills-last_week_good" role="tabpanel" aria-labelledby="pills-last_week_good_tab">
 									<div class="card shadow">						
 										<div class="card-header py-3">
-											<h5 class="m-0 font-weight-bold text-primary">上一周 好評電影 (共{{ good_keywords_last_week_len }}筆) </h5>
+											<h5 class="m-0 font-weight-bold text-primary">上一週 好評電影 (共{{ good_keywords_last_week_len }}筆) </h5>
 										</div>
 										<div id="good_last_week" class="card-body mb-1">
 											<div class=''>
@@ -320,7 +320,7 @@
 								<div class="tab-pane fade" id="pills-last_week_ordinary" role="tabpanel" aria-labelledby="pills-last_week_ordinary_tab">
 									<div class="card shadow">						
 										<div class="card-header py-3">
-											<h5 class="m-0 font-weight-bold text-primary">上一周 普評電影 (共{{ ordinary_keywords_last_week_len }}筆)</h5>
+											<h5 class="m-0 font-weight-bold text-primary">上一週 普評電影 (共{{ ordinary_keywords_last_week_len }}筆)</h5>
 										</div>
 										<div id="ordinary_last_week" class="card-body mb-1">
 											<div class=''>
@@ -347,7 +347,7 @@
 								<div class="tab-pane fade" id="pills-last_week_bad" role="tabpanel" aria-labelledby="pills-last_week_bad_tab">
 									<div class="card shadow">						
 										<div class="card-header py-3">
-											<h5 class="m-0 font-weight-bold text-primary">上一周 負評電影 (共{{ bad_keywords_last_week_len }}筆)</h5>
+											<h5 class="m-0 font-weight-bold text-primary">上一週 負評電影 (共{{ bad_keywords_last_week_len }}筆)</h5>
 										</div>
 										<div id="bad_last_week" class="card-body mb-1">
 											<div class=''>
@@ -374,7 +374,7 @@
 								<div class="tab-pane fade" id="pills-last_week_worse" role="tabpanel" aria-labelledby="pills-last_week_worse_tab">
 									<div class="card shadow">						
 										<div class="card-header py-3">
-											<h5 class="m-0 font-weight-bold text-primary">上一周 極負評電影 (共{{ worse_keywords_last_week_len }}筆)</h5>
+											<h5 class="m-0 font-weight-bold text-primary">上一週 極負評電影 (共{{ worse_keywords_last_week_len }}筆)</h5>
 										</div>
 										<div id="worse_last_week" class="card-body mb-1 ">
 											<div class=''>
@@ -401,7 +401,7 @@
 								<div class="tab-pane fade" id="pills-last_week_insufficient" role="tabpanel" aria-labelledby="pills-last_week_insufficient_tab">
 									<div class="card shadow">						
 										<div class="card-header py-3">
-											<h5 class="m-0 font-weight-bold text-primary">上一周 尚未分類 (共{{ insufficient_keywords_last_week_len }}筆)</h5>
+											<h5 class="m-0 font-weight-bold text-primary">上一週 尚未分類 (共{{ insufficient_keywords_last_week_len }}筆)</h5>
 										</div>
 										<div id="insufficient_last_week" class="card-body mb-1">
 											<div class=''>
